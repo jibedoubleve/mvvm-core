@@ -8,8 +8,8 @@
     <ProjectGuid>{880C823C-81D8-4F32-9E92-81C2E663C9BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Probel.Mvvm.Core</RootNamespace>
-    <AssemblyName>Probel.Mvvm.Core</AssemblyName>
+    <RootNamespace>Probel.Mvvm</RootNamespace>
+    <AssemblyName>Probel.Mvvm</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

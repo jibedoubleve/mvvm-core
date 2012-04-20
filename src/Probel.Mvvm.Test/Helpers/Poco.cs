@@ -1,6 +1,6 @@
 ﻿namespace Probel.Mvvm.Test.Helpers
 {
-    using Probel.Mvvm.Core;
+    using Probel.Mvvm;
 
     public class Poco : ObservableObject
     {
