@@ -4,7 +4,7 @@
 
     using NUnit.Framework;
 
-    using Probel.Mvvm.Core;
+    using Probel.Mvvm;
 
     [TestFixture]
     public class RelayCommandTest

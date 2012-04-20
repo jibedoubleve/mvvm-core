@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Core", "src\Probel.Mvvm.Core\Probel.Mvvm.Core.csproj", "{880C823C-81D8-4F32-9E92-81C2E663C9BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm", "src\Probel.Mvvm.Core\Probel.Mvvm.csproj", "{880C823C-81D8-4F32-9E92-81C2E663C9BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test", "src\Probel.Mvvm.Test\Probel.Mvvm.Test.csproj", "{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}"
 EndProject

@@ -60,9 +60,9 @@
     <Compile Include="WinManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Probel.Mvvm.Core\Probel.Mvvm.Core.csproj">
+    <ProjectReference Include="..\Probel.Mvvm.Core\Probel.Mvvm.csproj">
       <Project>{880C823C-81D8-4F32-9E92-81C2E663C9BC}</Project>
-      <Name>Probel.Mvvm.Core</Name>
+      <Name>Probel.Mvvm</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
