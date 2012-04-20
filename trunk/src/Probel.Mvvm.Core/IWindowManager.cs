@@ -16,13 +16,15 @@
 */
 namespace Probel.Mvvm
 {
-    public interface IWinManager
+    public interface IWindowManager
     {
         #region Methods
 
-        void Show<TType>();
+        void Reset();
 
-        void ShowDialog<TType>();
+        void Show<TViewModel>();
+
+        bool? ShowDialog<TViewModel>();
 
         #endregion Methods
     }

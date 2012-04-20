@@ -1,6 +1,7 @@
 ﻿namespace Probel.Mvvm.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
 
     using NUnit.Framework;
@@ -10,14 +11,46 @@
     [TestFixture]
     public class WinManagerTest
     {
+        #region Fields
+
+        private WindowManager windowManager = new WindowManager();
+
+        #endregion Fields
+
         #region Methods
 
         [Test]
         public void CantBindTwice()
         {
-            var win = new WinManager();
-            win.Bind(() => new Window(), typeof(bool));
-            Assert.Throws<ArgumentException>(() => win.Bind(() => new Window(), typeof(bool)));
+            this.windowManager.Bind(() => new Window(), typeof(object));
+            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
+        }
+
+        [Test]
+        public void ThrowsOnUnbinded()
+        {
+            this.windowManager.Bind(() => null, typeof(object));
+
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+        }
+
+        [Test]
+        public void CanConfigureUnbinded()
+        {
+            this.windowManager.Bind(() => null, typeof(object));
+
+            this.windowManager.ThrowsIfNotBinded = true;
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+
+            this.windowManager.ThrowsIfNotBinded = false;
+            this.windowManager.ShowDialog<bool>();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.windowManager.Reset();
+            this.windowManager.ThrowsIfNotBinded = true;
         }
 
         #endregion Methods
