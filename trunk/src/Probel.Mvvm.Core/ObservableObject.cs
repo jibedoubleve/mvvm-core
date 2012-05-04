@@ -22,7 +22,6 @@ namespace Probel.Mvvm
     using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     /// <summary>
     /// Basic implementation of <see cref="INotifyPropertyChanged"/>

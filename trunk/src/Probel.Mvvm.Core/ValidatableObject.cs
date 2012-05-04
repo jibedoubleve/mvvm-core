@@ -12,14 +12,15 @@
     public class ValidatableObject : ObservableObject, IDataErrorInfo
     {
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
         public ValidatableObject()
             : this(null)
         {
-
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
