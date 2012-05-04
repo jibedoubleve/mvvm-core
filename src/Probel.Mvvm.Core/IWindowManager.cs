@@ -16,14 +16,29 @@
 */
 namespace Probel.Mvvm
 {
+    /// <summary>
+    /// To  be a Window Manager, a class should implements these basic features
+    /// </summary>
     public interface IWindowManager
     {
         #region Methods
 
+        /// <summary>
+        /// Resets the repository.
+        /// </summary>
         void Reset();
 
+        /// <summary>
+        /// Shows the Window linkned to this ViewModel as a model window.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         void Show<TViewModel>();
 
+        /// <summary>
+        /// Shows the Window linkned to this ViewModel as a dialog window.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <returns></returns>
         bool? ShowDialog<TViewModel>();
 
         #endregion Methods

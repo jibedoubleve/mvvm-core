@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionExtension.cs" />
-    <Compile Include="Rule.cs" />
+    <Compile Include="ValidationRule.cs" />
     <Compile Include="ValidatableObject.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="RelayCommand.cs" />
