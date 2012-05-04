@@ -19,6 +19,9 @@ namespace Probel.Mvvm
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
+    /// <summary>
+    /// Allow to refill, add items to an ObservableCollection
+    /// </summary>
     public static class ObservableCollectionFiller
     {
         #region Methods

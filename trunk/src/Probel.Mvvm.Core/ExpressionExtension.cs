@@ -3,6 +3,9 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
+    /// <summary>
+    /// Add features to an <see cref="Expression"/>
+    /// </summary>
     internal static class ExpressionExtension
     {
         #region Methods

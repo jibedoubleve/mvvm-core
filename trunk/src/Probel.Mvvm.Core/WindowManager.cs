@@ -20,6 +20,10 @@ namespace Probel.Mvvm
     using System.Collections.Generic;
     using System.Windows;
 
+    /// <summary>
+    /// This manager will keep links between View and ViewModel to help user to open new windows
+    /// just by knowing the type of the ViewModel.
+    /// </summary>
     public class WindowManager : IWindowManager
     {
         #region Fields
@@ -30,29 +34,47 @@ namespace Probel.Mvvm
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowManager"/> class.
+        /// </summary>
         public WindowManager()
         {
             this.ThrowsIfNotBinded = true;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowManager"/> class.
+        /// </summary>
+        /// <param name="throwsIfNotBinded">if set to <c>true</c> [throws if not binded].</param>
         public WindowManager(bool throwsIfNotBinded)
         {
-            this.ThrowsIfNotBinded = ThrowsIfNotBinded;
+            this.ThrowsIfNotBinded = throwsIfNotBinded;
         }
 
         #endregion Constructors
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
+        /// </summary>
+        /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
         public bool ThrowsIfNotBinded
         {
-            get; set;
+            get;
+            set;
         }
 
         #endregion Properties
 
         #region Methods
 
+        /// <summary>
+        /// Binds the specified ctor to the specified type. It means that when user ask to show a window
+        /// this specified lambda will returns a fresh instance of a window
+        /// </summary>
+        /// <param name="ctor">The lambda that should create a fresh instance of a window.</param>
+        /// <param name="type">The type linked to the lambda.</param>
         public void Bind(Func<Window> ctor, Type type)
         {
             if (bindingCollection.ContainsKey(type))
@@ -62,6 +84,11 @@ namespace Probel.Mvvm
             bindingCollection.Add(type, ctor);
         }
 
+        /// <summary>
+        /// Binds the specified lambda to the specified TViewModel.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="ctor">The lambda that will create a fresh instance of the Window.</param>
         public void Bind<TViewModel>(Func<Window> ctor)
         {
             var type = typeof(TViewModel);
@@ -73,17 +100,29 @@ namespace Probel.Mvvm
             bindingCollection.Add(type, ctor);
         }
 
+        /// <summary>
+        /// Binds the TView type to the TViewModel.
+        /// </summary>
+        /// <typeparam name="TView">The type of the view.</typeparam>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         public void Bind<TView, TViewModel>()
             where TView : Window, new()
         {
             this.Bind<TViewModel>(() => new TView());
         }
 
+        /// <summary>
+        /// Resets the whole repository.
+        /// </summary>
         public void Reset()
         {
             bindingCollection.Clear();
         }
 
+        /// <summary>
+        /// Shows the window linked to the TViewModel type as a modal box.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         public void Show<TViewModel>()
         {
             var type = typeof(TViewModel);
@@ -98,6 +137,11 @@ namespace Probel.Mvvm
             if (win != null) win.Show();
         }
 
+        /// <summary>
+        /// Shows window linked to the TViewModel type as a dialog box.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <returns></returns>
         public bool? ShowDialog<TViewModel>()
         {
             var type = typeof(TViewModel);
