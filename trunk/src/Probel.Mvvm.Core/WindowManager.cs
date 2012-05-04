@@ -25,17 +25,31 @@ namespace Probel.Mvvm
         #region Fields
 
         private static Dictionary<Type, Func<Window>> bindingCollection = new Dictionary<Type, Func<Window>>();
-        public bool ThrowsIfNotBinded { get; set; }
+
+        #endregion Fields
+
+        #region Constructors
 
         public WindowManager()
         {
             this.ThrowsIfNotBinded = true;
         }
+
         public WindowManager(bool throwsIfNotBinded)
         {
             this.ThrowsIfNotBinded = ThrowsIfNotBinded;
         }
-        #endregion Fields
+
+        #endregion Constructors
+
+        #region Properties
+
+        public bool ThrowsIfNotBinded
+        {
+            get; set;
+        }
+
+        #endregion Properties
 
         #region Methods
 
