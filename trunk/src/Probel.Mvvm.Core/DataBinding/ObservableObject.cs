@@ -28,12 +28,6 @@ namespace Probel.Mvvm.DataBinding
     /// </summary>
     public class ObservableObject : INotifyPropertyChanged
     {
-        #region Fields
-
-        private HashSet<string> stateProperties = new HashSet<string>();
-
-        #endregion Fields
-
         #region Events
 
         /// <summary>
@@ -67,8 +61,6 @@ namespace Probel.Mvvm.DataBinding
         {
             foreach (var propertyName in propertyNames)
             {
-                this.stateProperties.Add(propertyName);
-
                 this.VerifyPropertyName(propertyName);
 
                 if (this.PropertyChanged != null)
