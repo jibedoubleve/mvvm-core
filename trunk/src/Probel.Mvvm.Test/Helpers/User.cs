@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Probel.Mvvm.Validation;
+
     public class User : ValidatableObject
     {
         #region Fields

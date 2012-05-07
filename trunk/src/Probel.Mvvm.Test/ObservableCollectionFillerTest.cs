@@ -4,7 +4,7 @@
 
     using NUnit.Framework;
 
-    using Probel.Mvvm;
+    using Probel.Mvvm.DataBinding;
 
     [TestFixture]
     public class ObservableCollectionFillerTest

@@ -6,7 +6,7 @@
 
     using NUnit.Framework;
 
-    using Probel.Mvvm;
+    using Probel.Mvvm.Gui;
 
     [TestFixture]
     public class WinManagerTest

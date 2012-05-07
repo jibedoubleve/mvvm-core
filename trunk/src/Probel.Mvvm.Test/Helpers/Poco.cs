@@ -1,6 +1,6 @@
 ﻿namespace Probel.Mvvm.Test.Helpers
 {
-    using Probel.Mvvm;
+    using Probel.Mvvm.DataBinding;
 
     public class Poco : ObservableObject
     {
