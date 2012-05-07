@@ -9,6 +9,7 @@
         #region Fields
 
         private DateTime birthdate;
+        private int height = 0;
         private string name;
 
         #endregion Fields

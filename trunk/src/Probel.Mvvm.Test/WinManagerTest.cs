@@ -31,13 +31,6 @@
             this.windowManager.ShowDialog<bool>();
         }
 
-        [Ignore]
-        [Test]
-        public void CanListenProperties()
-        {
-            Assert.Fail("Please write the tests...");
-        }
-
         [Test]
         public void CantBindTwice()
         {

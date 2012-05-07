@@ -30,7 +30,7 @@ namespace Probel.Mvvm.DataBinding
     {
         #region Fields
 
-        private HashSet<string> listenedProperties = new HashSet<string>();
+        private HashSet<string> stateProperties = new HashSet<string>();
 
         #endregion Fields
 
@@ -43,27 +43,7 @@ namespace Probel.Mvvm.DataBinding
 
         #endregion Events
 
-        #region Properties
-
-        public string[] ListenedProperties
-        {
-            get { return this.listenedProperties.ToArray(); }
-        }
-
-        #endregion Properties
-
         #region Methods
-
-        /// <summary>
-        /// Notifies subscribers of the property change.
-        /// </summary>
-        /// <typeparam name="TProperty">The type of the property.</typeparam>
-        /// <param name="property">The property expression.</param>
-        /// <param name="listen">if set to <c>true</c> add the property the the listen list.</param>
-        protected void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property, bool listen)
-        {
-            this.OnPropertyChanged(property, listen);
-        }
 
         /// <summary>
         /// Notifies subscribers of the property change.
@@ -72,16 +52,7 @@ namespace Probel.Mvvm.DataBinding
         /// <param name="property">The property expression.</param>
         protected void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property)
         {
-            this.OnPropertyChanged(property.GetMemberInfo().Name, false);
-        }
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that has a new value.</param>
-        protected void OnPropertyChanged(string propertyName)
-        {
-            this.OnPropertyChanged(propertyName, false);
+            this.OnPropertyChanged(property.GetMemberInfo().Name);
         }
 
         /// <summary>
@@ -89,9 +60,9 @@ namespace Probel.Mvvm.DataBinding
         /// </summary>
         /// <param name="propertyName">The name of the property that has a new value.</param>
         /// <param name="listen">if set to <c>true</c> add the property the the listen list.</param>
-        protected void OnPropertyChanged(string propertyName, bool listen)
+        protected void OnPropertyChanged(string propertyName)
         {
-            this.listenedProperties.Add(propertyName);
+            this.stateProperties.Add(propertyName);
 
             this.VerifyPropertyName(propertyName);
 
@@ -107,20 +78,7 @@ namespace Probel.Mvvm.DataBinding
         /// <param name="propertyName">The name of the property that has a new value.</param>
         protected void OnPropertyChanged(params string[] propertyNames)
         {
-            this.OnPropertyChanged(false, propertyNames);
-        }
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event on multiple properties changed
-        /// </summary>
-        /// <param name="propertyNames">The property names.</param>
-        /// <param name="listen">if set to <c>true</c> add the property the the listen list.</param>
-        protected void OnPropertyChanged(bool listen, params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-            {
-                this.OnPropertyChanged(propertyName, listen);
-            }
+            this.OnPropertyChanged(propertyNames);
         }
 
         /// <summary>
@@ -135,7 +93,7 @@ namespace Probel.Mvvm.DataBinding
             // public, instance property on this object.
             if (TypeDescriptor.GetProperties(this)[propertyName] == null)
             {
-                throw new InvalidOperationException(string.Format("Invalid property name: {0}", propertyName));
+                throw new InvalidOperationException(string.Format("Invalid property name: {0} before triggering 'PropertyChanged' event.", propertyName));
             }
         }
 
