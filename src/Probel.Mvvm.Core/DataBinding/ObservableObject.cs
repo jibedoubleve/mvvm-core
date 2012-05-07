@@ -76,7 +76,7 @@ namespace Probel.Mvvm.DataBinding
         /// </summary>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
-        protected virtual void VerifyPropertyName(string propertyName)
+        private void VerifyPropertyName(string propertyName)
         {
             // verify that the property name matches a real,
             // public, instance property on this object.

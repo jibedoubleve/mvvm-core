@@ -52,7 +52,6 @@
                 this.OnPropertyChanged(() => this.Name);
             }
         }
-
         #endregion Properties
     }
 }
