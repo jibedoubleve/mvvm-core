@@ -1,9 +1,27 @@
-﻿namespace Probel.Mvvm
+﻿/*
+    This file is part of Probel.Mvvm.
+
+    NDoctor is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    NDoctor is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NDoctor.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace Probel.Mvvm.Validation
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq.Expressions;
+
+    using Probel.Mvvm.DataBinding;
 
     /// <summary>
     /// Every objects that derive from this class will have the features to validates its properties
@@ -89,16 +107,17 @@
         /// <param name="error">The error to display if the property is not valid.</param>
         /// <param name="validation">The validation condition. This returns <c>True</c> 
         /// if the property is valid; otherwise <c>False</c></param>
+        /// <exception cref="ExistingRuleException">If a validation is already set for the specified property</exception>
         public void AddRule<TProperty>(Expression<Func<TProperty>> property, string error, Func<bool> validation)
         {
             var key = property.GetMemberInfo().Name;
-            if (!this.Validators.ContainsKey(key))
+
+            if (this.Validators.ContainsKey(key))
             {
-                this.Validators.Add(key, new ValidationRule(validation, error));
+                throw new ExistingRuleException();
             }
             else
             {
-                this.Validators.Remove(key);
                 this.Validators.Add(key, new ValidationRule(validation, error));
             }
         }

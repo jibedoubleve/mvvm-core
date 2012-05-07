@@ -49,14 +49,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionExtension.cs" />
-    <Compile Include="ValidationRule.cs" />
-    <Compile Include="ValidatableObject.cs" />
-    <Compile Include="WindowManager.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ObservableObject.cs" />
-    <Compile Include="IWindowManager.cs" />
-    <Compile Include="ObservableCollectionFiller.cs" />
+    <Compile Include="Properties\Messages.fr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.fr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Validation\ValidationRule.cs" />
+    <Compile Include="Validation\ValidatableObject.cs" />
+    <Compile Include="Validation\ExistingRuleException.cs" />
+    <Compile Include="Gui\WindowManager.cs" />
+    <Compile Include="DataBinding\RelayCommand.cs" />
+    <Compile Include="DataBinding\ObservableObject.cs" />
+    <Compile Include="Gui\IWindowManager.cs" />
+    <Compile Include="DataBinding\ObservableCollectionFiller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Messages.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.fr.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

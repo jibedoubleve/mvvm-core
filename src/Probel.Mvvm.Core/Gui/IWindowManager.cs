@@ -14,10 +14,10 @@
     You should have received a copy of the GNU General Public License
     along with NDoctor.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm
+namespace Probel.Mvvm.Gui
 {
     /// <summary>
-    /// To  be a Window Manager, a class should implements these basic features
+    /// To be a Window Manager, a class should implements these basic features
     /// </summary>
     public interface IWindowManager
     {

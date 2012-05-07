@@ -3,6 +3,7 @@
     using NUnit.Framework;
 
     using Probel.Mvvm.Test.Helpers;
+    using Probel.Mvvm.Validation;
 
     [TestFixture]
     public class ValidatableObjectTest
@@ -20,20 +21,16 @@
         }
 
         [Test]
-        public void CanOverrideRoles()
+        public void CannotOverrideRoles()
         {
             var user = new User("Robert");
             var error = user.Validate("Name");
 
             Assert.IsNotNull(error, "Default validation");
 
-
-            user.AddRule(() => user.Name
+            Assert.Throws<ExistingRuleException>(() => user.AddRule(() => user.Name
                 , "Oops"
-                , () => !user.Name.ToLower().StartsWith("a"));
-            error = user.Validate("Name");
-
-            Assert.IsNull(error, "Overriden validation");
+                , () => !user.Name.ToLower().StartsWith("a")));
         }
 
         #endregion Methods
