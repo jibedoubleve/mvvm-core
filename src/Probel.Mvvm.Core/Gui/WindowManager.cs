@@ -19,6 +19,7 @@ namespace Probel.Mvvm.Gui
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using Probel.Mvvm.Properties;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
@@ -91,13 +92,7 @@ namespace Probel.Mvvm.Gui
         /// <param name="ctor">The lambda that will create a fresh instance of the Window.</param>
         public void Bind<TViewModel>(Func<Window> ctor)
         {
-            var type = typeof(TViewModel);
-
-            if (bindingCollection.ContainsKey(type))
-            {
-                throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
-            }
-            bindingCollection.Add(type, ctor);
+            this.Bind(ctor, typeof(TViewModel));
         }
 
         /// <summary>
@@ -108,7 +103,7 @@ namespace Probel.Mvvm.Gui
         public void Bind<TView, TViewModel>()
             where TView : Window, new()
         {
-            this.Bind<TViewModel>(() => new TView());
+            this.Bind(() => new TView(), typeof(TViewModel));
         }
 
         /// <summary>
@@ -129,7 +124,7 @@ namespace Probel.Mvvm.Gui
 
             if (!bindingCollection.ContainsKey(type))
             {
-                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format("Nothing is binded to the type '{0}'", type)); }
+                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
                 else { return; }
             }
 
@@ -148,7 +143,7 @@ namespace Probel.Mvvm.Gui
 
             if (!bindingCollection.ContainsKey(type))
             {
-                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format("Nothing is binded to the type '{0}'", type)); }
+                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
                 else { return null; }
             }
 
