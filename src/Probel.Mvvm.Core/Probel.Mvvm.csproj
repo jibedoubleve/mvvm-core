@@ -61,9 +61,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Validation\EmptyValidator.cs" />
+    <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\ValidationRule.cs" />
     <Compile Include="Validation\ValidatableObject.cs" />
-    <Compile Include="Validation\ExistingRuleException.cs" />
+    <Compile Include="Validation\ExistingValidationRuleException.cs" />
     <Compile Include="Gui\WindowManager.cs" />
     <Compile Include="DataBinding\RelayCommand.cs" />
     <Compile Include="DataBinding\ObservableObject.cs" />

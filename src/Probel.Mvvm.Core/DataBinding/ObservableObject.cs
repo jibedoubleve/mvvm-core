@@ -17,10 +17,8 @@
 namespace Probel.Mvvm.DataBinding
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.Linq;
     using System.Linq.Expressions;
 
     /// <summary>
@@ -56,7 +54,7 @@ namespace Probel.Mvvm.DataBinding
         /// Raises this object's PropertyChanged event on multiple properties changed
         /// </summary>
         /// <param name="propertyName">The name of the property that has a new value.</param>
-        protected void OnPropertyChanged(params string[] propertyNames)
+        private void OnPropertyChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
             {

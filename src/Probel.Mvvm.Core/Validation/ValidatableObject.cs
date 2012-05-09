@@ -29,24 +29,23 @@ namespace Probel.Mvvm.Validation
     /// </summary>
     public class ValidatableObject : ObservableObject, IDataErrorInfo
     {
+        #region Fields
+
+        protected IValidator validator;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
-        public ValidatableObject()
-            : this(null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
-        /// </summary>
         /// <param name="error">The error.</param>
-        public ValidatableObject(string error)
+        public ValidatableObject(IValidator validator)
         {
-            this.Validators = new Dictionary<string, ValidationRule>();
-            this.Error = error;
+            this.ValidationRules = new Dictionary<string, ValidationRule>();
+            this.Error = validator.Error;
+            validator.SetValidationLogic(this);
         }
 
         #endregion Constructors
@@ -64,7 +63,7 @@ namespace Probel.Mvvm.Validation
             private set;
         }
 
-        private Dictionary<string, ValidationRule> Validators
+        private Dictionary<string, ValidationRule> ValidationRules
         {
             get;
             set;
@@ -83,13 +82,13 @@ namespace Probel.Mvvm.Validation
         {
             get
             {
-                if (this.Validators.ContainsKey(columnName))
+                if (this.ValidationRules.ContainsKey(columnName))
                 {
-                    var validator = this.Validators[columnName];
+                    var rule = this.ValidationRules[columnName];
 
-                    return (validator.Condition())
+                    return (rule.CheckCondition())
                         ? null
-                        : validator.Error;
+                        : rule.Error;
                 }
                 else { return null; }
             }
@@ -105,21 +104,21 @@ namespace Probel.Mvvm.Validation
         /// </summary>
         /// <typeparam name="TProperty">The type of the property.</typeparam>
         /// <param name="property">The property to validate.</param>
-        /// <param name="error">The error to display if the property is not valid.</param>
         /// <param name="validation">The validation condition. This returns <c>True</c> 
         /// if the property is valid; otherwise <c>False</c></param>
+        /// <param name="error">The error to display if the property is not valid.</param>
         /// <exception cref="ExistingRuleException">If a validation is already set for the specified property</exception>
-        public void AddRule<TProperty>(Expression<Func<TProperty>> property, string error, Func<bool> validation)
+        public void AddValidationRule<TProperty>(Expression<Func<TProperty>> property, Func<bool> validation, string error)
         {
             var key = property.GetMemberInfo().Name;
 
-            if (this.Validators.ContainsKey(key))
+            if (this.ValidationRules.ContainsKey(key))
             {
-                throw new ExistingRuleException();
+                throw new ExistingValidationRuleException();
             }
             else
             {
-                this.Validators.Add(key, new ValidationRule(validation, error));
+                this.ValidationRules.Add(key, new ValidationRule(validation, error));
             }
         }
 

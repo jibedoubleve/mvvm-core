@@ -1,5 +1,7 @@
 ﻿namespace Probel.Mvvm.Test
 {
+    using System;
+
     using NUnit.Framework;
 
     using Probel.Mvvm.Test.Helpers;
@@ -28,9 +30,23 @@
 
             Assert.IsNotNull(error, "Default validation");
 
-            Assert.Throws<ExistingRuleException>(() => user.AddRule(() => user.Name
-                , "Oops"
-                , () => !user.Name.ToLower().StartsWith("a")));
+            Assert.Throws<ExistingValidationRuleException>(() => user.AddValidationRule(() => user.Name, () => !user.Name.ToLower().StartsWith("a"), "Oops"));
+        }
+
+        [Test]
+        public void CanValidateDto()
+        {
+            var book = new BookDto()
+            {
+                Pages = 1,
+                Title = string.Empty,
+            };
+
+            Console.WriteLine(book["Pages"]);
+            Console.WriteLine(book["Title"]);
+
+            Assert.IsNotNull(book["Pages"]);
+            Assert.IsNotNull(book["Title"]);
         }
 
         #endregion Methods

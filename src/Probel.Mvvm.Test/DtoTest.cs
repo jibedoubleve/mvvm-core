@@ -4,8 +4,8 @@
 
     using NUnit.Framework;
 
-    using Probel.Mvvm.Test.Helpers;
     using Probel.Mvvm.DataBinding;
+    using Probel.Mvvm.Test.Helpers;
 
     [TestFixture]
     public class DtoTest
