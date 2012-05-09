@@ -120,4 +120,7 @@
   <data name="ExistingValidationRuleException" xml:space="preserve">
     <value>The validation rule for this property is already set</value>
   </data>
+  <data name="KeyNotFoundException" xml:space="preserve">
+    <value>Nothing is binded to the type '{0}'</value>
+  </data>
 </root>
