@@ -1,10 +1,11 @@
-﻿namespace Probel.Mvvm.DataBinding
+﻿namespace Probel.Mvvm
 {
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
     using Probel.Mvvm.Validation;
+    using Probel.Mvvm.DataBinding;
 
     /// <summary>
     /// Provide a base class to manage DTO. 
