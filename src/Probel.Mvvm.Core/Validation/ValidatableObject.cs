@@ -75,9 +75,10 @@ namespace Probel.Mvvm.Validation
         #region Indexers
 
         /// <summary>
-        /// Gets the <see cref="System.String"/> with the specified column name.
+        /// Gets the error message for the property with the given name.
         /// </summary>
-        /// <value></value>
+        /// <value>The name of the property whose error message to get.</value>
+        /// <returns>The error message for the property. The default is an empty string ("").</returns>
         public string this[string columnName]
         {
             get
@@ -120,22 +121,6 @@ namespace Probel.Mvvm.Validation
             {
                 this.Validators.Add(key, new ValidationRule(validation, error));
             }
-        }
-
-        /// <summary>
-        /// Validates the specified property.
-        /// </summary>
-        /// <param name="property">Name of the property.</param>
-        /// <returns>The error message if the validation rule failed; otherwise <c>Null</c></returns>
-        public string Validate(string property)
-        {
-            if (this.Validators.ContainsKey(property))
-            {
-                return this.Validators[property].Condition()
-                    ? null
-                    : this.Validators[property].Error;
-            }
-            else { return null; }
         }
 
         #endregion Methods
