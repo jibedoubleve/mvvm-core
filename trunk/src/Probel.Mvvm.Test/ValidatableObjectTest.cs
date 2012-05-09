@@ -15,7 +15,7 @@
         {
             var user = new User("Robert");
 
-            var error = user.Validate("Name");
+            var error = user["Name"];
 
             Assert.IsNotNull(error);
         }
@@ -24,7 +24,7 @@
         public void CannotOverrideRoles()
         {
             var user = new User("Robert");
-            var error = user.Validate("Name");
+            var error = user["Name"];
 
             Assert.IsNotNull(error, "Default validation");
 
