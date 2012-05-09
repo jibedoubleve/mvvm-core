@@ -30,7 +30,12 @@
 
             Assert.IsNotNull(error, "Default validation");
 
-            Assert.Throws<ExistingValidationRuleException>(() => user.AddValidationRule(() => user.Name, () => !user.Name.ToLower().StartsWith("a"), "Oops"));
+            Assert.Throws<ExistingValidationRuleException>(() =>
+            {
+                user.AddValidationRule(() => user.Name
+                    , () => !user.Name.ToLower().StartsWith("a")
+                    , "Oops");
+            });
         }
 
         [Test]

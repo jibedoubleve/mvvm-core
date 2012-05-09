@@ -6,6 +6,14 @@
 
     using Probel.Mvvm.Validation;
 
+    /// <summary>
+    /// Provide a base class to manage DTO. 
+    ///   - It manage object's. That's, it'll say if the state is dirty or clean whenever <see cref="PropertyChanged"/>
+    ///     is triggered.
+    ///   - It has a default ID
+    ///   - It can ignore defined properties during the state analysis phase.
+    /// </summary>
+    /// <typeparam name="TId">The type of the id.</typeparam>
     public class BaseDto<TId> : ValidatableObject
     {
         #region Fields
