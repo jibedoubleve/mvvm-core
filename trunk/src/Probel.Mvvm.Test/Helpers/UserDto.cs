@@ -1,32 +1,23 @@
 ﻿namespace Probel.Mvvm.Test.Helpers
 {
     using System;
+    using Probel.Mvvm.DataBinding;
 
-    using Probel.Mvvm.Validation;
-
-    public class User : ValidatableObject
+    public class UserDto : BaseDto<int>
     {
         #region Fields
 
         private DateTime birthdate;
-        private int height = 0;
+        private int height;
         private string name;
 
         #endregion Fields
 
         #region Constructors
 
-        public User(string name)
-            : this()
+        public UserDto()
         {
-            this.Name = name;
-        }
-
-        public User()
-        {
-            this.AddRule(() => this.Name
-                , "I hate names that starts with 'r'"
-                , () => !this.Name.ToLower().StartsWith("r"));
+            this.Ignore(() => this.Birthdate);
         }
 
         #endregion Constructors
@@ -40,6 +31,16 @@
             {
                 this.birthdate = value;
                 this.OnPropertyChanged(() => this.Birthdate);
+            }
+        }
+
+        public int Height
+        {
+            get { return this.height; }
+            set
+            {
+                this.height = value;
+                this.OnPropertyChanged(() => this.Height);
             }
         }
 

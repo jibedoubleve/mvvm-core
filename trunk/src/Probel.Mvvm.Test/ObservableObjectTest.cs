@@ -1,9 +1,11 @@
 ﻿namespace Probel.Mvvm.Test
 {
     using System;
+    using System.Diagnostics;
 
     using NUnit.Framework;
 
+    using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Test.Helpers;
 
     [TestFixture]
@@ -51,11 +53,8 @@
             Assert.IsTrue(propertyName == Poco.PropName_TriggerOnString, "The property name is not the expected one");
         }
 
-        #endregion Methods
-
-        #if DEBUG
-
         [Test]
+        [Conditional("DEBUG")]
         public void FailToTrigger()
         {
             var propertyName = string.Empty;
@@ -66,6 +65,6 @@
             Assert.Throws<InvalidOperationException>(() => poco.Failure = "new value");
         }
 
-        #endif
+        #endregion Methods
     }
 }

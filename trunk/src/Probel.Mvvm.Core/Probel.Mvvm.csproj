@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBinding\BaseDto.cs" />
+    <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
     <Compile Include="Properties\Messages.fr.Designer.cs">
       <AutoGen>True</AutoGen>
