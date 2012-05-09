@@ -14,33 +14,32 @@
     You should have received a copy of the GNU General Public License
     along with Probel.Mvvm.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Gui
+namespace Probel.Mvvm.DataBinding
 {
+    #region Enumerations
+
     /// <summary>
-    /// To be a Window Manager, a class should implements these basic features
+    /// Indicates the states of the dto
     /// </summary>
-    public interface IWindowManager
+    public enum State
     {
-        #region Methods
-
         /// <summary>
-        /// Resets the repository.
+        /// The DTO was not modified
         /// </summary>
-        void Reset();
-
+        Clean,
         /// <summary>
-        /// Shows the Window linkned to this ViewModel as a model window.
+        /// The DTO was updated
         /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        void Show<TViewModel>();
-
+        Updated,
         /// <summary>
-        /// Shows the Window linkned to this ViewModel as a dialog window.
+        /// The DTO is new and should be inserted into the database
         /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        /// <returns></returns>
-        bool? ShowDialog<TViewModel>();
-
-        #endregion Methods
+        Created,
+        /// <summary>
+        /// The DTO is deleted and should be deleted from the database
+        /// </summary>
+        Removed,
     }
+
+    #endregion Enumerations
 }
