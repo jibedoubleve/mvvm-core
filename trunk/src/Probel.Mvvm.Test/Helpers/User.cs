@@ -2,6 +2,7 @@
 {
     using System;
 
+    using Probel.Mvvm.Test.Validation;
     using Probel.Mvvm.Validation;
 
     public class User : ValidatableObject
@@ -23,10 +24,8 @@
         }
 
         public User()
+            : base(new UserValidator())
         {
-            this.AddRule(() => this.Name
-                , "I hate names that starts with 'r'"
-                , () => !this.Name.ToLower().StartsWith("r"));
         }
 
         #endregion Constructors

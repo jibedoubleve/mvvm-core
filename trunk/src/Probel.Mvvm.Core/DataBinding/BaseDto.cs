@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Linq.Expressions;
 
     using Probel.Mvvm.Validation;
@@ -20,13 +19,24 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseDto&lt;TId&gt;"/> class.
         /// </summary>
-        public BaseDto()
+        /// <param name="validator">The validator to check the data of this instance</param>
+        public BaseDto(IValidator validator)
+            : base(validator)
         {
             this.Id = default(TId);
             this.State = State.Created;
             this.IgnoredProperties = new HashSet<string>();
+            this.validator = validator;
 
             this.PropertyChanged += (sender, e) => this.UpdateState(e.PropertyName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseDto&lt;TId&gt;"/> class.
+        /// </summary>
+        public BaseDto()
+            : this(new EmptyValidator())
+        {
         }
 
         #endregion Constructors

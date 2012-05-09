@@ -32,7 +32,7 @@ namespace Probel.Mvvm.Validation
         /// <param name="error">The error.</param>
         public ValidationRule(Func<bool> condition, string error)
         {
-            this.Condition = condition;
+            this.CheckCondition = condition;
             this.Error = error;
         }
 
@@ -44,7 +44,7 @@ namespace Probel.Mvvm.Validation
         /// Gets or sets the condition to succeed to have a valid property's value.
         /// </summary>
         /// <value>The condition.</value>
-        public Func<bool> Condition
+        public Func<bool> CheckCondition
         {
             get;
             private set;

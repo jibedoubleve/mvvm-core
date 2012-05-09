@@ -2,7 +2,7 @@
 {
     using Probel.Mvvm.DataBinding;
 
-    public class Poco : ObservableObject
+    public class Observable : ObservableObject
     {
         #region Fields
 
@@ -17,16 +17,6 @@
 
         #region Properties
 
-        public string Failure
-        {
-            get { return this.failure; }
-            set
-            {
-                this.failure = value;
-                this.OnPropertyChanged("It will fail");
-            }
-        }
-
         public string TriggerOnLambda
         {
             get { return this.triggerOnLambda; }
@@ -34,16 +24,6 @@
             {
                 this.triggerOnLambda = value;
                 this.OnPropertyChanged(() => this.TriggerOnLambda);
-            }
-        }
-
-        public string TriggerOnString
-        {
-            get { return this.triggerOnString; }
-            set
-            {
-                this.triggerOnString = value;
-                this.OnPropertyChanged(Poco.PropName_TriggerOnString);
             }
         }
 

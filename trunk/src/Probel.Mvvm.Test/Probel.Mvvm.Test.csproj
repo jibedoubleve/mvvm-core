@@ -57,9 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DtoTest.cs" />
-    <Compile Include="Helpers\Poco.cs" />
+    <Compile Include="Helpers\BookDto.cs" />
+    <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\User.cs" />
     <Compile Include="Helpers\UserDto.cs" />
+    <Compile Include="Validation\BookValidator.cs" />
+    <Compile Include="Validation\UserValidator.cs" />
     <Compile Include="ObservableCollectionFillerTest.cs" />
     <Compile Include="ObservableObjectTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
