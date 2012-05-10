@@ -2,8 +2,6 @@
 {
     using System;
 
-    using Probel.Mvvm.DataBinding;
-
     public class UserDto : BaseDto<int>
     {
         #region Fields

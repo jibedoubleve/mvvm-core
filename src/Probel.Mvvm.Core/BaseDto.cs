@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
-    using Probel.Mvvm.Validation;
     using Probel.Mvvm.DataBinding;
+    using Probel.Mvvm.Validation;
 
     /// <summary>
     /// Provide a base class to manage DTO. 

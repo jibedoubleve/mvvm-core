@@ -1,6 +1,5 @@
 ﻿namespace Probel.Mvvm.Test.Helpers
 {
-    using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Test.Validation;
 
     public class BookDto : BaseDto<long>

@@ -19,6 +19,7 @@ namespace Probel.Mvvm.Gui
     using System;
     using System.Collections.Generic;
     using System.Windows;
+
     using Probel.Mvvm.Properties;
 
     /// <summary>
