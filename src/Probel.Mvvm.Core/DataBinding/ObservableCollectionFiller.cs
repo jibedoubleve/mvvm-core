@@ -16,9 +16,9 @@
 */
 namespace Probel.Mvvm.DataBinding
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System;
 
     /// <summary>
     /// Allow to refill, add items to an ObservableCollection
