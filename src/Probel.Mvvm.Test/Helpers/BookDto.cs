@@ -2,7 +2,7 @@
 {
     using Probel.Mvvm.Test.Validation;
 
-    public class BookDto : BaseDto<long>
+    public class BookDto : BaseDto<int>
     {
         #region Fields
 

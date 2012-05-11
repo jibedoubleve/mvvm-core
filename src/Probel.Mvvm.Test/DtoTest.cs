@@ -13,6 +13,17 @@
         #region Methods
 
         [Test]
+        public void CanCompareSameDto()
+        {
+            var user1 = new UserDto() { Id = 1 };
+            var user2 = new UserDto() { Id = 1 };
+
+            var comparer = new BaseDtoComparer<int>();
+
+            Assert.IsTrue(comparer.Equals(user1, user2));
+        }
+
+        [Test]
         public void CanCreateDto()
         {
             var user = this.CreateUser();
@@ -39,6 +50,17 @@
 
             user.Height = 128;
             Assert.AreEqual(State.Removed, user.State);
+        }
+
+        [Test]
+        public void FailToCompareDifferentTypes()
+        {
+            var user = new UserDto() { Id = 1 };
+            var book = new BookDto() { Id = 1 };
+
+            var comparer = new BaseDtoComparer<int>();
+
+            Assert.IsFalse(comparer.Equals(user, book));
         }
 
         private UserDto CreateUser()
