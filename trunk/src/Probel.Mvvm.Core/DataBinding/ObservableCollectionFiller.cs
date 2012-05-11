@@ -18,10 +18,12 @@ namespace Probel.Mvvm.DataBinding
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System;
 
     /// <summary>
     /// Allow to refill, add items to an ObservableCollection
     /// </summary>
+    [Serializable]
     public static class ObservableCollectionFiller
     {
         #region Methods

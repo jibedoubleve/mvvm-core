@@ -31,6 +31,7 @@ namespace Probel.Mvvm
     ///   - It can ignore defined properties during the state analysis phase.
     /// </summary>
     /// <typeparam name="TId">The type of the id.</typeparam>
+    [Serializable]
     public class BaseDto<TId> : ValidatableObject
     {
         #region Fields
