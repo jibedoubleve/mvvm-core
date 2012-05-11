@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,9 +16,13 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
+
+#endregion Header
+
 namespace Probel.Mvvm.Validation
 {
+    using System;
+
     /// <summary>
     /// This is a mocked validator. This does no validation
     /// </summary>
