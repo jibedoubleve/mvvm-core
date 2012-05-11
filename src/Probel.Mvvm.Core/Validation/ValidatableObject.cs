@@ -27,6 +27,7 @@ namespace Probel.Mvvm.Validation
     /// Every objects that derive from this class will have the features to validates its properties
     /// and be used with WPF technology because it implements the IDataErrorInfo interface.
     /// </summary>
+    [Serializable]
     public class ValidatableObject : ObservableObject, IDataErrorInfo
     {
         #region Fields

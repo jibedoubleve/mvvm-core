@@ -24,6 +24,7 @@ namespace Probel.Mvvm.DataBinding
     /// <summary>
     /// Basic implementation of <see cref="INotifyPropertyChanged"/>
     /// </summary>
+    [Serializable]
     public class ObservableObject : INotifyPropertyChanged
     {
         #region Events
@@ -42,12 +43,9 @@ namespace Probel.Mvvm.DataBinding
         /// </summary>
         /// <typeparam name="TProperty">The type of the property.</typeparam>
         /// <param name="property">The property expression.</param>
-        protected void OnPropertyChanged<TProperty>(params Expression<Func<TProperty>>[] properties)
+        protected void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property)
         {
-            foreach (var property in properties)
-            {
-                this.OnPropertyChanged(property.GetMemberInfo().Name);
-            }
+            this.OnPropertyChanged(property.GetMemberInfo().Name);
         }
 
         /// <summary>

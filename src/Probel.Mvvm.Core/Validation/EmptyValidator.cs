@@ -14,11 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 namespace Probel.Mvvm.Validation
 {
     /// <summary>
     /// This is a mocked validator. This does no validation
     /// </summary>
+    [Serializable]
     internal class EmptyValidator : IValidator
     {
         #region Properties
