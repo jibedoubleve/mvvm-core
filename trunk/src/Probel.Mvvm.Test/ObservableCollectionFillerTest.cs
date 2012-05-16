@@ -5,6 +5,7 @@
     using NUnit.Framework;
 
     using Probel.Mvvm.DataBinding;
+    using System;
 
     [TestFixture]
     public class ObservableCollectionFillerTest
@@ -41,6 +42,18 @@
             collection.Add(5);
             collection.Add(6);
             return collection;
+        }
+
+        [Test]
+        public void NullItemThrowNullReferenceException()
+        {
+            int[] array = null;
+
+            ObservableCollection<int> observableCollection = null;
+            Assert.Throws<ArgumentException>(() => observableCollection.Refill(new int[] { 1, 2 }), "First argument");
+
+            observableCollection = new ObservableCollection<int>();
+            Assert.Throws<ArgumentException>(() => observableCollection.Refill(array), "Second argument");
         }
 
         #endregion Methods

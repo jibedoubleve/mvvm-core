@@ -50,6 +50,9 @@ namespace Probel.Mvvm.DataBinding
         /// <param name="collection">The collection.</param>
         public static void Refill<T>(this ObservableCollection<T> oCollection, IEnumerable<T> collection)
         {
+            if (oCollection == null) throw new ArgumentException("The base collection whereon insert new items is null.");
+            if (collection == null) throw new ArgumentException("The collection to insert into the base collection is empty.");
+
             oCollection.Clear();
             oCollection.AddRange(collection);
         }
