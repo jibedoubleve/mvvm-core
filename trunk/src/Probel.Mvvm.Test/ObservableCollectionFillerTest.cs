@@ -1,11 +1,27 @@
-﻿namespace Probel.Mvvm.Test
+﻿/*
+    This file is part of Mvvm-core.
+
+    Mvvm-core is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Mvvm-core is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace Probel.Mvvm.Test
 {
+    using System;
     using System.Collections.ObjectModel;
 
     using NUnit.Framework;
 
     using Probel.Mvvm.DataBinding;
-    using System;
 
     [TestFixture]
     public class ObservableCollectionFillerTest
@@ -32,6 +48,18 @@
             Assert.AreEqual(2, collection.Count);
         }
 
+        [Test]
+        public void NullItemThrowNullReferenceException()
+        {
+            int[] array = null;
+
+            ObservableCollection<int> observableCollection = null;
+            Assert.Throws<ArgumentNullException>(() => observableCollection.Refill(new int[] { 1, 2 }), "First argument");
+
+            observableCollection = new ObservableCollection<int>();
+            Assert.Throws<ArgumentNullException>(() => observableCollection.Refill(array), "Second argument");
+        }
+
         private ObservableCollection<int> CreateCollection()
         {
             var collection = new ObservableCollection<int>();
@@ -42,18 +70,6 @@
             collection.Add(5);
             collection.Add(6);
             return collection;
-        }
-
-        [Test]
-        public void NullItemThrowNullReferenceException()
-        {
-            int[] array = null;
-
-            ObservableCollection<int> observableCollection = null;
-            Assert.Throws<ArgumentException>(() => observableCollection.Refill(new int[] { 1, 2 }), "First argument");
-
-            observableCollection = new ObservableCollection<int>();
-            Assert.Throws<ArgumentException>(() => observableCollection.Refill(array), "Second argument");
         }
 
         #endregion Methods
