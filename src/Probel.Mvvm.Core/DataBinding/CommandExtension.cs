@@ -2,6 +2,9 @@
 {
     using System.Windows.Input;
 
+    /// <summary>
+    /// Provides additional features to the ICommand
+    /// </summary>
     public static class CommandExtension
     {
         #region Methods
