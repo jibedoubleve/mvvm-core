@@ -74,10 +74,9 @@
   <ItemGroup>
     <Compile Include="BaseDto.cs" />
     <Compile Include="BaseDtoComparer.cs" />
-    <Compile Include="DataBinding\State.cs" />
     <Compile Include="DataBinding\CommandExtension.cs" />
+    <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
-    <Compile Include="ExpressionExtensionTester.cs" />
     <Compile Include="Properties\Messages.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

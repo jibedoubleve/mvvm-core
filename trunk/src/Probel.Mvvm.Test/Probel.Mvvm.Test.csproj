@@ -80,8 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DtoTest.cs" />
-    <Compile Include="CommandExtensionTest.cs" />
-    <Compile Include="ExpressionTest.cs" />
     <Compile Include="Helpers\BookDto.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\User.cs" />
