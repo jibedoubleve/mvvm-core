@@ -31,7 +31,7 @@ namespace Probel.Mvvm.Test
         [Test]
         public void CanManuallyValidate()
         {
-            var user = new User("Robert");
+            var user = new User("Robert"); //Validation doesn't allow names which starts with "R"
 
             var error = user["Name"];
 
@@ -59,8 +59,8 @@ namespace Probel.Mvvm.Test
         {
             var book = new BookDto()
             {
-                Pages = 1,
-                Title = string.Empty,
+                Pages = 1, //Should have at least 10 pages
+                Title = string.Empty, //Shouldn't be String.Empty
             };
 
             Console.WriteLine(book["Pages"]);
