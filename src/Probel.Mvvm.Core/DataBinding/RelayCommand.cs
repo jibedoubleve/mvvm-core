@@ -28,13 +28,13 @@ namespace Probel.Mvvm.DataBinding
     {
         #region Fields
 
-        private readonly Func<bool> canExecute;
-        private readonly Action execute;
-
         /// <summary>
         /// Null to inducate the command is empty
         /// </summary>
         public static readonly ICommand Empty = null;
+
+        private readonly Func<bool> canExecute;
+        private readonly Action execute;
 
         #endregion Fields
 
