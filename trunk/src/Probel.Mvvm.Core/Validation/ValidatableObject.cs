@@ -123,6 +123,21 @@ namespace Probel.Mvvm.Validation
             }
         }
 
+        /// <summary>
+        /// Determines whether this item is valid. That's whether all condition returns <c>true</c>
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsValid()
+        {
+            foreach (var rule in this.ValidationRules.Values)
+            {
+                if (!rule.CheckCondition()) return false;
+            }
+            return true;
+        }
+
         #endregion Methods
     }
 }
