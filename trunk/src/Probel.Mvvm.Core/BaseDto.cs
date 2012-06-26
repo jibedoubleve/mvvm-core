@@ -52,8 +52,6 @@ namespace Probel.Mvvm
             this.Id = default(TId);
             this.State = State.Created;
             this.IgnoredProperties = new HashSet<string>();
-            this.validator = validator;
-
             this.PropertyChanged += (sender, e) => this.UpdateState(e.PropertyName);
         }
 

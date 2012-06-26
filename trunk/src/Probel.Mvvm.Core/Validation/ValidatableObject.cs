@@ -30,18 +30,12 @@ namespace Probel.Mvvm.Validation
     [Serializable]
     public class ValidatableObject : ObservableObject, IDataErrorInfo
     {
-        #region Fields
-
-        protected IValidator validator;
-
-        #endregion Fields
-
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
-        /// <param name="error">The error.</param>
+        /// <param name="validator">The validator in charge to validate the data of this instance.</param>
         public ValidatableObject(IValidator validator)
         {
             this.ValidationRules = new Dictionary<string, ValidationRule>();
@@ -64,11 +58,8 @@ namespace Probel.Mvvm.Validation
             private set;
         }
 
-        private Dictionary<string, ValidationRule> ValidationRules
-        {
-            get;
-            set;
-        }
+        [NonSerialized]
+        private readonly Dictionary<string, ValidationRule> ValidationRules = new Dictionary<string, ValidationRule>();
 
         #endregion Properties
 
@@ -108,7 +99,7 @@ namespace Probel.Mvvm.Validation
         /// <param name="validation">The validation condition. This returns <c>True</c> 
         /// if the property is valid; otherwise <c>False</c></param>
         /// <param name="error">The error to display if the property is not valid.</param>
-        /// <exception cref="ExistingRuleException">If a validation is already set for the specified property</exception>
+        /// <exception cref="ExistingValidationRuleException">If a validation is already set for the specified property</exception>
         public void AddValidationRule<TProperty>(Expression<Func<TProperty>> property, Func<bool> validation, string error)
         {
             var key = property.GetMemberInfo().Name;

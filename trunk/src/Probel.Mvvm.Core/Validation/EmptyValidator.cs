@@ -26,7 +26,6 @@ namespace Probel.Mvvm.Validation
     /// <summary>
     /// This is a mocked validator. This does no validation
     /// </summary>
-    [Serializable]
     internal class EmptyValidator : IValidator
     {
         #region Properties
