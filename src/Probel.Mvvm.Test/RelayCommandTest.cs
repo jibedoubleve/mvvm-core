@@ -39,6 +39,18 @@ namespace Probel.Mvvm.Test
             Assert.IsTrue(hasBeenExecuted);
         }
 
+        [Test]
+        public void CanUseRelayArgCommand()
+        {
+            var hasBeenExecuted = false;
+            ICommand cmd = new RelayArgCommand(e => hasBeenExecuted = (bool)e, e => (bool)e);
+
+            cmd.Execute(true);
+
+            Assert.IsFalse(cmd.CanExecute(false));
+            Assert.IsTrue(hasBeenExecuted);
+        }
+
         #endregion Methods
     }
 }
