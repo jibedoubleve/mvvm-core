@@ -112,15 +112,21 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExistingValidationRuleException" xml:space="preserve">
     <value>La règle de validation est déjà configurée sur cette propriété</value>
   </data>
   <data name="KeyNotFoundException" xml:space="preserve">
     <value>Rien n'est lié au type: '{0}'</value>
+  </data>
+  <data name="NullDataContextException" xml:space="preserve">
+    <value>Le DataContext spécifié est null</value>
+  </data>
+  <data name="UnexpectedDataContextException" xml:space="preserve">
+    <value>Le type du DataContext devrait être "{0}" mais il est de type "{1}"</value>
   </data>
 </root>

@@ -77,5 +77,23 @@ namespace Probel.Mvvm.Properties {
                 return ResourceManager.GetString("KeyNotFoundException", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified DataContext is null.
+        /// </summary>
+        internal static string NullDataContextException {
+            get {
+                return ResourceManager.GetString("NullDataContextException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The DataContext&apos;s type should be &quot;{0}&quot; but it is &quot;{1}&quot;.
+        /// </summary>
+        internal static string UnexpectedDataContextException {
+            get {
+                return ResourceManager.GetString("UnexpectedDataContextException", resourceCulture);
+            }
+        }
     }
 }

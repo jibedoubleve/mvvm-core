@@ -32,6 +32,7 @@ namespace Probel.Mvvm.DataBinding
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
+        [field: NonSerialized]
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         #endregion Events
@@ -51,7 +52,7 @@ namespace Probel.Mvvm.DataBinding
         /// <summary>
         /// Raises this object's PropertyChanged event on multiple properties changed
         /// </summary>
-        /// <param name="propertyName">The name of the property that has a new value.</param>
+        /// <param name="propertyNames">The name of the property that has a new value.</param>
         private void OnPropertyChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)

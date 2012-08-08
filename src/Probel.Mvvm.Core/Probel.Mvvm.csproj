@@ -74,10 +74,15 @@
   <ItemGroup>
     <Compile Include="BaseDto.cs" />
     <Compile Include="BaseDtoComparer.cs" />
+    <Compile Include="Behaviours\ControlBehaviour.cs" />
+    <Compile Include="Behaviours\SelectorBehaviour.cs" />
+    <Compile Include="Behaviours\TreeViewBehaviour.cs" />
     <Compile Include="DataBinding\CommandExtension.cs" />
     <Compile Include="DataBinding\RelayArgCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
+    <Compile Include="Gui\NullDataContextException.cs" />
+    <Compile Include="Gui\UnexpectedDataContextException.cs" />
     <Compile Include="Properties\Messages.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

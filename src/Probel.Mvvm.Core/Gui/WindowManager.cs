@@ -121,6 +121,16 @@ namespace Probel.Mvvm.Gui
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         public void Show<TViewModel>()
         {
+            this.Show<TViewModel>((Action<TViewModel>)null);
+        }
+
+        /// <summary>
+        /// Shows the window linked to the TViewModel type as a modal box.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        public void Show<TViewModel>(Action<TViewModel> beforeShowing)
+        {
             var type = typeof(TViewModel);
 
             if (!bindingCollection.ContainsKey(type))
@@ -130,7 +140,15 @@ namespace Probel.Mvvm.Gui
             }
 
             var win = bindingCollection[typeof(TViewModel)]();
-            if (win != null) win.Show();
+            if (win != null)
+            {
+                if (win.DataContext is TViewModel)
+                {
+                    if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
+                    win.Show();
+                }
+                else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
+            }
         }
 
         /// <summary>
@@ -139,6 +157,17 @@ namespace Probel.Mvvm.Gui
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <returns></returns>
         public bool? ShowDialog<TViewModel>()
+        {
+            return this.ShowDialog<TViewModel>((Action<TViewModel>)null);
+        }
+
+        /// <summary>
+        /// Shows window linked to the TViewModel type as a dialog box.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        /// <returns></returns>
+        public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing)
         {
             var type = typeof(TViewModel);
 
@@ -149,7 +178,16 @@ namespace Probel.Mvvm.Gui
             }
 
             var win = bindingCollection[type]();
-            if (win != null) return win.ShowDialog();
+            if (win != null)
+            {
+                if (win.DataContext is TViewModel)
+                {
+                    if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
+                    return win.ShowDialog();
+                }
+                else if (win.DataContext == null) { throw new NullDataContextException(); }
+                else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
+            }
             else return null;
         }
 

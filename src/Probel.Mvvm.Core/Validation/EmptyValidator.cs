@@ -21,8 +21,6 @@
 
 namespace Probel.Mvvm.Validation
 {
-    using System;
-
     /// <summary>
     /// This is a mocked validator. This does no validation
     /// </summary>
