@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,57 +16,63 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+
+#endregion Header
+
+namespace Probel.Mvvm.Gui
 {
     using System;
-    using System.Runtime.Serialization;
 
     using Probel.Mvvm.Properties;
 
     /// <summary>
-    /// A validation rule has been set for this property
+    /// This exception is thrown when the DataContext of the specified Window is not of the expected type
     /// </summary>
     [Serializable]
-    public class ExistingValidationRuleException : Exception
+    public class UnexpectedDataContextException : Exception
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExistingValidationRuleException"/> class.
+        /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.
         /// </summary>
-        public ExistingValidationRuleException()
-            : this(Messages.ExistingValidationRuleException)
+        /// <param name="expected">The expected.</param>
+        /// <param name="current">The current.</param>
+        public UnexpectedDataContextException(Type expected, Type current)
+            : this(string.Format(Messages.UnexpectedDataContextException, expected, current))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExistingValidationRuleException"/> class.
+        /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        public ExistingValidationRuleException(string message)
+        public UnexpectedDataContextException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExistingValidationRuleException"/> class.
+        /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="inner">The inner.</param>
-        public ExistingValidationRuleException(string message, Exception inner)
+        public UnexpectedDataContextException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExistingValidationRuleException"/> class.
+        /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.
         /// </summary>
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. </exception>
         ///   
         /// <exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0). </exception>
-        protected ExistingValidationRuleException(SerializationInfo info, StreamingContext context)
+        protected UnexpectedDataContextException(
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
         {
         }

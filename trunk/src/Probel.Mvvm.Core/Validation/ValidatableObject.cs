@@ -30,6 +30,13 @@ namespace Probel.Mvvm.Validation
     [Serializable]
     public class ValidatableObject : ObservableObject, IDataErrorInfo
     {
+        #region Fields
+
+        [NonSerialized]
+        private readonly Dictionary<string, ValidationRule> ValidationRules = new Dictionary<string, ValidationRule>();
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -57,9 +64,6 @@ namespace Probel.Mvvm.Validation
             get;
             private set;
         }
-
-        [NonSerialized]
-        private readonly Dictionary<string, ValidationRule> ValidationRules = new Dictionary<string, ValidationRule>();
 
         #endregion Properties
 

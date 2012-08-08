@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,6 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#endregion Header
+
 namespace Probel.Mvvm.DataBinding
 {
     using System;
@@ -24,7 +29,7 @@ namespace Probel.Mvvm.DataBinding
     /// objects by invoking delegates. The default return value for the CanExecute
     /// method is 'true'.
     /// </summary>
-    public class RelayCommand : ICommand
+    public class RelayArgCommand : ICommand
     {
         #region Fields
 
@@ -33,8 +38,8 @@ namespace Probel.Mvvm.DataBinding
         /// </summary>
         public static readonly ICommand Empty = null;
 
-        private readonly Func<bool> canExecute;
-        private readonly Action execute;
+        private readonly Func<object, bool> canExecute;
+        private readonly Action<object> execute;
 
         #endregion Fields
 
@@ -44,7 +49,7 @@ namespace Probel.Mvvm.DataBinding
         /// Initializes a new instance of the RelayCommand class
         /// </summary>
         /// <param name="execute">The execution logic.</param>
-        public RelayCommand(Action execute)
+        public RelayArgCommand(Action<object> execute)
             : this(execute, null)
         {
         }
@@ -54,7 +59,7 @@ namespace Probel.Mvvm.DataBinding
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayArgCommand(Action<object> execute, Func<object, bool> canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
@@ -97,7 +102,7 @@ namespace Probel.Mvvm.DataBinding
         /// </returns>
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null ? true : this.canExecute();
+            return this.canExecute == null ? true : this.canExecute(parameter);
         }
 
         /// <summary>
@@ -106,7 +111,7 @@ namespace Probel.Mvvm.DataBinding
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
         public void Execute(object parameter)
         {
-            this.execute();
+            this.execute(parameter);
         }
 
         #endregion Methods
