@@ -28,18 +28,6 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanUseRelayCommand()
-        {
-            var hasBeenExecuted = false;
-            ICommand cmd = new RelayCommand(() => hasBeenExecuted = true, () => false);
-
-            cmd.Execute(null);
-
-            Assert.IsFalse(cmd.CanExecute(null));
-            Assert.IsTrue(hasBeenExecuted);
-        }
-
-        [Test]
         public void CanUseRelayArgCommand()
         {
             var hasBeenExecuted = false;
@@ -48,6 +36,18 @@ namespace Probel.Mvvm.Test
             cmd.Execute(true);
 
             Assert.IsFalse(cmd.CanExecute(false));
+            Assert.IsTrue(hasBeenExecuted);
+        }
+
+        [Test]
+        public void CanUseRelayCommand()
+        {
+            var hasBeenExecuted = false;
+            ICommand cmd = new RelayCommand(() => hasBeenExecuted = true, () => false);
+
+            cmd.Execute(null);
+
+            Assert.IsFalse(cmd.CanExecute(null));
             Assert.IsTrue(hasBeenExecuted);
         }
 
