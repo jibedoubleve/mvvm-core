@@ -19,6 +19,7 @@
   <property name="build-mode" value="release" overwrite="false"/>
   <property name="svn-repository" value="http://mvvm-core.googlecode.com/svn/trunk/"/>
   <property name="nest-dir" value="${release-dir}\mvvm-core\"/>
+  <property name="nunit-prj" value="${release-dir}\src\Probel.Mvvm.nunit"/>
 
   <!-- Targets -->
   <target name="Pre-Build" description="Export the code locally">
@@ -39,6 +40,11 @@
     </delete>
     <delete dir="${release-dir}\bin"/>   
 	
+		
+	<echo message="Creates dir"/>
+	<mkdir dir="${nest-dir}\"/>
+	<mkdir dir="${release-dir}\results"/>
+	
     <echo message="Checkout the code..."/>
     <exec program="svn.exe"
           commandline="checkout &quot;${svn-repository}&quot; &quot;${code-dir}&quot; -q"/> 
@@ -57,6 +63,12 @@
 
   <target name="Post-Build" description="Execute the post build actions" depends="Build">
    <!-- Here should go the unit tests execution... -->
+   <echo message="Test file: ${code-dir}\Probel.Mvvm.Test\bin\Release\Probel.Mvvm.Test.dll"/>
+   
+    <echo message="Run the unit tests..."/>
+    <exec program="nunit-console.exe"
+		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml"/>
+          <!--commandline="checkout &quot;${svn-repository}&quot; &quot;${code-dir}&quot; -q"/> -->
   </target>
 
   <!-- Create a release package with the binaries -->
@@ -64,11 +76,7 @@
     <loadfile file="${code-dir}\src\Version.cs" property="version-file"/>
     <regex pattern="AssemblyVersion\(\&quot;(?'version'1.*.*.*)*\&quot;"
            input="${version-file}"/>
-    <echo message="Version number: ${version}"/>
-	
-	
-	<echo message="Prepare the nest"/>
-	<mkdir dir="${nest-dir}\"/>
+    <echo message="Version number: ${version}"/>	
 	
 	<echo message="Copy: ${code-dir}\bin\Probel.Mvvm.Core\bin\${build-mode}\"/>
 	<echo message="To  : ${nest-dir}"/>
@@ -86,15 +94,11 @@
 			<exclude name="bin\**" />
 			<include name="**.*"/>        
       </fileset>
-    </zip>
+    </zip>	
 	
-	<echo message="Delete all in ${release-dir}"/>
-    <delete>
-      <fileset basedir="${release-dir}">
-        <exclude name="*.zip"/>
-        <include name="**.*"/>
-      </fileset>
-    </delete>
-
+    <echo message="Clean temporary files"/>
+    <delete dir="${release-dir}\mvvm-core"/>
+    <delete dir="${code-dir}"/>
+	
   </target>
 </project>
