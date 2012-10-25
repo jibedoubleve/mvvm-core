@@ -73,6 +73,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="BaseDto.cs" />
     <Compile Include="BaseDtoComparer.cs" />
     <Compile Include="Behaviours\ControlBehaviour.cs" />
@@ -150,6 +153,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)tools\SubWCRev.exe $(SolutionDir) "$(ProjectDir)Properties\AssemblyInfo.template" "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)tools\SubWCRev.exe $(SolutionDir) "$(ProjectDir)\..\Version.template" "$(ProjectDir)\..\Version.cs"</PreBuildEvent>
   </PropertyGroup>
 </Project>
