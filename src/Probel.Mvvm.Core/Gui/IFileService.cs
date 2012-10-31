@@ -23,6 +23,8 @@ namespace Probel.Mvvm.Gui
 {
     using System;
 
+    using Probel.Mvvm.Gui.FileServices;
+
     /// <summary>
     /// Provides an generic way to select file or directories
     /// </summary>
@@ -41,6 +43,20 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <param name="action">The action.</param>
         void SelectFile(Action<string> action);
+
+        /// <summary>
+        /// Selects the file.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="options">The options.</param>
+        void SelectFile(Action<string> action, Options options);
+
+        /// <summary>
+        /// Selects the directory.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="options">The options.</param>
+        void SelectFileToSave(Action<string> action, Options options);
 
         /// <summary>
         /// Selects the file where to save the data.
