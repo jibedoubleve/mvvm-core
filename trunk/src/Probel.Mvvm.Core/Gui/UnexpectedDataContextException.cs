@@ -42,6 +42,16 @@ namespace Probel.Mvvm.Gui
             : this(string.Format(Messages.UnexpectedDataContextException, expected, current))
         {
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.
+        /// </summary>
+        /// <param name="expected">The expected.</param>
+        /// <param name="current">The current.</param>
+        /// <param name="inner">The inner.</param>
+        public UnexpectedDataContextException(Type expected, Type current, Exception inner)
+            : this(string.Format(Messages.UnexpectedDataContextException, expected, current), inner)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnexpectedDataContextException"/> class.

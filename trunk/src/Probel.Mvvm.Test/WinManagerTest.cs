@@ -48,6 +48,11 @@ namespace Probel.Mvvm.Test
             #endregion Methods
         }
 
+        public interface IOtherViewModel
+        {
+
+        }
+
         #endregion Nested Interfaces
 
         #region Methods
@@ -158,7 +163,6 @@ namespace Probel.Mvvm.Test
             Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
         }
 
-
         [Test]
         public void ShowWindow_ShowUnbindedWindow_KeyNotFoundExceptionIsThrown()
         {
@@ -185,6 +189,17 @@ namespace Probel.Mvvm.Test
             this.windowManager.ShowDialog<bool>();
         }
 
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModel_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
+            windowManager.ShowDialog<IOtherViewModel>();
+        }
+
         #endregion Methods
 
         #region Nested Types
@@ -194,6 +209,11 @@ namespace Probel.Mvvm.Test
             #region Constructors
 
             public View(IViewModel viewmodel)
+            {
+                this.DataContext = viewmodel;
+            }
+
+            public View(IOtherViewModel viewmodel)
             {
                 this.DataContext = viewmodel;
             }
