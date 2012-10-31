@@ -102,6 +102,21 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
+        /// Binds the specified ctor to the specified type. It means that when user ask to show a window
+        /// this specified lambda will returns a fresh instance of a window
+        /// </summary>
+        /// <param name="ctor">The lambda that should create a fresh instance of a window.</param>
+        /// <param name="type">The type linked to the lambda.</param>        
+        public void Bind(Func<Window> ctor, Type type)
+        {
+            if (bindingCollection.ContainsKey(type))
+            {
+                throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
+            }
+            bindingCollection.Add(type, ctor);
+        }
+
+        /// <summary>
         /// Resets the whole repository.
         /// </summary>
         public void Reset()
@@ -246,21 +261,6 @@ namespace Probel.Mvvm.Gui
                 else { throw new NullDataContextException(); }
                 return view;
             };
-        }
-
-        /// <summary>
-        /// Binds the specified ctor to the specified type. It means that when user ask to show a window
-        /// this specified lambda will returns a fresh instance of a window
-        /// </summary>
-        /// <param name="ctor">The lambda that should create a fresh instance of a window.</param>
-        /// <param name="type">The type linked to the lambda.</param>        
-        public void Bind(Func<Window> ctor, Type type)
-        {
-            if (bindingCollection.ContainsKey(type))
-            {
-                throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
-            }
-            bindingCollection.Add(type, ctor);
         }
 
         #endregion Methods

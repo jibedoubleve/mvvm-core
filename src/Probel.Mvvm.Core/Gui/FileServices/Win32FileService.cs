@@ -57,6 +57,7 @@ namespace Probel.Mvvm.Gui.FileServices
             }
             else { return; }
         }
+
         /// <summary>
         /// Selects the file.
         /// </summary>
@@ -65,6 +66,7 @@ namespace Probel.Mvvm.Gui.FileServices
         {
             this.SelectFile(action, Options.Default);
         }
+
         /// <summary>
         /// Selects the file.
         /// </summary>
@@ -86,7 +88,6 @@ namespace Probel.Mvvm.Gui.FileServices
             else { return; }
         }
 
-
         /// <summary>
         /// Selects the file where to save the data.
         /// </summary>
@@ -96,6 +97,10 @@ namespace Probel.Mvvm.Gui.FileServices
             this.SelectFileToSave(action, Options.Default);
         }
 
+        /// <summary>
+        /// Selects the file where to save the data.
+        /// </summary>
+        /// <param name="action">The action.</param>
         public void SelectFileToSave(Action<string> action, Options options)
         {
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();

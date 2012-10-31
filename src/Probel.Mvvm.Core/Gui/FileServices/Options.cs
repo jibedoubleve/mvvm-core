@@ -14,11 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 namespace Probel.Mvvm.Gui.FileServices
 {
     public class Options
     {
+        #region Constructors
+
         public Options()
         {
             this.Multiselect = false;
@@ -26,14 +27,36 @@ namespace Probel.Mvvm.Gui.FileServices
             this.InitialDirectory = null;
             this.Title = null;
         }
+
+        #endregion Constructors
+
+        #region Properties
+
         public static Options Default
         {
             get { return new Options(); }
         }
-        public string Filter { get; set; }
-        public bool Multiselect { get; set; }
-        public string InitialDirectory { get; set; }
 
-        public string Title { get; set; }
+        public string Filter
+        {
+            get; set;
+        }
+
+        public string InitialDirectory
+        {
+            get; set;
+        }
+
+        public bool Multiselect
+        {
+            get; set;
+        }
+
+        public string Title
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

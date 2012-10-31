@@ -37,7 +37,7 @@ namespace Probel.Mvvm.Test
 
         #region Nested Interfaces
 
-        public interface IViewModel
+        public interface IOtherViewModel
         {
             #region Methods
 
@@ -48,7 +48,7 @@ namespace Probel.Mvvm.Test
             #endregion Methods
         }
 
-        public interface IOtherViewModel
+        public interface IViewModel
         {
             #region Methods
 
@@ -71,9 +71,76 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            windowManager.Bind<IOtherViewModel>(() => view)
+                         .OnClosing(vm => vm.Closing());
+            windowManager.ShowDialog<IOtherViewModel>();
+            view.Close();
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnAddShowingHandler_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel))
+                         .OnShow(vm => vm.Refresh());
+            windowManager.Show<IOtherViewModel>();
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnShowDialog_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
+            windowManager.ShowDialog<IOtherViewModel>();
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnShow_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
+            windowManager.Show<IOtherViewModel>();
+        }
+
+        [Test]
         public void Configuration_AddUnbindedViewModel_ViewModelBinded()
         {
             this.windowManager.Bind<Window, int>();
+
+            this.windowManager.ThrowsIfNotBinded = true;
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+
+            this.windowManager.ThrowsIfNotBinded = false;
+            this.windowManager.ShowDialog<bool>();
+        }
+
+        [Test]
+        public void Configuration_BindTwiceTheSameViewModel_ArgumentExceptionIsThrown()
+        {
+            this.windowManager.Bind(() => new Window(), typeof(object));
+            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
+        }
+
+        [Test]
+        public void Configuration_CanSetIfExceptionIsThrownOnMultipleBinding_ExceptionIsThrownIfConfigured()
+        {
+            this.windowManager.Bind(() => null, typeof(object));
 
             this.windowManager.ThrowsIfNotBinded = true;
             Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
@@ -99,6 +166,20 @@ namespace Probel.Mvvm.Test
             view.Close();
 
             viewmodel.Received().Refresh();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnShowAndAddOneTimeOnShow_ActionnIsExecutedBeforeShowing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IViewModel>(() => new View(viewmodel))
+                         .OnShow(vm => vm.Refresh());
+
+            windowManager.ShowDialog<IViewModel>(vm => vm.Refresh());
+
+            viewmodel.Received(2).Refresh();
         }
 
         [Test]
@@ -138,35 +219,12 @@ namespace Probel.Mvvm.Test
             viewmodel.Received().Refresh();
         }
 
-        [Test]
-        [STAThread]
-        public void Configuration_SetActionOnShowAndAddOneTimeOnShow_ActionnIsExecutedBeforeShowing()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-
-            windowManager.Bind<IViewModel>(() => new View(viewmodel))
-                         .OnShow(vm => vm.Refresh());
-
-            windowManager.ShowDialog<IViewModel>(vm => vm.Refresh());
-
-            viewmodel.Received(2).Refresh();
-        }
-
         [SetUp]
         public void SetUp()
         {
             this.windowManager.Reset();
             this.windowManager.ThrowsIfNotBinded = true;
             this.windowManager.IsUnderTest = true;
-        }
-
-        [Test]
-        public void ShowWindow_TryToShowUnbindedViewModel_KeyNotFoundExceptionThrown()
-        {
-            this.windowManager.Bind<Window, int>();
-
-            this.windowManager.ThrowsIfNotBinded = true;
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
         }
 
         [Test]
@@ -177,68 +235,12 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void Configuration_BindTwiceTheSameViewModel_ArgumentExceptionIsThrown()
+        public void ShowWindow_TryToShowUnbindedViewModel_KeyNotFoundExceptionThrown()
         {
-            this.windowManager.Bind(() => new Window(), typeof(object));
-            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
-        }
-
-        [Test]
-        public void Configuration_CanSetIfExceptionIsThrownOnMultipleBinding_ExceptionIsThrownIfConfigured()
-        {
-            this.windowManager.Bind(() => null, typeof(object));
+            this.windowManager.Bind<Window, int>();
 
             this.windowManager.ThrowsIfNotBinded = true;
             Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
-
-            this.windowManager.ThrowsIfNotBinded = false;
-            this.windowManager.ShowDialog<bool>();
-        }
-
-        [Test]
-        [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModelOnShowDialog_UnexpectedDataContextException()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
-            windowManager.ShowDialog<IOtherViewModel>();
-        }
-        [Test]
-        [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModelOnShow_UnexpectedDataContextException()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
-            windowManager.Show<IOtherViewModel>();
-        }
-
-        [Test]
-        [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModelOnAddShowingHandler_UnexpectedDataContextException()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel))
-                         .OnShow(vm => vm.Refresh());
-            windowManager.Show<IOtherViewModel>();
-        }
-        [Test]
-        [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-            var view = new View(viewmodel);
-
-            windowManager.Bind<IOtherViewModel>(() => view)
-                         .OnClosing(vm => vm.Closing());
-            windowManager.ShowDialog<IOtherViewModel>();
-            view.Close();
         }
 
         #endregion Methods
