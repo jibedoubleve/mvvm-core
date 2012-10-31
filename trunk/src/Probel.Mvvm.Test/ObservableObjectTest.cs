@@ -26,7 +26,7 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanTriggerOnLambda()
+        public void TriggerINPCEvent_ChangeTheProperty_INPCTriggeredEvent()
         {
             var triggered = false;
             var propertyName = string.Empty;

@@ -29,7 +29,7 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanCompareSameDto()
+        public void Compare_CompareDtoWithSameId_DtoAreEquals()
         {
             var user1 = new UserDto() { Id = 1 };
             var user2 = new UserDto() { Id = 1 };
@@ -40,7 +40,18 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void CanCreateDto()
+        public void Compare_CompareTwoDtoThatHasDifferentTypeButSameId_DtoAreNotEquals()
+        {
+            var user = new UserDto() { Id = 1 };
+            var book = new BookDto() { Id = 1 };
+
+            var comparer = new BaseDtoComparer<int>();
+
+            Assert.IsFalse(comparer.Equals(user, book));
+        }
+
+        [Test]
+        public void Create_CreateNewDto_StateIsCreated()
         {
             var user = this.CreateUser();
 
@@ -49,17 +60,7 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void CanIgnoreProperty()
-        {
-            var user = this.CreateUser();
-            user.Clean();
-
-            user.Birthdate = new DateTime(2010, 1, 1);
-            Assert.AreEqual(State.Clean, user.State);
-        }
-
-        [Test]
-        public void CanRemoveDto()
+        public void Remove_RemoveDto_StateIsRemoved()
         {
             var user = this.CreateUser();
             user.Remove();
@@ -69,14 +70,13 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void FailToCompareDifferentTypes()
+        public void UpdateDto_UpdateAnIgnoredProperty_DtoStateIsClean()
         {
-            var user = new UserDto() { Id = 1 };
-            var book = new BookDto() { Id = 1 };
+            var user = this.CreateUser();
+            user.Clean();
 
-            var comparer = new BaseDtoComparer<int>();
-
-            Assert.IsFalse(comparer.Equals(user, book));
+            user.Birthdate = new DateTime(2010, 1, 1);
+            Assert.AreEqual(State.Clean, user.State);
         }
 
         private UserDto CreateUser()

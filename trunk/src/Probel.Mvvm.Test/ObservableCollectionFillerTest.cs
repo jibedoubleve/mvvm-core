@@ -29,7 +29,7 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanAddRange()
+        public void CreateCollection_AddRangeToCollection_RangeAdded()
         {
             var collection = this.CreateCollection();
 
@@ -39,7 +39,7 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void CanRefillCollection()
+        public void CreateCollection_RefillCollection_CollectionRefilled()
         {
             var collection = this.CreateCollection();
 
@@ -49,14 +49,17 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void NullItemThrowNullReferenceException()
+        public void FillingCollection_FillWhenCollectionIsNull_NullReferenceException()
         {
-            int[] array = null;
-
             ObservableCollection<int> observableCollection = null;
             Assert.Throws<ArgumentNullException>(() => observableCollection.Refill(new int[] { 1, 2 }), "First argument");
+        }
 
-            observableCollection = new ObservableCollection<int>();
+        [Test]
+        public void FillingCollection_FillWithNullIEnumerable_NullReferenceException()
+        {
+            int[] array = null;
+            var observableCollection = new ObservableCollection<int>();
             Assert.Throws<ArgumentNullException>(() => observableCollection.Refill(array), "Second argument");
         }
 

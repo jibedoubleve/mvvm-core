@@ -85,8 +85,10 @@
     <Compile Include="DataBinding\RelayArgCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
+    <Compile Include="Gui\ConfigurationExpression.cs" />
     <Compile Include="Gui\FileServices\FileServiceFactory.cs" />
     <Compile Include="Gui\FileServices\Win32FileService.cs" />
+    <Compile Include="Gui\IConfigurationExpression.cs" />
     <Compile Include="Gui\IFileService.cs" />
     <Compile Include="Gui\NullDataContextException.cs" />
     <Compile Include="Gui\UnexpectedDataContextException.cs" />

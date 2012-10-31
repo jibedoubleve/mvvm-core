@@ -28,19 +28,20 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanUseRelayArgCommand()
+        public void ConfigureCommand_SpecifyArgumentToCommand_CommandExecuted()
         {
             var hasBeenExecuted = false;
             ICommand cmd = new RelayArgCommand(e => hasBeenExecuted = (bool)e, e => (bool)e);
 
             cmd.Execute(true);
 
+            //Check that the CanExecute returns the expected value as defined in the lambda when configuring the RelayArgCommand
             Assert.IsFalse(cmd.CanExecute(false));
             Assert.IsTrue(hasBeenExecuted);
         }
 
         [Test]
-        public void CanUseRelayCommand()
+        public void ConfigureCommand_UseCommandWithoutArgument_CommandExecuted()
         {
             var hasBeenExecuted = false;
             ICommand cmd = new RelayCommand(() => hasBeenExecuted = true, () => false);

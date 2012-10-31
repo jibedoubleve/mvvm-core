@@ -40,8 +40,8 @@ namespace Probel.Mvvm.Gui
         /// Initializes a new instance of the <see cref="WindowManager"/> class.
         /// </summary>
         public WindowManager()
+            : this(true)
         {
-            this.ThrowsIfNotBinded = true;
         }
 
         /// <summary>
@@ -51,11 +51,18 @@ namespace Probel.Mvvm.Gui
         public WindowManager(bool throwsIfNotBinded)
         {
             this.ThrowsIfNotBinded = throwsIfNotBinded;
+            this.IsUnderTest = false;
         }
 
         #endregion Constructors
 
         #region Properties
+
+        public bool IsUnderTest
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
@@ -72,28 +79,14 @@ namespace Probel.Mvvm.Gui
         #region Methods
 
         /// <summary>
-        /// Binds the specified ctor to the specified type. It means that when user ask to show a window
-        /// this specified lambda will returns a fresh instance of a window
-        /// </summary>
-        /// <param name="ctor">The lambda that should create a fresh instance of a window.</param>
-        /// <param name="type">The type linked to the lambda.</param>
-        public void Bind(Func<Window> ctor, Type type)
-        {
-            if (bindingCollection.ContainsKey(type))
-            {
-                throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
-            }
-            bindingCollection.Add(type, ctor);
-        }
-
-        /// <summary>
         /// Binds the specified lambda to the specified TViewModel.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="ctor">The lambda that will create a fresh instance of the Window.</param>
-        public void Bind<TViewModel>(Func<Window> ctor)
+        public IConfigurationExpression<TViewModel> Bind<TViewModel>(Func<Window> ctor)
         {
             this.Bind(ctor, typeof(TViewModel));
+            return new ConfigurationExpression<TViewModel>(this);
         }
 
         /// <summary>
@@ -101,10 +94,11 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <typeparam name="TView">The type of the view.</typeparam>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        public void Bind<TView, TViewModel>()
+        public IConfigurationExpression<TViewModel> Bind<TView, TViewModel>()
             where TView : Window, new()
         {
             this.Bind(() => new TView(), typeof(TViewModel));
+            return new ConfigurationExpression<TViewModel>(this);
         }
 
         /// <summary>
@@ -126,6 +120,7 @@ namespace Probel.Mvvm.Gui
 
         /// <summary>
         /// Shows the window linked to the TViewModel type as a modal box.
+        /// If a OnShow action is set, it'll be executed as well.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
@@ -140,19 +135,20 @@ namespace Probel.Mvvm.Gui
             }
 
             var win = bindingCollection[typeof(TViewModel)]();
+
             if (win != null)
             {
                 if (win.DataContext is TViewModel)
                 {
                     if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
-                    win.Show();
+                    if (!this.IsUnderTest) { win.Show(); }
                 }
                 else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
             }
         }
 
         /// <summary>
-        /// Shows window linked to the TViewModel type as a dialog box.
+        /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <returns></returns>
@@ -162,7 +158,8 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
-        /// Shows window linked to the TViewModel type as a dialog box.
+        /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
+        /// If a OnShow action is set, it'll be executed as well.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
@@ -183,12 +180,74 @@ namespace Probel.Mvvm.Gui
                 if (win.DataContext is TViewModel)
                 {
                     if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
-                    return win.ShowDialog();
+
+                    if (!this.IsUnderTest)
+                    {
+                        return win.ShowDialog();
+                    }
+                    else { return true; }
                 }
                 else if (win.DataContext == null) { throw new NullDataContextException(); }
                 else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
             }
             else return null;
+        }
+
+        /// <summary>
+        /// Adds the handler that will be triggered when <see cref="Window"/> will be shown.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="action">The action.</param>
+        internal void AddBeforeShowingHandler<TViewModel>(Action<TViewModel> action)
+        {
+            var ctor = bindingCollection[typeof(TViewModel)];
+
+            bindingCollection[typeof(TViewModel)] = () =>
+            {
+                var view = ctor();
+                if (view.DataContext != null)
+                {
+                    action((TViewModel)view.DataContext);
+                }
+                else { throw new NullDataContextException(); }
+                return view;
+            };
+        }
+
+        /// <summary>
+        /// Add a handler when Closing event of the windows is triggered
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="action">The action.</param>
+        internal void OnClosingHandler<TViewModel>(Action<TViewModel> action)
+        {
+            var ctor = bindingCollection[typeof(TViewModel)];
+
+            bindingCollection[typeof(TViewModel)] = () =>
+            {
+                var view = ctor();
+                if (view.DataContext != null)
+                {
+                    view.Closing += (sender, e) => action((TViewModel)view.DataContext);
+                }
+                else { throw new NullDataContextException(); }
+                return view;
+            };
+        }
+
+        /// <summary>
+        /// Binds the specified ctor to the specified type. It means that when user ask to show a window
+        /// this specified lambda will returns a fresh instance of a window
+        /// </summary>
+        /// <param name="ctor">The lambda that should create a fresh instance of a window.</param>
+        /// <param name="type">The type linked to the lambda.</param>        
+        public void Bind(Func<Window> ctor, Type type)
+        {
+            if (bindingCollection.ContainsKey(type))
+            {
+                throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
+            }
+            bindingCollection.Add(type, ctor);
         }
 
         #endregion Methods

@@ -68,7 +68,6 @@
     <echo message="Run the unit tests..."/>
     <exec program="nunit-console.exe"
 		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml"/>
-          <!--commandline="checkout &quot;${svn-repository}&quot; &quot;${code-dir}&quot; -q"/> -->
   </target>
 
   <!-- Create a release package with the binaries -->
