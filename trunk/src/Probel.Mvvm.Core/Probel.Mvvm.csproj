@@ -87,6 +87,7 @@
     <Compile Include="ExpressionExtension.cs" />
     <Compile Include="Gui\ConfigurationExpression.cs" />
     <Compile Include="Gui\FileServices\FileServiceFactory.cs" />
+    <Compile Include="Gui\FileServices\Options.cs" />
     <Compile Include="Gui\FileServices\Win32FileService.cs" />
     <Compile Include="Gui\IConfigurationExpression.cs" />
     <Compile Include="Gui\IFileService.cs" />

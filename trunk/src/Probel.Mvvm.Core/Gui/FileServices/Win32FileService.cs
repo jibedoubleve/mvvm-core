@@ -57,14 +57,26 @@ namespace Probel.Mvvm.Gui.FileServices
             }
             else { return; }
         }
-
         /// <summary>
         /// Selects the file.
         /// </summary>
         /// <param name="action">The action.</param>
         public void SelectFile(Action<string> action)
         {
+            this.SelectFile(action, Options.Default);
+        }
+        /// <summary>
+        /// Selects the file.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        public void SelectFile(Action<string> action, Options options)
+        {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = options.Filter;
+            openFileDialog.Multiselect = options.Multiselect;
+            openFileDialog.InitialDirectory = options.InitialDirectory;
+            openFileDialog.Title = options.Title;
+
             bool? flag = openFileDialog.ShowDialog();
 
             if (flag.HasValue && flag.Value)
@@ -74,13 +86,23 @@ namespace Probel.Mvvm.Gui.FileServices
             else { return; }
         }
 
+
         /// <summary>
         /// Selects the file where to save the data.
         /// </summary>
         /// <param name="action">The action.</param>
         public void SelectFileToSave(Action<string> action)
         {
+            this.SelectFileToSave(action, Options.Default);
+        }
+
+        public void SelectFileToSave(Action<string> action, Options options)
+        {
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = options.Filter;
+            saveFileDialog.InitialDirectory = options.InitialDirectory;
+            saveFileDialog.Title = options.Title;
+
             bool? flag = saveFileDialog.ShowDialog();
             if (flag.HasValue && flag.Value)
             {
