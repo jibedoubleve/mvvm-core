@@ -216,7 +216,11 @@ namespace Probel.Mvvm.Gui
                 var view = ctor();
                 if (view.DataContext != null)
                 {
-                    action((TViewModel)view.DataContext);
+                    try
+                    {
+                        action((TViewModel)view.DataContext);
+                    }
+                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex); }
                 }
                 else { throw new NullDataContextException(); }
                 return view;

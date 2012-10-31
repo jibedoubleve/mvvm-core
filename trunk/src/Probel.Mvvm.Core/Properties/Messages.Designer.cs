@@ -88,7 +88,7 @@ namespace Probel.Mvvm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DataContext&apos;s type should be &quot;{0}&quot; but it is &quot;{1}&quot;.
+        ///   Looks up a localized string similar to The DataContext  type should be &quot;{0}&quot; but it is &quot;{1}&quot;.
         /// </summary>
         internal static string UnexpectedDataContextException {
             get {
