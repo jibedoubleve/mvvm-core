@@ -67,7 +67,7 @@
    
     <echo message="Run the unit tests..."/>
     <exec program="nunit-console.exe"
-		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml"/>
+		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=release"/>
   </target>
 
   <!-- Create a release package with the binaries -->
