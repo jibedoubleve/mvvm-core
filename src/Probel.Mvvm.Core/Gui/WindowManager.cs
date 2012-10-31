@@ -179,7 +179,11 @@ namespace Probel.Mvvm.Gui
             {
                 if (win.DataContext is TViewModel)
                 {
-                    if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
+                    try
+                    {
+                        if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
+                    }
+                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
 
                     if (!this.IsUnderTest)
                     {
