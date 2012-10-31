@@ -140,8 +140,13 @@ namespace Probel.Mvvm.Gui
             {
                 if (win.DataContext is TViewModel)
                 {
-                    if (beforeShowing != null) beforeShowing((TViewModel)win.DataContext);
-                    if (!this.IsUnderTest) { win.Show(); }
+                    try
+                    {
+
+                        if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
+                        if (!this.IsUnderTest) { win.Show(); }
+                    }
+                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
                 }
                 else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
             }

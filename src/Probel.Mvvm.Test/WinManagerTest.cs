@@ -192,12 +192,22 @@ namespace Probel.Mvvm.Test
         [Test]
         [STAThread]
         [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModel_UnexpectedDataContextException()
+        public void Configuration_AddAnUnexpectedViewModelOnShowDialog_UnexpectedDataContextException()
         {
             var viewmodel = Substitute.For<IViewModel>();
 
             windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
             windowManager.ShowDialog<IOtherViewModel>();
+        }
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnShow_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
+            windowManager.Show<IOtherViewModel>();
         }
 
         #endregion Methods
