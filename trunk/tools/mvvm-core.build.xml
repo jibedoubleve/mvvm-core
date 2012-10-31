@@ -66,7 +66,7 @@
     <echo message="Test file: ${code-dir}\Probel.Mvvm.Test\bin\Release\Probel.Mvvm.Test.dll"/>
 
     <echo message="Run the unit tests..."/>
-    <echo message="Command line: nunit-console.exe ${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=release"/>
+    <echo message="Command line: nunit-console.exe ${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=Release"/>
     <exec program="nunit-console.exe"
 		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=release"/>
   </target>
