@@ -38,34 +38,35 @@
         <include name="**.*"/>
       </fileset>
     </delete>
-    <delete dir="${release-dir}\bin"/>   
-	
-		
-	<echo message="Creates dir"/>
-	<mkdir dir="${nest-dir}\"/>
-	<mkdir dir="${release-dir}\results"/>
-	
+    <delete dir="${release-dir}\bin"/>
+
+
+    <echo message="Creates dir"/>
+    <mkdir dir="${nest-dir}\"/>
+    <mkdir dir="${release-dir}\results"/>
+
     <echo message="Checkout the code..."/>
     <exec program="svn.exe"
-          commandline="checkout &quot;${svn-repository}&quot; &quot;${code-dir}&quot; -q"/> 
+          commandline="checkout &quot;${svn-repository}&quot; &quot;${code-dir}&quot; -q"/>
   </target>
 
   <target name="Build" description="Build the solution" depends="Pre-Build">
     <!-- Build the solution -->
     <echo message="Building..."/>
     <echo message="Build mode: ${build-mode}"/>
-	<echo message="Building file: ${code-dir}\src\${sln-file}"/>
+    <echo message="Building file: ${code-dir}\src\${sln-file}"/>
     <msbuild project="${code-dir}\${sln-file}"
              verbosity="Minimal">
       <property name="Configuration" value="${build-mode}"/>
-    </msbuild>	
+    </msbuild>
   </target>
 
   <target name="Post-Build" description="Execute the post build actions" depends="Build">
-   <!-- Here should go the unit tests execution... -->
-   <echo message="Test file: ${code-dir}\Probel.Mvvm.Test\bin\Release\Probel.Mvvm.Test.dll"/>
-   
+    <!-- Here should go the unit tests execution... -->
+    <echo message="Test file: ${code-dir}\Probel.Mvvm.Test\bin\Release\Probel.Mvvm.Test.dll"/>
+
     <echo message="Run the unit tests..."/>
+    <echo message="Command line: nunit-console.exe ${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=release"/>
     <exec program="nunit-console.exe"
 		  commandline="${code-dir}\src\Probel.Mvvm.nunit /result=${release-dir}\results\nunit-output.xml /config=release"/>
   </target>
@@ -75,29 +76,29 @@
     <loadfile file="${code-dir}\src\Version.cs" property="version-file"/>
     <regex pattern="AssemblyVersion\(\&quot;(?'version'1.*.*.*)*\&quot;"
            input="${version-file}"/>
-    <echo message="Version number: ${version}"/>	
-	
-	<echo message="Copy: ${code-dir}\bin\Probel.Mvvm.Core\bin\${build-mode}\"/>
-	<echo message="To  : ${nest-dir}"/>
-	<copy todir="${nest-dir}\">
-		<fileset basedir="${code-dir}\src\Probel.Mvvm.Core\bin\${build-mode}\">
-			<exclude name="*.vshost.exe"/>
-			<exclude name="*.vshost.exe.config"/>
-			<include name="*.dll"/>
-			<include name="*.xml"/>
-        </fileset>
-    </copy>
-	
-	<zip zipfile="${release-dir}\mvvm-core.${version}.zip">
-		<fileset basedir="${nest-dir}\..\">
-			<exclude name="bin\**" />
-			<include name="**.*"/>        
+    <echo message="Version number: ${version}"/>
+
+    <echo message="Copy: ${code-dir}\bin\Probel.Mvvm.Core\bin\${build-mode}\"/>
+    <echo message="To  : ${nest-dir}"/>
+    <copy todir="${nest-dir}\">
+      <fileset basedir="${code-dir}\src\Probel.Mvvm.Core\bin\${build-mode}\">
+        <exclude name="*.vshost.exe"/>
+        <exclude name="*.vshost.exe.config"/>
+        <include name="*.dll"/>
+        <include name="*.xml"/>
       </fileset>
-    </zip>	
-	
+    </copy>
+
+    <zip zipfile="${release-dir}\mvvm-core.${version}.zip">
+      <fileset basedir="${nest-dir}\..\">
+        <exclude name="bin\**" />
+        <include name="**.*"/>
+      </fileset>
+    </zip>
+
     <echo message="Clean temporary files"/>
     <delete dir="${release-dir}\mvvm-core"/>
     <delete dir="${code-dir}"/>
-	
+
   </target>
 </project>
