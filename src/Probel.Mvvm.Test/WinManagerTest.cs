@@ -50,7 +50,13 @@ namespace Probel.Mvvm.Test
 
         public interface IOtherViewModel
         {
+            #region Methods
 
+            void Closing();
+
+            void Refresh();
+
+            #endregion Methods
         }
 
         #endregion Nested Interfaces
@@ -208,6 +214,31 @@ namespace Probel.Mvvm.Test
 
             windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
             windowManager.Show<IOtherViewModel>();
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnAddShowingHandler_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel))
+                         .OnShow(vm => vm.Refresh());
+            windowManager.Show<IOtherViewModel>();
+        }
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            windowManager.Bind<IOtherViewModel>(() => view)
+                         .OnClosing(vm => vm.Closing());
+            windowManager.ShowDialog<IOtherViewModel>();
+            view.Close();
         }
 
         #endregion Methods
