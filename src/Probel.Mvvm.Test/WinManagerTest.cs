@@ -20,6 +20,8 @@ namespace Probel.Mvvm.Test
     using System.Collections.Generic;
     using System.Windows;
 
+    using NSubstitute;
+
     using NUnit.Framework;
 
     using Probel.Mvvm.Gui;
@@ -33,10 +35,146 @@ namespace Probel.Mvvm.Test
 
         #endregion Fields
 
+        #region Nested Interfaces
+
+        public interface IViewModel
+        {
+            #region Methods
+
+            void Closing();
+
+            void Refresh();
+
+            #endregion Methods
+        }
+
+        #endregion Nested Interfaces
+
         #region Methods
 
         [Test]
-        public void CanConfigureUnbinded()
+        public void Configuration_AddAlreadyBindedItem_ArgumentExceptionThrown()
+        {
+            this.windowManager.Bind<Window, object>();
+            Assert.Throws<ArgumentException>(() => this.windowManager.Bind<Window, object>());
+        }
+
+        [Test]
+        public void Configuration_AddUnbindedViewModel_ViewModelBinded()
+        {
+            this.windowManager.Bind<Window, int>();
+
+            this.windowManager.ThrowsIfNotBinded = true;
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+
+            this.windowManager.ThrowsIfNotBinded = false;
+            this.windowManager.ShowDialog<bool>();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnClosing_ActionIsExecutedOnClosing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            windowManager.Bind<IViewModel>(() => view)
+                         .OnClosing(vm => vm.Refresh());
+
+            windowManager.Show<IViewModel>();
+
+            viewmodel.Received(0).Refresh();
+
+            view.Close();
+
+            viewmodel.Received().Refresh();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnShowAndOnClosing_ActionIsExecutedBeforeAndAfterShowing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            windowManager.Bind<IViewModel>(() => view)
+                         .OnShow(vm => vm.Refresh())
+                         .OnClosing(vm => vm.Closing());
+
+            viewmodel.Received(0).Refresh();
+            viewmodel.Received(0).Closing();
+
+            windowManager.ShowDialog<IViewModel>();
+
+            viewmodel.Received(0).Closing();
+
+            view.Close();
+
+            viewmodel.Received().Closing();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnShow_ActionnIsExecutedBeforeShowing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IViewModel>(() => new View(viewmodel))
+                         .OnShow(vm => vm.Refresh());
+
+            windowManager.ShowDialog<IViewModel>();
+
+            viewmodel.Received().Refresh();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnShowAndAddOneTimeOnShow_ActionnIsExecutedBeforeShowing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+
+            windowManager.Bind<IViewModel>(() => new View(viewmodel))
+                         .OnShow(vm => vm.Refresh());
+
+            windowManager.ShowDialog<IViewModel>(vm => vm.Refresh());
+
+            viewmodel.Received(2).Refresh();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.windowManager.Reset();
+            this.windowManager.ThrowsIfNotBinded = true;
+            this.windowManager.IsUnderTest = true;
+        }
+
+        [Test]
+        public void ShowWindow_TryToShowUnbindedViewModel_KeyNotFoundExceptionThrown()
+        {
+            this.windowManager.Bind<Window, int>();
+
+            this.windowManager.ThrowsIfNotBinded = true;
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+        }
+
+
+        [Test]
+        public void ShowWindow_ShowUnbindedWindow_KeyNotFoundExceptionIsThrown()
+        {
+            this.windowManager.Bind(() => null, typeof(object));
+            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+        }
+
+        [Test]
+        public void Configuration_BindTwiceTheSameViewModel_ArgumentExceptionIsThrown()
+        {
+            this.windowManager.Bind(() => new Window(), typeof(object));
+            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
+        }
+
+        [Test]
+        public void Configuration_CanSetIfExceptionIsThrownOnMultipleBinding_ExceptionIsThrownIfConfigured()
         {
             this.windowManager.Bind(() => null, typeof(object));
 
@@ -47,27 +185,22 @@ namespace Probel.Mvvm.Test
             this.windowManager.ShowDialog<bool>();
         }
 
-        [Test]
-        public void CantBindTwice()
-        {
-            this.windowManager.Bind(() => new Window(), typeof(object));
-            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            this.windowManager.Reset();
-            this.windowManager.ThrowsIfNotBinded = true;
-        }
-
-        [Test]
-        public void ThrowsOnUnbinded()
-        {
-            this.windowManager.Bind(() => null, typeof(object));
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
-        }
-
         #endregion Methods
+
+        #region Nested Types
+
+        public class View : Window
+        {
+            #region Constructors
+
+            public View(IViewModel viewmodel)
+            {
+                this.DataContext = viewmodel;
+            }
+
+            #endregion Constructors
+        }
+
+        #endregion Nested Types
     }
 }

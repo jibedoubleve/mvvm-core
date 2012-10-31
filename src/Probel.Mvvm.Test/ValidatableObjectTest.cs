@@ -29,7 +29,7 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void CanManuallyValidate()
+        public void ValidateObject_ManuallValidation_ValidationWorks()
         {
             var user = new User("Robert"); //Validation doesn't allow names which starts with "R"
 
@@ -39,7 +39,7 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void CannotOverrideRoles()
+        public void ValidateObject_OverrideRole_ExistingValidationRuleExceptionThrown()
         {
             var user = new User("Robert");
             var error = user["Name"];
@@ -55,7 +55,7 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
-        public void CanValidateDto()
+        public void ValidateObject_ValidationOfDto_ValidationWorks()
         {
             var book = new BookDto()
             {

@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -15,14 +17,20 @@
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Reflection;
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.1.52")]
+#endregion Header
+
+namespace Probel.Mvvm.Gui
+{
+    using System;
+
+    public interface IConfigurationExpression<TViewModel>
+    {
+        #region Methods
+
+        IConfigurationExpression<TViewModel> OnClosing(Action<TViewModel> action);
+
+        IConfigurationExpression<TViewModel> OnShow(Action<TViewModel> action);
+
+        #endregion Methods
+    }
+}
