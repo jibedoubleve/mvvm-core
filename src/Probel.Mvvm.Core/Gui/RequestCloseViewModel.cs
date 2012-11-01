@@ -24,26 +24,28 @@ namespace Probel.Mvvm.Gui
     using System;
 
     /// <summary>
-    /// This interface is used to make WindowManager fluent.
+    /// Basic implementation of a ViewModel that can ask to the view to close it self
     /// </summary>
-    /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-    public interface IConfigurationExpression<TViewModel>
+    public class RequestCloseViewModel : IRequestCloseViewModel
     {
+        #region Events
+
+        /// <summary>
+        /// Occurs when the ViewModel requested to close the Gui item.
+        /// </summary>
+        public event EventHandler CloseRequested;
+
+        #endregion Events
+
         #region Methods
 
         /// <summary>
-        /// Hook a handler that will be executed when the View will be closing
+        /// Trigger a close request to the view
         /// </summary>
-        /// <param name="handler">The action.</param>
-        /// <returns></returns>
-        IConfigurationExpression<TViewModel> OnClosing(Action<TViewModel> handler);
-
-        /// <summary>
-        /// Hook a handler that will be executed when the View will be showed
-        /// </summary>
-        /// <param name="handler">The handler.</param>
-        /// <returns></returns>
-        IConfigurationExpression<TViewModel> OnShow(Action<TViewModel> handler);
+        protected void OnCloseRequested()
+        {
+            if (this.CloseRequested != null) { this.CloseRequested(this, EventArgs.Empty); }
+        }
 
         #endregion Methods
     }

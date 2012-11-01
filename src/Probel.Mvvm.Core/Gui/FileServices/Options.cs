@@ -16,10 +16,16 @@
 */
 namespace Probel.Mvvm.Gui.FileServices
 {
+    /// <summary>
+    /// Options to configure a FileService item
+    /// </summary>
     public class Options
     {
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Options"/> class.
+        /// </summary>
         public Options()
         {
             this.Multiselect = false;
@@ -32,29 +38,60 @@ namespace Probel.Mvvm.Gui.FileServices
 
         #region Properties
 
+        /// <summary>
+        /// Gets the default options.
+        /// </summary>
         public static Options Default
         {
             get { return new Options(); }
         }
 
+        /// <summary>
+        /// Gets or sets the filter.
+        /// </summary>
+        /// <value>
+        /// The filter.
+        /// </value>
         public string Filter
         {
-            get; set;
+            get;
+            set;
         }
 
+        /// <summary>
+        /// Gets or sets the initial directory.
+        /// </summary>
+        /// <value>
+        /// The initial directory.
+        /// </value>
         public string InitialDirectory
         {
-            get; set;
+            get;
+            set;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether multiple file can be selected.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if multiselect; otherwise, <c>false</c>.
+        /// </value>
         public bool Multiselect
         {
-            get; set;
+            get;
+            set;
         }
 
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
         public string Title
         {
-            get; set;
+            get;
+            set;
         }
 
         #endregion Properties

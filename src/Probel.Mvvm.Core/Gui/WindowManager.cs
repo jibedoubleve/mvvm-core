@@ -58,6 +58,14 @@ namespace Probel.Mvvm.Gui
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is under test.
+        /// That's, if this instance is under test, the View won't be showed when 
+        /// using the methods Show() or ShowDialog()
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is under test; otherwise, <c>false</c>.
+        /// </value>
         public bool IsUnderTest
         {
             get;
@@ -141,30 +149,16 @@ namespace Probel.Mvvm.Gui
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
         public void Show<TViewModel>(Action<TViewModel> beforeShowing)
         {
-            var type = typeof(TViewModel);
-
-            if (!bindingCollection.ContainsKey(type))
+            this.WrappedShow<TViewModel>(win =>
             {
-                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
-                else { return; }
-            }
-
-            var win = bindingCollection[typeof(TViewModel)]();
-
-            if (win != null)
-            {
-                if (win.DataContext is TViewModel)
+                try
                 {
-                    try
-                    {
-
-                        if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-                        if (!this.IsUnderTest) { win.Show(); }
-                    }
-                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
+                    if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
+                    if (!this.IsUnderTest) { win.Show(); }
                 }
-                else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
-            }
+                catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
+                return null;
+            });
         }
 
         /// <summary>
@@ -186,35 +180,12 @@ namespace Probel.Mvvm.Gui
         /// <returns></returns>
         public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing)
         {
-            var type = typeof(TViewModel);
-
-            if (!bindingCollection.ContainsKey(type))
+            return this.WrappedShow<TViewModel>(win =>
             {
-                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
-                else { return null; }
-            }
-
-            var win = bindingCollection[type]();
-            if (win != null)
-            {
-                if (win.DataContext is TViewModel)
-                {
-                    try
-                    {
-                        if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-                    }
-                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
-
-                    if (!this.IsUnderTest)
-                    {
-                        return win.ShowDialog();
-                    }
-                    else { return true; }
-                }
-                else if (win.DataContext == null) { throw new NullDataContextException(); }
-                else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
-            }
-            else return null;
+                if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
+                if (!this.IsUnderTest) { return win.ShowDialog(); }
+                else { return true; }
+            });
         }
 
         /// <summary>
@@ -261,6 +232,38 @@ namespace Probel.Mvvm.Gui
                 else { throw new NullDataContextException(); }
                 return view;
             };
+        }
+
+        private bool? WrappedShow<TViewModel>(Func<Window, bool?> action)
+        {
+            var type = typeof(TViewModel);
+
+            if (!bindingCollection.ContainsKey(type))
+            {
+                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
+                else { return null; }
+            }
+
+            var win = bindingCollection[type]();
+            if (win != null)
+            {
+                if (win.DataContext is TViewModel)
+                {
+                    try
+                    {
+                        if (win.DataContext is IRequestCloseViewModel)
+                        {
+                            (win.DataContext as IRequestCloseViewModel).CloseRequested += (sender, e) => win.Close();
+                        }
+                        return action(win);
+                    }
+                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
+
+                }
+                else if (win.DataContext == null) { throw new NullDataContextException(); }
+                else { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType()); }
+            }
+            else return null;
         }
 
         #endregion Methods

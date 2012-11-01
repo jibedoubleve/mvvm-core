@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -15,14 +17,24 @@
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Reflection;
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("1.2.0.65")]
+#endregion Header
+
+namespace Probel.Mvvm.Gui
+{
+    using System;
+
+    /// <summary>
+    /// Implements by a ViewModel that will request to the View to close
+    /// </summary>
+    public interface IRequestCloseViewModel
+    {
+        #region Events
+
+        /// <summary>
+        /// Occurs when the ViewModel requested to close the Gui item.
+        /// </summary>
+        event EventHandler CloseRequested;
+
+        #endregion Events
+    }
+}

@@ -71,6 +71,7 @@ namespace Probel.Mvvm.Gui.FileServices
         /// Selects the file.
         /// </summary>
         /// <param name="action">The action.</param>
+        /// <param name="options">The options.</param>
         public void SelectFile(Action<string> action, Options options)
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
@@ -101,6 +102,7 @@ namespace Probel.Mvvm.Gui.FileServices
         /// Selects the file where to save the data.
         /// </summary>
         /// <param name="action">The action.</param>
+        /// <param name="options">The options.</param>
         public void SelectFileToSave(Action<string> action, Options options)
         {
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
