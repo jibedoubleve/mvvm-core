@@ -21,6 +21,7 @@ namespace Probel.Mvvm.Gui
     using System.Windows;
 
     using Probel.Mvvm.Properties;
+    using Probel.Mvvm.DataBinding;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
