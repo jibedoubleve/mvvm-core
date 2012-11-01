@@ -228,6 +228,22 @@ namespace Probel.Mvvm.Test
         }
 
         [Test]
+        [STAThread]
+        public void ShowWindow_RequestClosing_ViewClosed()
+        {
+            var viewmodel = Substitute.For<IRequestCloseViewModel>();
+
+            var called = false;
+
+            windowManager.Bind<IRequestCloseViewModel>(() => new View(viewmodel))
+                         .OnClosing(vm => called = true);
+
+            windowManager.Show<IRequestCloseViewModel>();
+            viewmodel.CloseRequested += Raise.Event();
+            Assert.IsTrue(called);
+        }
+
+        [Test]
         public void ShowWindow_ShowUnbindedWindow_KeyNotFoundExceptionIsThrown()
         {
             this.windowManager.Bind(() => null, typeof(object));
@@ -257,6 +273,11 @@ namespace Probel.Mvvm.Test
             }
 
             public View(IOtherViewModel viewmodel)
+            {
+                this.DataContext = viewmodel;
+            }
+
+            public View(IRequestCloseViewModel viewmodel)
             {
                 this.DataContext = viewmodel;
             }

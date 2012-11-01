@@ -25,7 +25,7 @@ namespace Probel.Mvvm
 
     /// <summary>
     /// Provide a base class to manage DTO. 
-    ///   - It manage object's. That's, it'll say if the state is dirty or clean whenever <see cref="Probel.Mvvm.Validation.ValidatableObject.PropertyChanged"/>
+    ///   - It manage object's. That's, it'll say if the state is dirty or clean whenever PropertyChanged/>
     ///     is triggered.
     ///   - It has a default ID
     ///   - It can ignore defined properties during the state analysis phase.

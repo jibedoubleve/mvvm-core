@@ -26,7 +26,7 @@ namespace Probel.Mvvm.Gui
     using System.Linq;
     using System.Text;
 
-    public class ConfigurationExpression<TViewModel> : IConfigurationExpression<TViewModel>
+    internal class ConfigurationExpression<TViewModel> : IConfigurationExpression<TViewModel>
     {
         #region Fields
 
