@@ -25,6 +25,7 @@ namespace Probel.Mvvm.Test
     using NUnit.Framework;
 
     using Probel.Mvvm.Gui;
+    using Probel.Mvvm.DataBinding;
 
     [TestFixture]
     public class WinManagerTest

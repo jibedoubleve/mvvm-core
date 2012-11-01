@@ -19,22 +19,35 @@
 
 #endregion Header
 
-namespace Probel.Mvvm.Gui
+namespace Probel.Mvvm.DataBinding
 {
     using System;
+    using Probel.Mvvm.DataBinding;
 
     /// <summary>
-    /// Implements by a ViewModel that will request to the View to close
+    /// Basic implementation of a ViewModel that can ask to the view to close it self
     /// </summary>
-    public interface IRequestCloseViewModel
+    public class RequestCloseViewModel : ObservableObject, IRequestCloseViewModel
     {
         #region Events
 
         /// <summary>
         /// Occurs when the ViewModel requested to close the Gui item.
         /// </summary>
-        event EventHandler CloseRequested;
+        public event EventHandler CloseRequested;
 
         #endregion Events
+
+        #region Methods
+
+        /// <summary>
+        /// Trigger a close request to the view
+        /// </summary>
+        protected void OnCloseRequested()
+        {
+            if (this.CloseRequested != null) { this.CloseRequested(this, EventArgs.Empty); }
+        }
+
+        #endregion Methods
     }
 }
