@@ -20,18 +20,18 @@ namespace Probel.Mvvm.Gui
     using System.Collections.Generic;
     using System.Windows;
 
-    using Probel.Mvvm.Properties;
     using Probel.Mvvm.DataBinding;
+    using Probel.Mvvm.Properties;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
     /// just by knowing the type of the ViewModel.
     /// </summary>
-    public class WindowManager : IWindowManager
+    internal class WindowManager : IWindowManager, IWindowConfigurator
     {
         #region Fields
 
-        private static Dictionary<Type, Func<Window>> bindingCollection = new Dictionary<Type, Func<Window>>();
+        private Dictionary<Type, Func<Window>> bindingCollection = new Dictionary<Type, Func<Window>>();
 
         #endregion Fields
 
