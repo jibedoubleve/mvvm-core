@@ -22,11 +22,12 @@
 namespace Probel.Mvvm.Gui
 {
     using System;
+    using Probel.Mvvm.DataBinding;
 
     /// <summary>
     /// Basic implementation of a ViewModel that can ask to the view to close it self
     /// </summary>
-    public class RequestCloseViewModel : IRequestCloseViewModel
+    public class RequestCloseViewModel : ObservableObject, IRequestCloseViewModel
     {
         #region Events
 
