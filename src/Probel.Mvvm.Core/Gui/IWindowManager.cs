@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,8 +16,13 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#endregion Header
+
 namespace Probel.Mvvm.Gui
 {
+    using System;
+
     /// <summary>
     /// To be a Window Manager, a class should implements these basic features
     /// </summary>
@@ -35,11 +42,28 @@ namespace Probel.Mvvm.Gui
         void Show<TViewModel>();
 
         /// <summary>
+        /// Shows the window linked to the TViewModel type as a modal box.
+        /// If a OnShow action is set, it'll be executed as well.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        void Show<TViewModel>(Action<TViewModel> beforeShowing);
+
+        /// <summary>
         /// Shows the Window linkned to this ViewModel as a dialog window.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <returns></returns>
         bool? ShowDialog<TViewModel>();
+
+        /// <summary>
+        /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
+        /// If a OnShow action is set, it'll be executed as well.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        /// <returns></returns>
+        bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing);
 
         #endregion Methods
     }

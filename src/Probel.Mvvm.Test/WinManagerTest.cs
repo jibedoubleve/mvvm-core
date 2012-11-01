@@ -24,15 +24,14 @@ namespace Probel.Mvvm.Test
 
     using NUnit.Framework;
 
-    using Probel.Mvvm.Gui;
     using Probel.Mvvm.DataBinding;
+    using Probel.Mvvm.Gui;
 
     [TestFixture]
     public class WinManagerTest
     {
         #region Fields
 
-        private WindowManager windowManager = new WindowManager();
 
         #endregion Fields
 
@@ -67,8 +66,8 @@ namespace Probel.Mvvm.Test
         [Test]
         public void Configuration_AddAlreadyBindedItem_ArgumentExceptionThrown()
         {
-            this.windowManager.Bind<Window, object>();
-            Assert.Throws<ArgumentException>(() => this.windowManager.Bind<Window, object>());
+            ViewService.Configure(e => e.Bind<Window, object>());
+            Assert.Throws<ArgumentException>(() => ViewService.Configure(e => e.Bind<Window, object>()));
         }
 
         [Test]
@@ -79,9 +78,12 @@ namespace Probel.Mvvm.Test
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View(viewmodel);
 
-            windowManager.Bind<IOtherViewModel>(() => view)
-                         .OnClosing(vm => vm.Closing());
-            windowManager.ShowDialog<IOtherViewModel>();
+            ViewService.Configure(e =>
+            {
+                e.Bind<IOtherViewModel>(() => view)
+                 .OnClosing(vm => vm.Closing());
+            });
+            ViewService.Manager.ShowDialog<IOtherViewModel>();
             view.Close();
         }
 
@@ -92,9 +94,12 @@ namespace Probel.Mvvm.Test
         {
             var viewmodel = Substitute.For<IViewModel>();
 
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel))
-                         .OnShow(vm => vm.Refresh());
-            windowManager.Show<IOtherViewModel>();
+            ViewService.Configure(e =>
+            {
+                e.Bind<IOtherViewModel>(() => new View(viewmodel))
+                 .OnShow(vm => vm.Refresh());
+            });
+            ViewService.Manager.Show<IOtherViewModel>();
         }
 
         [Test]
@@ -104,8 +109,8 @@ namespace Probel.Mvvm.Test
         {
             var viewmodel = Substitute.For<IViewModel>();
 
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
-            windowManager.ShowDialog<IOtherViewModel>();
+            ViewService.Configure(e => e.Bind<IOtherViewModel>(() => new View(viewmodel)));
+            ViewService.Manager.ShowDialog<IOtherViewModel>();
         }
 
         [Test]
@@ -115,39 +120,39 @@ namespace Probel.Mvvm.Test
         {
             var viewmodel = Substitute.For<IViewModel>();
 
-            windowManager.Bind<IOtherViewModel>(() => new View(viewmodel));
-            windowManager.Show<IOtherViewModel>();
+            ViewService.Configure(e => e.Bind<IOtherViewModel>(() => new View(viewmodel)));
+            ViewService.Manager.Show<IOtherViewModel>();
         }
 
         [Test]
         public void Configuration_AddUnbindedViewModel_ViewModelBinded()
         {
-            this.windowManager.Bind<Window, int>();
+            ViewService.Configure(e => e.Bind<Window, int>());
 
-            this.windowManager.ThrowsIfNotBinded = true;
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+            ViewService.Configure(e => e.ThrowsIfNotBinded = true);
+            Assert.Throws<KeyNotFoundException>(() => ViewService.Manager.ShowDialog<bool>());
 
-            this.windowManager.ThrowsIfNotBinded = false;
-            this.windowManager.ShowDialog<bool>();
+            ViewService.Configure(e => e.ThrowsIfNotBinded = false);
+            ViewService.Manager.ShowDialog<bool>();
         }
 
         [Test]
         public void Configuration_BindTwiceTheSameViewModel_ArgumentExceptionIsThrown()
         {
-            this.windowManager.Bind(() => new Window(), typeof(object));
-            Assert.Throws<ArgumentException>(() => this.windowManager.Bind(() => new Window(), typeof(object)));
+            ViewService.Configure(e => e.Bind(() => new Window(), typeof(object)));
+            Assert.Throws<ArgumentException>(() => ViewService.Configure(e => e.Bind(() => new Window(), typeof(object))));
         }
 
         [Test]
         public void Configuration_CanSetIfExceptionIsThrownOnMultipleBinding_ExceptionIsThrownIfConfigured()
         {
-            this.windowManager.Bind(() => null, typeof(object));
+            ViewService.Configure(e => e.Bind(() => null, typeof(object)));
 
-            this.windowManager.ThrowsIfNotBinded = true;
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+            ViewService.Configure(e => e.ThrowsIfNotBinded = true);
+            Assert.Throws<KeyNotFoundException>(() => ViewService.Manager.ShowDialog<bool>());
 
-            this.windowManager.ThrowsIfNotBinded = false;
-            this.windowManager.ShowDialog<bool>();
+            ViewService.Configure(e => e.ThrowsIfNotBinded = false);
+            ViewService.Manager.ShowDialog<bool>();
         }
 
         [Test]
@@ -157,16 +162,19 @@ namespace Probel.Mvvm.Test
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View(viewmodel);
 
-            windowManager.Bind<IViewModel>(() => view)
-                         .OnClosing(vm => vm.Refresh());
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => view)
+                 .OnClosing(vm => vm.Refresh());
+            });
 
-            windowManager.Show<IViewModel>();
+            ViewService.Manager.Show<IViewModel>();
 
             viewmodel.Received(0).Refresh();
 
             view.Close();
 
-            viewmodel.Received().Refresh();
+            viewmodel.Received(1).Refresh();
         }
 
         [Test]
@@ -175,10 +183,13 @@ namespace Probel.Mvvm.Test
         {
             var viewmodel = Substitute.For<IViewModel>();
 
-            windowManager.Bind<IViewModel>(() => new View(viewmodel))
-                         .OnShow(vm => vm.Refresh());
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => new View(viewmodel))
+                 .OnShow(vm => vm.Refresh());
+            });
 
-            windowManager.ShowDialog<IViewModel>(vm => vm.Refresh());
+            ViewService.Manager.ShowDialog<IViewModel>(vm => vm.Refresh());
 
             viewmodel.Received(2).Refresh();
         }
@@ -190,20 +201,25 @@ namespace Probel.Mvvm.Test
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View(viewmodel);
 
-            windowManager.Bind<IViewModel>(() => view)
-                         .OnShow(vm => vm.Refresh())
-                         .OnClosing(vm => vm.Closing());
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => view)
+                 .OnShow(vm => vm.Refresh())
+                 .OnClosing(vm => vm.Closing());
+            });
 
             viewmodel.Received(0).Refresh();
             viewmodel.Received(0).Closing();
 
-            windowManager.ShowDialog<IViewModel>();
+            ViewService.Manager.ShowDialog<IViewModel>();
 
+            viewmodel.Received(1).Refresh();
             viewmodel.Received(0).Closing();
 
             view.Close();
 
-            viewmodel.Received().Closing();
+            viewmodel.Received(1).Refresh();
+            viewmodel.Received(1).Closing();
         }
 
         [Test]
@@ -212,20 +228,15 @@ namespace Probel.Mvvm.Test
         {
             var viewmodel = Substitute.For<IViewModel>();
 
-            windowManager.Bind<IViewModel>(() => new View(viewmodel))
-                         .OnShow(vm => vm.Refresh());
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => new View(viewmodel))
+                 .OnShow(vm => vm.Refresh());
+            });
 
-            windowManager.ShowDialog<IViewModel>();
+            ViewService.Manager.ShowDialog<IViewModel>();
 
             viewmodel.Received().Refresh();
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            this.windowManager.Reset();
-            this.windowManager.ThrowsIfNotBinded = true;
-            this.windowManager.IsUnderTest = true;
         }
 
         [Test]
@@ -236,10 +247,14 @@ namespace Probel.Mvvm.Test
 
             var called = false;
 
-            windowManager.Bind<IRequestCloseViewModel>(() => new View(viewmodel))
-                         .OnClosing(vm => called = true);
+            ViewService.Configure(e =>
+            {
+                e.Bind<IRequestCloseViewModel>(() => new View(viewmodel))
+                 .OnClosing(vm => called = true);
+            });
 
-            windowManager.Show<IRequestCloseViewModel>();
+            ViewService.Manager.Show<IRequestCloseViewModel>();
+
             viewmodel.CloseRequested += Raise.Event();
             Assert.IsTrue(called);
         }
@@ -247,17 +262,30 @@ namespace Probel.Mvvm.Test
         [Test]
         public void ShowWindow_ShowUnbindedWindow_KeyNotFoundExceptionIsThrown()
         {
-            this.windowManager.Bind(() => null, typeof(object));
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+            ViewService.Configure(e => e.Bind(() => null, typeof(object)));
+            Assert.Throws<KeyNotFoundException>(() => ViewService.Manager.ShowDialog<bool>());
         }
 
         [Test]
         public void ShowWindow_TryToShowUnbindedViewModel_KeyNotFoundExceptionThrown()
         {
-            this.windowManager.Bind<Window, int>();
+            ViewService.Configure(e =>
+            {
+                e.Bind<Window, int>();
+                e.ThrowsIfNotBinded = true;
+            });
+            Assert.Throws<KeyNotFoundException>(() => ViewService.Manager.ShowDialog<bool>());
+        }
 
-            this.windowManager.ThrowsIfNotBinded = true;
-            Assert.Throws<KeyNotFoundException>(() => this.windowManager.ShowDialog<bool>());
+        [SetUp]
+        public void _SetUp()
+        {
+            ViewService.Configure(e =>
+            {
+                e.Reset();
+                e.ThrowsIfNotBinded = true;
+                e.IsUnderTest = true;
+            });
         }
 
         #endregion Methods

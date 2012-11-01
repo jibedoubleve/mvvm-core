@@ -19,35 +19,30 @@
 
 #endregion Header
 
-namespace Probel.Mvvm.DataBinding
+namespace Probel.Mvvm.Gui
 {
     using System;
 
-    using Probel.Mvvm.DataBinding;
-
     /// <summary>
-    /// Basic implementation of a ViewModel that can ask to the view to close it self
+    /// Provides all the feature for window management
     /// </summary>
-    public class RequestCloseViewModel : ObservableObject, IRequestCloseViewModel
+    public static class ViewService
     {
-        #region Events
-
-        /// <summary>
-        /// Occurs when the ViewModel requested to close the Gui item.
-        /// </summary>
-        public event EventHandler CloseRequested;
-
-        #endregion Events
-
         #region Methods
+        private static readonly WindowManager WindowManager = new WindowManager();
+        /// <summary>
+        /// Configures the specifie the ViewService.
+        /// </summary>
+        /// <param name="configurator">The configurator.</param>
+        public static void Configure(Action<IWindowConfigurator> configurator)
+        {
+            configurator(WindowManager);
+        }
 
         /// <summary>
-        /// Trigger a close request to the view
+        /// Gets the window manager.
         /// </summary>
-        protected void OnCloseRequested()
-        {
-            if (this.CloseRequested != null) { this.CloseRequested(this, EventArgs.Empty); }
-        }
+        public static IWindowManager Manager { get { return WindowManager; } }
 
         #endregion Methods
     }
