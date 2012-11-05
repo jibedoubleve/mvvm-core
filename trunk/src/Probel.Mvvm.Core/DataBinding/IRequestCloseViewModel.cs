@@ -36,5 +36,14 @@ namespace Probel.Mvvm.DataBinding
         event EventHandler CloseRequested;
 
         #endregion Events
+
+        #region Methods
+
+        /// <summary>
+        /// Closes the view linked to this ViewModel if exist.
+        /// </summary>
+        void Close();
+
+        #endregion Methods
     }
 }
