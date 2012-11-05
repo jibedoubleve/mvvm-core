@@ -152,10 +152,44 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
+        [ExpectedException(typeof(NullDataContextException))]
+        public void Configuration_GetDataContextWithNull_DataContextIsReturned()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View();
+
+            var vm = view.As<IOtherViewModel>();
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_GetDataContextWithOtherTypeThanAsked_DataContextIsReturned()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            var vm = view.As<IOtherViewModel>();
+
+            Assert.IsInstanceOf<IViewModel>(vm);
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_GetDataContext_DataContextIsReturned()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            var vm = view.As<IViewModel>();
+        }
+
+        [Test]
+        [STAThread]
         public void Configuration_SetActionOnClosing_ActionIsExecutedOnClosing()
         {
             var viewmodel = Substitute.For<IViewModel>();
-            var other= Substitute.For<IOtherViewModel>();
+            var other = Substitute.For<IOtherViewModel>();
             var view = new View(viewmodel);
 
             ViewService.Configure(e =>
@@ -331,6 +365,10 @@ namespace Probel.Mvvm.Test
         public class View : Window
         {
             #region Constructors
+
+            public View()
+            {
+            }
 
             public View(IViewModel viewmodel)
             {

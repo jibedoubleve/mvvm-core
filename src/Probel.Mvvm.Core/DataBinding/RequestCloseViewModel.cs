@@ -40,9 +40,17 @@ namespace Probel.Mvvm.DataBinding
         #region Methods
 
         /// <summary>
+        /// Closes the view linked to this ViewModel if exist.
+        /// </summary>
+        public void Close()
+        {
+            this.OnCloseRequested();
+        }
+
+        /// <summary>
         /// Trigger a close request to the view
         /// </summary>
-        protected void OnCloseRequested()
+        private void OnCloseRequested()
         {
             if (this.CloseRequested != null) { this.CloseRequested(this, EventArgs.Empty); }
         }

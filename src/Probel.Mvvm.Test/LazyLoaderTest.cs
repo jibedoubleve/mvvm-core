@@ -43,6 +43,12 @@ namespace Probel.Mvvm.Test
             Assert.AreEqual(item1.Id, item2.Id);
         }
 
+        [SetUp]
+        public void _Setup()
+        {
+            LazyLoader.Clear();
+        }
+
         #endregion Methods
 
         #region Nested Types
