@@ -34,10 +34,9 @@ namespace Probel.Mvvm
 
         #region Methods
 
-        public void Set<TType>(Func<TType> ctor)
+        public void Clear()
         {
-            Func<object> func = () => ctor();
-            this.dictionary.Add(typeof(TType), new Item(func));
+            this.dictionary.Clear();
         }
 
         public TType Get<TType>()
@@ -47,6 +46,12 @@ namespace Probel.Mvvm
             if (item.Value == null) { item.Value = (object)item.Ctor(); }
 
             return (TType)item.Value;
+        }
+
+        public void Set<TType>(Func<TType> ctor)
+        {
+            Func<object> func = () => ctor();
+            this.dictionary.Add(typeof(TType), new Item(func));
         }
 
         #endregion Methods
@@ -68,12 +73,14 @@ namespace Probel.Mvvm
 
             public Func<object> Ctor
             {
-                get; set;
+                get;
+                set;
             }
 
             public object Value
             {
-                get; set;
+                get;
+                set;
             }
 
             #endregion Properties

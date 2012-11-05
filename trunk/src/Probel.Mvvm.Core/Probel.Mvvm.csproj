@@ -83,6 +83,7 @@
     <Compile Include="Behaviours\SelectorBehaviour.cs" />
     <Compile Include="Behaviours\TreeViewBehaviour.cs" />
     <Compile Include="DataBinding\CommandExtension.cs" />
+    <Compile Include="DataBinding\FrameworkElementExtension.cs" />
     <Compile Include="DataBinding\RelayArgCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
