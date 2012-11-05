@@ -30,11 +30,6 @@ namespace Probel.Mvvm.Test
     [TestFixture]
     public class WinManagerTest
     {
-        #region Fields
-
-
-        #endregion Fields
-
         #region Nested Interfaces
 
         public interface IOtherViewModel
@@ -157,29 +152,6 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
-        public void Configuration_SetActionWithoutArgOnClosing_ActionIsExecutedOnClosing()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-            var view = new View(viewmodel);
-
-            ViewService.Configure(e =>
-            {
-                e.Bind<IViewModel>(() => view)
-                 .OnClosing(vm => vm.Refresh());
-            });
-
-            ViewService.Manager.Show<IViewModel>();
-
-            viewmodel.Received(0).Refresh();
-
-            view.Close();
-
-            viewmodel.Received(1).Refresh();
-        }
-
-
-        [Test]
-        [STAThread]
         public void Configuration_SetActionOnClosing_ActionIsExecutedOnClosing()
         {
             var viewmodel = Substitute.For<IViewModel>();
@@ -261,6 +233,28 @@ namespace Probel.Mvvm.Test
             ViewService.Manager.ShowDialog<IViewModel>();
 
             viewmodel.Received().Refresh();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionWithoutArgOnClosing_ActionIsExecutedOnClosing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => view)
+                 .OnClosing(vm => vm.Refresh());
+            });
+
+            ViewService.Manager.Show<IViewModel>();
+
+            viewmodel.Received(0).Refresh();
+
+            view.Close();
+
+            viewmodel.Received(1).Refresh();
         }
 
         [Test]
