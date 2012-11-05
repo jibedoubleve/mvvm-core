@@ -38,15 +38,11 @@ namespace Probel.Mvvm
         #region Methods
 
         /// <summary>
-        /// Add the specified type in the repository. When it'll be asked an instance
-        /// of that type, it'll execute the specified ctor only once and after it'll return
-        /// always the same instance.
+        /// Clears all the bindings from the container.
         /// </summary>
-        /// <typeparam name="TType">The type of the type.</typeparam>
-        /// <param name="ctor">The ctor.</param>
-        public static void Set<TType>(Func<TType> ctor)
+        public static void Clear()
         {
-            Loader.Set<TType>(ctor);
+            Loader.Clear();
         }
 
         /// <summary>
@@ -58,6 +54,18 @@ namespace Probel.Mvvm
         public static TType Get<TType>()
         {
             return Loader.Get<TType>();
+        }
+
+        /// <summary>
+        /// Add the specified type in the repository. When it'll be asked an instance
+        /// of that type, it'll execute the specified ctor only once and after it'll return
+        /// always the same instance.
+        /// </summary>
+        /// <typeparam name="TType">The type of the type.</typeparam>
+        /// <param name="ctor">The ctor.</param>
+        public static void Set<TType>(Func<TType> ctor)
+        {
+            Loader.Set<TType>(ctor);
         }
 
         #endregion Methods
