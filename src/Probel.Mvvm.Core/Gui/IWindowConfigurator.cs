@@ -32,6 +32,32 @@ namespace Probel.Mvvm.Gui
     /// </summary>
     public interface IWindowConfigurator
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is under test.
+        /// That's, if this instance is under test, the View won't be showed when 
+        /// using the methods Show() or ShowDialog()
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is under test; otherwise, <c>false</c>.
+        /// </value>
+        bool IsUnderTest
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
+        /// </summary>
+        /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
+        bool ThrowsIfNotBinded
+        {
+            get; set;
+        }
+
+        #endregion Properties
+
         #region Methods
 
         /// <summary>
@@ -63,21 +89,5 @@ namespace Probel.Mvvm.Gui
         void Reset();
 
         #endregion Methods
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is under test.
-        /// That's, if this instance is under test, the View won't be showed when 
-        /// using the methods Show() or ShowDialog()
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is under test; otherwise, <c>false</c>.
-        /// </value>
-        bool IsUnderTest { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
-        /// </summary>
-        /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
-        bool ThrowsIfNotBinded { get; set; }
     }
 }

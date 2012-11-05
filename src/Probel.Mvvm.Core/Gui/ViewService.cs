@@ -28,8 +28,26 @@ namespace Probel.Mvvm.Gui
     /// </summary>
     public static class ViewService
     {
-        #region Methods
+        #region Fields
+
         private static readonly WindowManager WindowManager = new WindowManager();
+
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the window manager.
+        /// </summary>
+        public static IWindowManager Manager
+        {
+            get { return WindowManager; }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
         /// <summary>
         /// Configures the specifie the ViewService.
         /// </summary>
@@ -38,11 +56,6 @@ namespace Probel.Mvvm.Gui
         {
             configurator(WindowManager);
         }
-
-        /// <summary>
-        /// Gets the window manager.
-        /// </summary>
-        public static IWindowManager Manager { get { return WindowManager; } }
 
         #endregion Methods
     }
