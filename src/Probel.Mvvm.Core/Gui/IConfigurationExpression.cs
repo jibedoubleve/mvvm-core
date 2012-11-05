@@ -37,6 +37,12 @@ namespace Probel.Mvvm.Gui
         /// <param name="handler">The action.</param>
         /// <returns></returns>
         IConfigurationExpression<TViewModel> OnClosing(Action<TViewModel> handler);
+        /// <summary>
+        /// Hook a handler that will be executed when the View will be closing
+        /// </summary>
+        /// <param name="handler">The action.</param>
+        /// <returns></returns>
+        IConfigurationExpression<TViewModel> OnClosing(Action handler);
 
         /// <summary>
         /// Hook a handler that will be executed when the View will be showed
@@ -44,6 +50,12 @@ namespace Probel.Mvvm.Gui
         /// <param name="handler">The handler.</param>
         /// <returns></returns>
         IConfigurationExpression<TViewModel> OnShow(Action<TViewModel> handler);
+        /// <summary>
+        /// Hook a handler that will be executed when the View will be showed
+        /// </summary>
+        /// <param name="handler">The handler.</param>
+        /// <returns></returns>
+        IConfigurationExpression<TViewModel> OnShow(Action handler);
 
         #endregion Methods
     }
