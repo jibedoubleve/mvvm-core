@@ -23,8 +23,6 @@ namespace Probel.Mvvm.DataBinding
 {
     using System;
 
-    using Probel.Mvvm.DataBinding;
-
     /// <summary>
     /// Basic implementation of a ViewModel that can ask to the view to close it self
     /// </summary>

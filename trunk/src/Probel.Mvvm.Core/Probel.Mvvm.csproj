@@ -98,6 +98,8 @@
     <Compile Include="DataBinding\RequestCloseViewModel.cs" />
     <Compile Include="Gui\UnexpectedDataContextException.cs" />
     <Compile Include="Gui\ViewService.cs" />
+    <Compile Include="LazyContainer.cs" />
+    <Compile Include="LazyLoader.cs" />
     <Compile Include="Properties\Messages.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

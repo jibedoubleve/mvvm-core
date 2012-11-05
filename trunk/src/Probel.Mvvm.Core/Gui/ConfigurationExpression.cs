@@ -22,9 +22,6 @@
 namespace Probel.Mvvm.Gui
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     internal class ConfigurationExpression<TViewModel> : IConfigurationExpression<TViewModel>
     {
