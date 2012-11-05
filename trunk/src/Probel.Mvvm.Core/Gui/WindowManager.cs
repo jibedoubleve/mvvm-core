@@ -214,7 +214,6 @@ namespace Probel.Mvvm.Gui
             };
         }
 
-
         /// <summary>
         /// Adds the handler that will be triggered when <see cref="Window"/> will be shown.
         /// </summary>
