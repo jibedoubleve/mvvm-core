@@ -157,7 +157,7 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
-        public void Configuration_SetActionOnClosing_ActionIsExecutedOnClosing()
+        public void Configuration_SetActionWithoutArgOnClosing_ActionIsExecutedOnClosing()
         {
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View(viewmodel);
@@ -175,6 +175,30 @@ namespace Probel.Mvvm.Test
             view.Close();
 
             viewmodel.Received(1).Refresh();
+        }
+
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionOnClosing_ActionIsExecutedOnClosing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var other= Substitute.For<IOtherViewModel>();
+            var view = new View(viewmodel);
+
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => view)
+                 .OnClosing(() => other.Refresh());
+            });
+
+            ViewService.Manager.Show<IViewModel>();
+
+            other.Received(0).Refresh();
+
+            view.Close();
+
+            other.Received(1).Refresh();
         }
 
         [Test]
@@ -237,6 +261,24 @@ namespace Probel.Mvvm.Test
             ViewService.Manager.ShowDialog<IViewModel>();
 
             viewmodel.Received().Refresh();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_SetActionWithoutArgOnShow_ActionnIsExecutedBeforeShowing()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var other = Substitute.For<IOtherViewModel>();
+
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => new View(viewmodel))
+                 .OnShow(() => other.Refresh());
+            });
+
+            ViewService.Manager.ShowDialog<IViewModel>();
+
+            other.Received().Refresh();
         }
 
         [Test]

@@ -214,6 +214,32 @@ namespace Probel.Mvvm.Gui
             };
         }
 
+
+        /// <summary>
+        /// Adds the handler that will be triggered when <see cref="Window"/> will be shown.
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="action">The action.</param>
+        internal void AddBeforeShowingHandler<TViewModel>(Action action)
+        {
+            var ctor = bindingCollection[typeof(TViewModel)];
+
+            bindingCollection[typeof(TViewModel)] = () =>
+            {
+                var view = ctor();
+                if (view.DataContext != null)
+                {
+                    try
+                    {
+                        action();
+                    }
+                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex); }
+                }
+                else { throw new NullDataContextException(); }
+                return view;
+            };
+        }
+
         /// <summary>
         /// Add a handler when Closing event of the windows is triggered
         /// </summary>
@@ -229,6 +255,27 @@ namespace Probel.Mvvm.Gui
                 if (view.DataContext != null)
                 {
                     view.Closing += (sender, e) => action((TViewModel)view.DataContext);
+                }
+                else { throw new NullDataContextException(); }
+                return view;
+            };
+        }
+
+        /// <summary>
+        /// Add a handler when Closing event of the windows is triggered
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="action">The action.</param>
+        internal void OnClosingHandler<TViewModel>(Action action)
+        {
+            var ctor = bindingCollection[typeof(TViewModel)];
+
+            bindingCollection[typeof(TViewModel)] = () =>
+            {
+                var view = ctor();
+                if (view.DataContext != null)
+                {
+                    view.Closing += (sender, e) => action();
                 }
                 else { throw new NullDataContextException(); }
                 return view;

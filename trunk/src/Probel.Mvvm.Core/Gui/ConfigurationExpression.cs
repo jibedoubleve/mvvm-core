@@ -58,5 +58,18 @@ namespace Probel.Mvvm.Gui
         }
 
         #endregion Methods
+
+
+        public IConfigurationExpression<TViewModel> OnClosing(Action handler)
+        {
+            this.WindowManager.OnClosingHandler<TViewModel>(handler);
+            return this;
+        }
+
+        public IConfigurationExpression<TViewModel> OnShow(Action handler)
+        {
+            this.WindowManager.AddBeforeShowingHandler<TViewModel>(handler);
+            return this;
+        }
     }
 }
