@@ -19,16 +19,16 @@ namespace Probel.Mvvm.Gui.FileServices
     /// <summary>
     /// Provides the implementation of the FileServices
     /// </summary>
-    public static class FileServiceFactory
+    public static class FileGuiFactory
     {
         #region Properties
 
         /// <summary>
-        /// Gets the <see cref="IFileService"/> implemented with Microsoft.Win32.
+        /// Gets the <see cref="IFileGui"/> implemented with Microsoft.Win32.
         /// </summary>
-        public static IFileService Win32
+        public static IFileGui Win32
         {
-            get { return new Win32FileService(); }
+            get { return new Win32FileGui(); }
         }
 
         #endregion Properties
