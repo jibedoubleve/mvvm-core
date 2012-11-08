@@ -27,14 +27,14 @@ namespace Probel.Mvvm.Gui.FileServices
     /// <summary>
     /// Implements the FileService with Microsoft.Win32 
     /// </summary>
-    public class Win32FileService : IFileService
+    public class Win32FileGui : IFileGui
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Win32FileService"/> class.
+        /// Initializes a new instance of the <see cref="Win32FileGui"/> class.
         /// </summary>
-        internal Win32FileService()
+        internal Win32FileGui()
         {
         }
 
@@ -46,7 +46,8 @@ namespace Probel.Mvvm.Gui.FileServices
         /// Selects the directory.
         /// </summary>
         /// <param name="action">The action.</param>
-        public void SelectDirectory(Action<string> action)
+        /// <returns><c>True</c> if the user clicked on 'OK'; otherwise <c>False</c></returns>
+        public bool? SelectDirectory(Action<string> action)
         {
             var folderBrowserDialog = new FolderBrowserDialog();
             var dr = folderBrowserDialog.ShowDialog();
@@ -55,16 +56,17 @@ namespace Probel.Mvvm.Gui.FileServices
             {
                 action(folderBrowserDialog.SelectedPath);
             }
-            else { return; }
+            return (dr == DialogResult.OK);
         }
 
         /// <summary>
         /// Selects the file.
         /// </summary>
         /// <param name="action">The action.</param>
-        public void SelectFile(Action<string> action)
+        /// <returns><c>True</c> if the user clicked on 'OK'; otherwise <c>False</c></returns>
+        public bool? SelectFile(Action<string> action)
         {
-            this.SelectFile(action, Options.Default);
+            return this.SelectFile(action, Options.Default);
         }
 
         /// <summary>
@@ -72,7 +74,8 @@ namespace Probel.Mvvm.Gui.FileServices
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="options">The options.</param>
-        public void SelectFile(Action<string> action, Options options)
+        /// <returns><c>True</c> if the user clicked on 'OK'; otherwise <c>False</c></returns>
+        public bool? SelectFile(Action<string> action, Options options)
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter = options.Filter;
@@ -86,16 +89,17 @@ namespace Probel.Mvvm.Gui.FileServices
             {
                 action(openFileDialog.FileName);
             }
-            else { return; }
+            return flag;
         }
 
         /// <summary>
         /// Selects the file where to save the data.
         /// </summary>
         /// <param name="action">The action.</param>
-        public void SelectFileToSave(Action<string> action)
+        /// <returns><c>True</c> if the user clicked on 'OK'; otherwise <c>False</c></returns>
+        public bool? SelectFileToSave(Action<string> action)
         {
-            this.SelectFileToSave(action, Options.Default);
+            return this.SelectFileToSave(action, Options.Default);
         }
 
         /// <summary>
@@ -103,7 +107,8 @@ namespace Probel.Mvvm.Gui.FileServices
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="options">The options.</param>
-        public void SelectFileToSave(Action<string> action, Options options)
+        /// <returns><c>True</c> if the user clicked on 'OK'; otherwise <c>False</c></returns>
+        public bool? SelectFileToSave(Action<string> action, Options options)
         {
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.Filter = options.Filter;
@@ -115,7 +120,7 @@ namespace Probel.Mvvm.Gui.FileServices
             {
                 action(saveFileDialog.FileName);
             }
-            else { return; }
+            return flag;
         }
 
         #endregion Methods
