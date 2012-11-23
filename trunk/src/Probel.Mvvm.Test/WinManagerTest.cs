@@ -311,6 +311,24 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
+        public void Configuration_SetTheMainWindow_ShowedWindowHasTheSameOwner()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            ViewService.Configure(e =>
+            {
+                e.RootWindow = new Window();
+                e.Bind<IViewModel>(() => view);
+            });
+
+            ViewService.Manager.Show<IViewModel>();
+
+            ViewService.Configure(e => Assert.NotNull(e.RootWindow));
+        }
+
+        [Test]
+        [STAThread]
         public void ShowWindow_RequestClosing_ViewClosed()
         {
             var viewmodel = Substitute.For<IRequestCloseViewModel>();

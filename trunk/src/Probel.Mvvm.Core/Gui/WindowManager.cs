@@ -31,7 +31,7 @@ namespace Probel.Mvvm.Gui
     {
         #region Fields
 
-        private Dictionary<Type, Func<Window>> bindingCollection = new Dictionary<Type, Func<Window>>();
+        private readonly Dictionary<Type, Func<Window>> Bindings = new Dictionary<Type, Func<Window>>();
 
         #endregion Fields
 
@@ -68,6 +68,18 @@ namespace Probel.Mvvm.Gui
         /// 	<c>true</c> if this instance is under test; otherwise, <c>false</c>.
         /// </value>
         public bool IsUnderTest
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the root window. That's the parent window of all tool boxes
+        /// </summary>
+        /// <value>
+        /// The root window.
+        /// </value>
+        public Window RootWindow
         {
             get;
             set;
@@ -118,11 +130,11 @@ namespace Probel.Mvvm.Gui
         /// <param name="type">The type linked to the lambda.</param>        
         public void Bind(Func<Window> ctor, Type type)
         {
-            if (bindingCollection.ContainsKey(type))
+            if (Bindings.ContainsKey(type))
             {
                 throw new ArgumentException(string.Format("The type '{0}' is already binded.", type));
             }
-            bindingCollection.Add(type, ctor);
+            Bindings.Add(type, ctor);
         }
 
         /// <summary>
@@ -130,7 +142,7 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         public void Reset()
         {
-            bindingCollection.Clear();
+            Bindings.Clear();
         }
 
         /// <summary>
@@ -196,9 +208,9 @@ namespace Probel.Mvvm.Gui
         /// <param name="action">The action.</param>
         internal void AddBeforeShowingHandler<TViewModel>(Action<TViewModel> action)
         {
-            var ctor = bindingCollection[typeof(TViewModel)];
+            var ctor = Bindings[typeof(TViewModel)];
 
-            bindingCollection[typeof(TViewModel)] = () =>
+            Bindings[typeof(TViewModel)] = () =>
             {
                 var view = ctor();
                 if (view.DataContext != null)
@@ -221,9 +233,9 @@ namespace Probel.Mvvm.Gui
         /// <param name="action">The action.</param>
         internal void AddBeforeShowingHandler<TViewModel>(Action action)
         {
-            var ctor = bindingCollection[typeof(TViewModel)];
+            var ctor = Bindings[typeof(TViewModel)];
 
-            bindingCollection[typeof(TViewModel)] = () =>
+            Bindings[typeof(TViewModel)] = () =>
             {
                 var view = ctor();
                 if (view.DataContext != null)
@@ -246,9 +258,9 @@ namespace Probel.Mvvm.Gui
         /// <param name="action">The action.</param>
         internal void OnClosingHandler<TViewModel>(Action<TViewModel> action)
         {
-            var ctor = bindingCollection[typeof(TViewModel)];
+            var ctor = Bindings[typeof(TViewModel)];
 
-            bindingCollection[typeof(TViewModel)] = () =>
+            Bindings[typeof(TViewModel)] = () =>
             {
                 var view = ctor();
                 if (view.DataContext != null)
@@ -267,9 +279,9 @@ namespace Probel.Mvvm.Gui
         /// <param name="action">The action.</param>
         internal void OnClosingHandler<TViewModel>(Action action)
         {
-            var ctor = bindingCollection[typeof(TViewModel)];
+            var ctor = Bindings[typeof(TViewModel)];
 
-            bindingCollection[typeof(TViewModel)] = () =>
+            Bindings[typeof(TViewModel)] = () =>
             {
                 var view = ctor();
                 if (view.DataContext != null)
@@ -285,15 +297,16 @@ namespace Probel.Mvvm.Gui
         {
             var type = typeof(TViewModel);
 
-            if (!bindingCollection.ContainsKey(type))
+            if (!Bindings.ContainsKey(type))
             {
                 if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
                 else { return null; }
             }
 
-            var win = bindingCollection[type]();
+            var win = Bindings[type]();
             if (win != null)
             {
+                if (!this.IsUnderTest && this.RootWindow != null) { win.Owner = this.RootWindow; }
                 if (win.DataContext is TViewModel)
                 {
                     try

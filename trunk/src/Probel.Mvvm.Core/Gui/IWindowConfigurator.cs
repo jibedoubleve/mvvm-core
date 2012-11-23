@@ -41,7 +41,20 @@ namespace Probel.Mvvm.Gui
         /// </value>
         bool IsUnderTest
         {
-            get; set;
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the root window. That's the parent window of all tool boxes
+        /// </summary>
+        /// <value>
+        /// The root window.
+        /// </value>
+        Window RootWindow
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -50,7 +63,8 @@ namespace Probel.Mvvm.Gui
         /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
         bool ThrowsIfNotBinded
         {
-            get; set;
+            get;
+            set;
         }
 
         #endregion Properties

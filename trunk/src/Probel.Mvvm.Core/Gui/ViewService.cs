@@ -22,6 +22,7 @@
 namespace Probel.Mvvm.Gui
 {
     using System;
+    using System.Windows;
 
     /// <summary>
     /// Provides all the feature for window management
@@ -42,6 +43,17 @@ namespace Probel.Mvvm.Gui
         public static IWindowManager Manager
         {
             get { return WindowManager; }
+        }
+
+        /// <summary>
+        /// Gets or sets the root window. That's the parent window of all tool boxes
+        /// </summary>
+        /// <value>
+        /// The root window.
+        /// </value>
+        public static Window RootWindow
+        {
+            get { return WindowManager.RootWindow; }
         }
 
         #endregion Properties
