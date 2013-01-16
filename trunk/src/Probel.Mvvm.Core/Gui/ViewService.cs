@@ -23,6 +23,7 @@ namespace Probel.Mvvm.Gui
 {
     using System;
     using System.Windows;
+    using Probel.Mvvm.Gui.MessageBoxes;
 
     /// <summary>
     /// Provides all the feature for window management
@@ -56,6 +57,19 @@ namespace Probel.Mvvm.Gui
             get { return WindowManager.RootWindow; }
         }
 
+        /// <summary>
+        /// Gets the configured <see cref="IMessageBox"/>. If no message box is configured, it returns the default implementation
+        /// which is using the System.Window.MessageBox
+        /// </summary>
+        public static IMessageBox MessageBox
+        {
+            get
+            {
+                return (WindowManager.MessageBox == null)
+                    ? new WindowsMessageBox()
+                    : WindowManager.MessageBox;
+            }
+        }
         #endregion Properties
 
         #region Methods
