@@ -22,6 +22,7 @@ namespace Probel.Mvvm.Gui
 
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Properties;
+    using Probel.Mvvm.Gui.MessageBoxes;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
@@ -327,5 +328,18 @@ namespace Probel.Mvvm.Gui
         }
 
         #endregion Methods
+
+
+        /// <summary>
+        /// Gets or sets the abstraction for the message box.
+        /// </summary>
+        /// <value>
+        /// The message box implementation.
+        /// </value>
+        public IMessageBox MessageBox
+        {
+            get;
+            set;
+        }
     }
 }

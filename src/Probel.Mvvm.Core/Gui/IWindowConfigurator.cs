@@ -23,6 +23,7 @@ namespace Probel.Mvvm.Gui
 {
     using System;
     using System.Windows;
+    using Probel.Mvvm.Gui.MessageBoxes;
 
     /// <summary>
     /// Used to configure the window service
@@ -52,6 +53,18 @@ namespace Probel.Mvvm.Gui
         /// The root window.
         /// </value>
         Window RootWindow
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the abstraction for the message box.
+        /// </summary>
+        /// <value>
+        /// The message box implementation.
+        /// </value>
+        IMessageBox MessageBox
         {
             get;
             set;

@@ -14,15 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+using Probel.Mvvm.Gui;
 
-using System.Reflection;
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("1.2.0.81")]
+namespace Probel.Mvvm.Test
+{
+    [TestFixture]
+    public class MessageBoxTest
+    {
+        [Test]
+        public void UseDefaultImplementation_NoConfigurationIsSpecified_TheDefaultConfigurationIsReturnedInsteadOfNull()
+        {
+            ViewService.Configure(e => e.Reset());
+
+            Assert.NotNull(ViewService.MessageBox);
+        }
+    }
+}

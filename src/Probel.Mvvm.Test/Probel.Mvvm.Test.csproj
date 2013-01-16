@@ -93,6 +93,7 @@
     <Compile Include="Helpers\User.cs" />
     <Compile Include="Helpers\UserDto.cs" />
     <Compile Include="LazyLoaderTest.cs" />
+    <Compile Include="MessageBoxTest.cs" />
     <Compile Include="Validation\BookValidator.cs" />
     <Compile Include="Validation\UserValidator.cs" />
     <Compile Include="ObservableCollectionFillerTest.cs" />
