@@ -117,16 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Asterisk" xml:space="preserve">
+    <value>Asterisque</value>
+    <comment>Asterisk</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+    <comment>Error</comment>
+  </data>
+  <data name="Exclamation" xml:space="preserve">
+    <value>Exclamation</value>
+    <comment>Exclamation</comment>
+  </data>
   <data name="ExistingValidationRuleException" xml:space="preserve">
     <value>La règle de validation est déjà configurée sur cette propriété</value>
+  </data>
+  <data name="Hand" xml:space="preserve">
+    <value>Hand</value>
+    <comment>Hand</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+    <comment>Information</comment>
   </data>
   <data name="KeyNotFoundException" xml:space="preserve">
     <value>Rien n'est lié au type: '{0}'</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>Message</value>
+    <comment>Message</comment>
+  </data>
   <data name="NullDataContextException" xml:space="preserve">
     <value>Le DataContext spécifié est null</value>
   </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+    <comment>Question</comment>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+    <comment>Stop</comment>
+  </data>
   <data name="UnexpectedDataContextException" xml:space="preserve">
     <value>Le type du DataContext devrait être "{0}" mais il est de type "{1}"</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Attention</value>
+    <comment>Warning</comment>
   </data>
 </root>
