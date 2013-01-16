@@ -23,6 +23,7 @@ namespace Probel.Mvvm.Gui
 {
     using System;
     using System.Windows;
+
     using Probel.Mvvm.Gui.MessageBoxes;
 
     /// <summary>
@@ -47,24 +48,24 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
-        /// Gets or sets the root window. That's the parent window of all tool boxes
-        /// </summary>
-        /// <value>
-        /// The root window.
-        /// </value>
-        Window RootWindow
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the abstraction for the message box.
         /// </summary>
         /// <value>
         /// The message box implementation.
         /// </value>
         IMessageBox MessageBox
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the root window. That's the parent window of all tool boxes
+        /// </summary>
+        /// <value>
+        /// The root window.
+        /// </value>
+        Window RootWindow
         {
             get;
             set;

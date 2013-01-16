@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,18 +16,20 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Probel.Mvvm.Gui;
+
+#endregion Header
 
 namespace Probel.Mvvm.Test
 {
+    using NUnit.Framework;
+
+    using Probel.Mvvm.Gui;
+
     [TestFixture]
     public class MessageBoxTest
     {
+        #region Methods
+
         [Test]
         public void UseDefaultImplementation_NoConfigurationIsSpecified_TheDefaultConfigurationIsReturnedInsteadOfNull()
         {
@@ -33,5 +37,7 @@ namespace Probel.Mvvm.Test
 
             Assert.NotNull(ViewService.MessageBox);
         }
+
+        #endregion Methods
     }
 }
