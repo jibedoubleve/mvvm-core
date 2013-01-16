@@ -84,6 +84,7 @@
       <fileset basedir="${code-dir}\src\Probel.Mvvm.Core\bin\${build-mode}\">
         <exclude name="*.vshost.exe"/>
         <exclude name="*.vshost.exe.config"/>
+        <exclude name="*.pdb"/>
         <include name="*.dll"/>
         <include name="*.xml"/>
         <include name="**/*"/>
@@ -100,6 +101,7 @@
     <echo message="Clean temporary files"/>
     <delete dir="${release-dir}\mvvm-core"/>
     <delete dir="${code-dir}"/>
+    <delete dir="${release-dir}\fr"/>
 
   </target>
 </project>
