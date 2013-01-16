@@ -21,8 +21,8 @@ namespace Probel.Mvvm.Gui
     using System.Windows;
 
     using Probel.Mvvm.DataBinding;
-    using Probel.Mvvm.Properties;
     using Probel.Mvvm.Gui.MessageBoxes;
+    using Probel.Mvvm.Properties;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
@@ -69,6 +69,18 @@ namespace Probel.Mvvm.Gui
         /// 	<c>true</c> if this instance is under test; otherwise, <c>false</c>.
         /// </value>
         public bool IsUnderTest
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the abstraction for the message box.
+        /// </summary>
+        /// <value>
+        /// The message box implementation.
+        /// </value>
+        public IMessageBox MessageBox
         {
             get;
             set;
@@ -328,18 +340,5 @@ namespace Probel.Mvvm.Gui
         }
 
         #endregion Methods
-
-
-        /// <summary>
-        /// Gets or sets the abstraction for the message box.
-        /// </summary>
-        /// <value>
-        /// The message box implementation.
-        /// </value>
-        public IMessageBox MessageBox
-        {
-            get;
-            set;
-        }
     }
 }

@@ -86,6 +86,7 @@
         <exclude name="*.vshost.exe.config"/>
         <include name="*.dll"/>
         <include name="*.xml"/>
+        <include name="**/*"/>
       </fileset>
     </copy>
 

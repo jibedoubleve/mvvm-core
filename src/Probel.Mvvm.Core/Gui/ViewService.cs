@@ -23,6 +23,7 @@ namespace Probel.Mvvm.Gui
 {
     using System;
     using System.Windows;
+
     using Probel.Mvvm.Gui.MessageBoxes;
 
     /// <summary>
@@ -47,17 +48,6 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
-        /// Gets or sets the root window. That's the parent window of all tool boxes
-        /// </summary>
-        /// <value>
-        /// The root window.
-        /// </value>
-        public static Window RootWindow
-        {
-            get { return WindowManager.RootWindow; }
-        }
-
-        /// <summary>
         /// Gets the configured <see cref="IMessageBox"/>. If no message box is configured, it returns the default implementation
         /// which is using the System.Window.MessageBox
         /// </summary>
@@ -70,6 +60,18 @@ namespace Probel.Mvvm.Gui
                     : WindowManager.MessageBox;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the root window. That's the parent window of all tool boxes
+        /// </summary>
+        /// <value>
+        /// The root window.
+        /// </value>
+        public static Window RootWindow
+        {
+            get { return WindowManager.RootWindow; }
+        }
+
         #endregion Properties
 
         #region Methods

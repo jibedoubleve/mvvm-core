@@ -21,7 +21,6 @@
 
 namespace Probel.Mvvm.Gui.MessageBoxes
 {
-
     /// <summary>
     /// Represents an abstraction of message box
     /// </summary>
