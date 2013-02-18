@@ -46,6 +46,7 @@ namespace Probel.Mvvm.Gui
         public WindowManager()
             : this(true)
         {
+            this.Culture = Thread.CurrentThread.CurrentCulture;
         }
 
         /// <summary>
@@ -70,7 +71,8 @@ namespace Probel.Mvvm.Gui
         /// </value>
         public CultureInfo Culture
         {
-            get; set;
+            get;
+            set;
         }
 
         /// <summary>
@@ -129,7 +131,8 @@ namespace Probel.Mvvm.Gui
         /// </value>
         public CultureInfo UICulture
         {
-            get; set;
+            get;
+            set;
         }
 
         #endregion Properties
