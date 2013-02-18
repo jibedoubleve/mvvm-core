@@ -25,6 +25,7 @@ namespace Probel.Mvvm.Gui
     using System.Windows;
 
     using Probel.Mvvm.Gui.MessageBoxes;
+    using System.Globalization;
 
     /// <summary>
     /// Used to configure the window service
@@ -81,6 +82,21 @@ namespace Probel.Mvvm.Gui
             set;
         }
 
+
+        /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentCulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        CultureInfo Culture { get; set; }
+        /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentUICulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        CultureInfo UICulture { get; set; }
         #endregion Properties
 
         #region Methods
