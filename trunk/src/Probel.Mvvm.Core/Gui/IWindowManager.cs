@@ -36,25 +36,12 @@ namespace Probel.Mvvm.Gui
         void Reset();
 
         /// <summary>
-        /// Shows the Window linkned to this ViewModel as a model window.
-        /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        void Show<TViewModel>();
-
-        /// <summary>
         /// Shows the window linked to the TViewModel type as a modal box.
         /// If a OnShow action is set, it'll be executed as well.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
-        void Show<TViewModel>(Action<TViewModel> beforeShowing);
-
-        /// <summary>
-        /// Shows the Window linkned to this ViewModel as a dialog window.
-        /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        /// <returns></returns>
-        bool? ShowDialog<TViewModel>();
+        void Show<TViewModel>(Action<TViewModel> beforeShowing = null);
 
         /// <summary>
         /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
@@ -63,7 +50,7 @@ namespace Probel.Mvvm.Gui
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
         /// <returns></returns>
-        bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing);
+        bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null);
 
         #endregion Methods
     }

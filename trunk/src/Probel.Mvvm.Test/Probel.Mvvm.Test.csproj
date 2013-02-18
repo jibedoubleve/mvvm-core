@@ -103,7 +103,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ValidatableObjectTest.cs" />
-    <Compile Include="WinManagerTest.cs" />
+    <Compile Include="ViewServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Probel.Mvvm.Core\Probel.Mvvm.csproj">

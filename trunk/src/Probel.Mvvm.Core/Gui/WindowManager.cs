@@ -23,6 +23,8 @@ namespace Probel.Mvvm.Gui
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Gui.MessageBoxes;
     using Probel.Mvvm.Properties;
+    using System.Globalization;
+    using System.Threading;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
@@ -99,6 +101,20 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentCulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        public CultureInfo Culture { get; set; }
+        /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentUICulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        public CultureInfo UICulture { get; set; }
+        /// <summary>
         /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
         /// </summary>
         /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
@@ -160,20 +176,11 @@ namespace Probel.Mvvm.Gui
 
         /// <summary>
         /// Shows the window linked to the TViewModel type as a modal box.
-        /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        public void Show<TViewModel>()
-        {
-            this.Show<TViewModel>((Action<TViewModel>)null);
-        }
-
-        /// <summary>
-        /// Shows the window linked to the TViewModel type as a modal box.
         /// If a OnShow action is set, it'll be executed as well.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
-        public void Show<TViewModel>(Action<TViewModel> beforeShowing)
+        public void Show<TViewModel>(Action<TViewModel> beforeShowing = null)
         {
             this.WrappedShow<TViewModel>(win =>
             {
@@ -189,22 +196,12 @@ namespace Probel.Mvvm.Gui
 
         /// <summary>
         /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
-        /// </summary>
-        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-        /// <returns></returns>
-        public bool? ShowDialog<TViewModel>()
-        {
-            return this.ShowDialog<TViewModel>((Action<TViewModel>)null);
-        }
-
-        /// <summary>
-        /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
         /// If a OnShow action is set, it'll be executed as well.
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
         /// <returns></returns>
-        public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing)
+        public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null)
         {
             return this.WrappedShow<TViewModel>(win =>
             {
@@ -308,6 +305,8 @@ namespace Probel.Mvvm.Gui
 
         private bool? WrappedShow<TViewModel>(Func<Window, bool?> action)
         {
+            Thread.CurrentThread.CurrentUICulture = this.UICulture;
+            Thread.CurrentThread.CurrentCulture = this.Culture;
             var type = typeof(TViewModel);
 
             if (!Bindings.ContainsKey(type))
