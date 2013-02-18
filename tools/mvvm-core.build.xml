@@ -36,6 +36,8 @@
     <delete>
       <fileset basedir="${release-dir}\">
         <include name="**.*"/>
+		<exclude name="*.msi"/>
+		<exclude name="*.zip"/>
       </fileset>
     </delete>
     <delete dir="${release-dir}\bin"/>
@@ -74,7 +76,7 @@
   <!-- Create a release package with the binaries -->
   <target name="Release" description="Zip the binaries and rename the file" depends="Post-Build">
     <loadfile file="${code-dir}\src\Version.cs" property="version-file"/>
-    <regex pattern="AssemblyVersion\(\&quot;(?'version'1.*.*.*)*\&quot;"
+    <regex pattern="AssemblyVersion\(\&quot;(?'version'*.*.*.*)*\&quot;"
            input="${version-file}"/>
     <echo message="Version number: ${version}"/>
 
