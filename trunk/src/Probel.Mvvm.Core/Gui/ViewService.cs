@@ -22,6 +22,7 @@
 namespace Probel.Mvvm.Gui
 {
     using System;
+    using System.Threading;
     using System.Windows;
 
     using Probel.Mvvm.Gui.MessageBoxes;
@@ -55,6 +56,9 @@ namespace Probel.Mvvm.Gui
         {
             get
             {
+                Thread.CurrentThread.CurrentUICulture = WindowManager.Culture;
+                Thread.CurrentThread.CurrentCulture = WindowManager.Culture;
+
                 return (WindowManager.MessageBox == null)
                     ? new WindowsMessageBox()
                     : WindowManager.MessageBox;
