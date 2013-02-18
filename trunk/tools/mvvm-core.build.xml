@@ -99,9 +99,14 @@
     </zip>
 
     <echo message="Clean temporary files"/>
-    <delete dir="${release-dir}\mvvm-core"/>
-    <delete dir="${code-dir}"/>
-    <delete dir="${release-dir}\fr"/>
+	<delete>
+		<fileset basedir="${release-dir}">
+			<exclude name="**/results/**"/>
+			<exclude name="*.msi"/>
+			<exclude name="*.zip"/>
+			<include name="**.*"/>
+		</fileset>
+	</delete>
 
   </target>
 </project>
