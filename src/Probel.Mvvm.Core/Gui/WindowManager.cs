@@ -18,13 +18,13 @@ namespace Probel.Mvvm.Gui
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Threading;
     using System.Windows;
 
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Gui.MessageBoxes;
     using Probel.Mvvm.Properties;
-    using System.Globalization;
-    using System.Threading;
 
     /// <summary>
     /// This manager will keep links between View and ViewModel to help user to open new windows
@@ -61,6 +61,17 @@ namespace Probel.Mvvm.Gui
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentCulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        public CultureInfo Culture
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is under test.
@@ -101,20 +112,6 @@ namespace Probel.Mvvm.Gui
         }
 
         /// <summary>
-        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentCulture will be set with this <see cref="CultureInfo"/>       
-        /// </summary>
-        /// <value>
-        /// The culture.
-        /// </value>
-        public CultureInfo Culture { get; set; }
-        /// <summary>
-        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentUICulture will be set with this <see cref="CultureInfo"/>       
-        /// </summary>
-        /// <value>
-        /// The culture.
-        /// </value>
-        public CultureInfo UICulture { get; set; }
-        /// <summary>
         /// Gets or sets a value indicating whether to throws an exception if a window is already binded.
         /// </summary>
         /// <value><c>true</c> if an exception should be thrown if the window is already binded; otherwise, <c>false</c>.</value>
@@ -122,6 +119,17 @@ namespace Probel.Mvvm.Gui
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Each time the Show and ShowDialog methods are called, the current thread's CurrentUICulture will be set with this <see cref="CultureInfo"/>       
+        /// </summary>
+        /// <value>
+        /// The culture.
+        /// </value>
+        public CultureInfo UICulture
+        {
+            get; set;
         }
 
         #endregion Properties

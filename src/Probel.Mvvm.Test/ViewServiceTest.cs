@@ -18,6 +18,9 @@ namespace Probel.Mvvm.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
 
     using NSubstitute;
@@ -26,9 +29,6 @@ namespace Probel.Mvvm.Test
 
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Gui;
-    using System.Globalization;
-    using System.Threading.Tasks;
-    using System.Threading;
 
     [TestFixture]
     public class ViewServiceTest
@@ -62,29 +62,6 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
-        public void Configuration_AddAlreadyBindedItem_ArgumentExceptionThrown()
-        {
-            ViewService.Configure(e => e.Bind<Window, object>());
-            Assert.Throws<ArgumentException>(() => ViewService.Configure(e => e.Bind<Window, object>()));
-        }
-
-        [Test]
-        [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
-        public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
-        {
-            var viewmodel = Substitute.For<IViewModel>();
-            var view = new View(viewmodel);
-
-            ViewService.Configure(e =>
-            {
-                e.Bind<IOtherViewModel>(() => view)
-                 .OnClosing(vm => vm.Closing());
-            });
-            ViewService.Manager.ShowDialog<IOtherViewModel>();
-            view.Close();
-        }
-        [Test]
         [STAThread]
         public void ChangeCultureInfo_ShowAView_CultureInfoIsAsConfigured()
         {
@@ -111,6 +88,31 @@ namespace Probel.Mvvm.Test
             });
             task.Wait();
         }
+
+        [Test]
+        public void Configuration_AddAlreadyBindedItem_ArgumentExceptionThrown()
+        {
+            ViewService.Configure(e => e.Bind<Window, object>());
+            Assert.Throws<ArgumentException>(() => ViewService.Configure(e => e.Bind<Window, object>()));
+        }
+
+        [Test]
+        [STAThread]
+        [ExpectedException(typeof(UnexpectedDataContextException))]
+        public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            ViewService.Configure(e =>
+            {
+                e.Bind<IOtherViewModel>(() => view)
+                 .OnClosing(vm => vm.Closing());
+            });
+            ViewService.Manager.ShowDialog<IOtherViewModel>();
+            view.Close();
+        }
+
         [Test]
         [STAThread]
         [ExpectedException(typeof(UnexpectedDataContextException))]
