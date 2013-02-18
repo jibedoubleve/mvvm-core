@@ -173,6 +173,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)tools\SubWCRev.exe $(SolutionDir) "$(ProjectDir)\..\Version.template" "$(ProjectDir)\..\Version.cs"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
