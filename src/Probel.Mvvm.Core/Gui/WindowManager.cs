@@ -47,6 +47,7 @@ namespace Probel.Mvvm.Gui
             : this(true)
         {
             this.Culture = Thread.CurrentThread.CurrentCulture;
+            this.UICulture = Thread.CurrentThread.CurrentUICulture;
         }
 
         /// <summary>
