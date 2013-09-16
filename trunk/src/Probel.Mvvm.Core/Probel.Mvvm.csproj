@@ -88,6 +88,7 @@
     <Compile Include="Behaviours\ControlBehaviour.cs" />
     <Compile Include="Behaviours\SelectorBehaviour.cs" />
     <Compile Include="Behaviours\TreeViewBehaviour.cs" />
+    <Compile Include="Converters\InvertBoolConverter.cs" />
     <Compile Include="DataBinding\CommandExtension.cs" />
     <Compile Include="DataBinding\FrameworkElementExtension.cs" />
     <Compile Include="DataBinding\RelayArgCommand.cs" />
