@@ -87,6 +87,7 @@
     <Compile Include="..\Version.cs">
       <Link>Version.cs</Link>
     </Compile>
+    <Compile Include="ConversionTest.cs" />
     <Compile Include="DtoTest.cs" />
     <Compile Include="Helpers\BookDto.cs" />
     <Compile Include="Helpers\Observable.cs" />
