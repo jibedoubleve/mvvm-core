@@ -37,14 +37,19 @@ namespace Probel.Mvvm.Behaviours
         /// 
         /// </summary>
         public static readonly DependencyProperty SelectedItemChangedProperty = 
-            DependencyProperty.RegisterAttached("SelectedItemChanged", typeof(ICommand), typeof(TreeViewBehaviour), new UIPropertyMetadata(null, SelectedItemChangedPropertyChangedCallback));
+            DependencyProperty.RegisterAttached("SelectedItemChanged"
+                , typeof(ICommand)
+                , typeof(TreeViewBehaviour)
+                , new UIPropertyMetadata(null, SelectedItemChangedPropertyChangedCallback));
 
         // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
         /// <summary>
         /// 
         /// </summary>
-        public static readonly DependencyProperty SelectedItemProperty = 
-            DependencyProperty.RegisterAttached("SelectedItem", typeof(object), typeof(TreeViewBehaviour), new UIPropertyMetadata(null, SelectedItemChangedPropertyChangedCallback));
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.RegisterAttached("SelectedItem"
+                , typeof(object), typeof(TreeViewBehaviour)
+                , new UIPropertyMetadata(null, SelectedItemChangedPropertyChangedCallback));
 
         private static Dictionary<DependencyObject, Behaviour> behaviours = new Dictionary<DependencyObject, Behaviour>();
 
