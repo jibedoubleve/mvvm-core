@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="BaseDto.cs" />
     <Compile Include="BaseDtoComparer.cs" />
+    <Compile Include="Behaviours\CalendarBehaviour.cs" />
     <Compile Include="Behaviours\ControlBehaviour.cs" />
     <Compile Include="Behaviours\SelectorBehaviour.cs" />
     <Compile Include="Behaviours\TreeViewBehaviour.cs" />

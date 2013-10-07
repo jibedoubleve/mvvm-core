@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm", "src\Probel.Mvvm.Core\Probel.Mvvm.csproj", "{880C823C-81D8-4F32-9E92-81C2E663C9BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test", "src\Probel.Mvvm.Test\Probel.Mvvm.Test.csproj", "{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}"
@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tools", ".tools", "{AB33D8
 		src\Version.template = src\Version.template
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test.Gui", "Probel.Mvvm.Test.Gui\Probel.Mvvm.Test.Gui.csproj", "{EA2478D9-D529-4B9E-8E91-CA00E7267E93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA2478D9-D529-4B9E-8E91-CA00E7267E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA2478D9-D529-4B9E-8E91-CA00E7267E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA2478D9-D529-4B9E-8E91-CA00E7267E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA2478D9-D529-4B9E-8E91-CA00E7267E93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
