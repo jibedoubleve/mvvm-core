@@ -201,7 +201,10 @@ namespace Probel.Mvvm.Gui
                     if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
                     if (!this.IsUnderTest) { win.Show(); }
                 }
-                catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
+                catch (InvalidCastException ex)
+                {
+                    throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex);
+                }
                 return null;
             });
         }
@@ -241,7 +244,10 @@ namespace Probel.Mvvm.Gui
                     {
                         action((TViewModel)view.DataContext);
                     }
-                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex); }
+                    catch (InvalidCastException ex)
+                    {
+                        throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex);
+                    }
                 }
                 else { throw new NullDataContextException(); }
                 return view;
@@ -262,11 +268,11 @@ namespace Probel.Mvvm.Gui
                 var view = ctor();
                 if (view.DataContext != null)
                 {
-                    try
+                    try { action(); }
+                    catch (InvalidCastException ex)
                     {
-                        action();
+                        throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex);
                     }
-                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), view.DataContext.GetType(), ex); }
                 }
                 else { throw new NullDataContextException(); }
                 return view;
@@ -323,7 +329,10 @@ namespace Probel.Mvvm.Gui
 
             if (!Bindings.ContainsKey(type))
             {
-                if (this.ThrowsIfNotBinded) { throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type)); }
+                if (this.ThrowsIfNotBinded)
+                {
+                    throw new KeyNotFoundException(string.Format(Messages.KeyNotFoundException, type));
+                }
                 else { return null; }
             }
 
@@ -341,7 +350,10 @@ namespace Probel.Mvvm.Gui
                         }
                         return action(win);
                     }
-                    catch (InvalidCastException ex) { throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex); }
+                    catch (InvalidCastException ex)
+                    {
+                        throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex);
+                    }
 
                 }
                 else if (win.DataContext == null) { throw new NullDataContextException(); }
