@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tools", ".tools", "{AB33D8
 		src\Version.template = src\Version.template
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test.Gui", "Probel.Mvvm.Test.Gui\Probel.Mvvm.Test.Gui.csproj", "{EA2478D9-D529-4B9E-8E91-CA00E7267E93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test.Gui", "src\Probel.Mvvm.Test.Gui\Probel.Mvvm.Test.Gui.csproj", "{EA2478D9-D529-4B9E-8E91-CA00E7267E93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
