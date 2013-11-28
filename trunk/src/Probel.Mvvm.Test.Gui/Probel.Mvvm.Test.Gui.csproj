@@ -96,7 +96,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Probel.Mvvm.Core\Probel.Mvvm.csproj">
+    <ProjectReference Include="..\Probel.Mvvm.Core\Probel.Mvvm.csproj">
       <Project>{880c823c-81d8-4f32-9e92-81c2e663c9bc}</Project>
       <Name>Probel.Mvvm</Name>
     </ProjectReference>
