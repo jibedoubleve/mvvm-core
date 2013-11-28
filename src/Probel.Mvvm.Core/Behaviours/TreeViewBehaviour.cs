@@ -46,7 +46,7 @@ namespace Probel.Mvvm.Behaviours
         /// <summary>
         /// 
         /// </summary>
-        public static readonly DependencyProperty SelectedItemProperty =
+        public static readonly DependencyProperty SelectedItemProperty = 
             DependencyProperty.RegisterAttached("SelectedItem"
                 , typeof(object), typeof(TreeViewBehaviour)
                 , new UIPropertyMetadata(null, SelectedItemChangedPropertyChangedCallback));
