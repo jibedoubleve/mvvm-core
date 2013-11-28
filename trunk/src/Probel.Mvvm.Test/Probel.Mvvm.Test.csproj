@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="ConversionTest.cs" />
     <Compile Include="DtoTest.cs" />
+    <Compile Include="HelpersTest.cs" />
     <Compile Include="Helpers\BookDto.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\User.cs" />
