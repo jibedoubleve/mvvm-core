@@ -1,0 +1,13 @@
+﻿<Window x:Class="Probel.Mvvm.Test.Gui.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviours="clr-namespace:Probel.Mvvm.Behaviours;assembly=Probel.Mvvm"
+        
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Calendar behaviours:CalendarBehaviour.SelectedDatesChanged="{Binding SelectedDatesChangedCommand}"                  
+                  SelectedDate="{Binding SelectedDate}"/>
+        <Button Content="Show window" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="43,213,0,0"
+                Command="{Binding ShowWindowCommand}"/>
+    </Grid>
+</Window>
