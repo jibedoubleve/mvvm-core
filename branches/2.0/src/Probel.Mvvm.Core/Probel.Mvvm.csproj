@@ -74,6 +74,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=f300afd708cefcd3, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive.Interfaces, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=f300afd708cefcd3, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive.Linq, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=f300afd708cefcd3, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -98,6 +101,7 @@
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
     <Compile Include="Gui\ConfigurationExpression.cs" />
+    <Compile Include="Gui\OneShotHandler.cs" />
     <Compile Include="Gui\FileServices\FileGuiFactory.cs" />
     <Compile Include="Gui\FileServices\Options.cs" />
     <Compile Include="Gui\FileServices\Win32FileGui.cs" />

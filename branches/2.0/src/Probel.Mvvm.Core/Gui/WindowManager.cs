@@ -192,14 +192,22 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
-        public void Show<TViewModel>(Action<TViewModel> beforeShowing = null)
+        /// <param name="afterShowing">Represent the action to execute after view has been showed.</param>
+        public void Show<TViewModel>(Action<TViewModel> beforeShowing = null, Action<TViewModel> afterShowing = null)
         {
             this.WrappedShow<TViewModel>(win =>
             {
                 try
                 {
                     if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-                    if (!this.IsUnderTest) { win.Show(); }
+                    if (!this.IsUnderTest)
+                    {
+
+                        var handler = new OneShotHandler<Window>(win);
+
+                        handler.Handle("Closed", e => afterShowing((TViewModel)win.DataContext));
+                        win.Show();
+                    }
                 }
                 catch (InvalidCastException ex)
                 {

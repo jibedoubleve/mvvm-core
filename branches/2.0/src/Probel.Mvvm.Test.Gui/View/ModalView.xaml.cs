@@ -14,27 +14,32 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+namespace Probel.Mvvm.Test.Gui.View
 {
-    /// <summary>
-    /// This is a mocked validator. This does no validation
-    /// </summary>
-    internal class EmptyValidator : IValidator
-    {
-        #region Properties
+    using System.Windows;
 
-        public string Error
+    using Probel.Mvvm.Test.Gui.ViewModel;
+
+    /// <summary>
+    /// Interaction logic for ModalWindow.xaml
+    /// </summary>
+    public partial class ModalView : Window
+    {
+        #region Constructors
+
+        public ModalView()
         {
-            get { return null; }
+            InitializeComponent();
+            this.DataContext = new ModalViewModel();
         }
 
-        #endregion Properties
+        #endregion Constructors
 
         #region Methods
 
-        public void SetValidationLogic(ValidatableObject item)
+        private void Window_Closed(object sender, System.EventArgs e)
         {
-            //Always valid
+            //MessageBox.Show("This is closed");
         }
 
         #endregion Methods

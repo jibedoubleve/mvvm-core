@@ -18,7 +18,7 @@ namespace Probel.Mvvm.Test.Helpers
 {
     using Probel.Mvvm.DataBinding;
 
-    public class Observable : ObservableObject
+    public class ObservableItem : ObservableObject
     {
         #region Fields
 

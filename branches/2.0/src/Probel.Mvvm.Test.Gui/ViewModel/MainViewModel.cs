@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Test.Gui
+namespace Probel.Mvvm.Test.Gui.ViewModel
 {
     using System;
     using System.Windows.Input;
@@ -27,6 +27,7 @@ namespace Probel.Mvvm.Test.Gui
         #region Fields
 
         private readonly ICommand selectedDatesChangedCommand;
+        private readonly ICommand showWindowCommand;
 
         private DateTime selectedDate;
 
@@ -36,7 +37,8 @@ namespace Probel.Mvvm.Test.Gui
 
         public MainViewModel()
         {
-            this.selectedDatesChangedCommand = new RelayCommand(() => this.SelectedDatesChanged(), () => this.CanSelectedDatesChanged());
+            this.selectedDatesChangedCommand = new RelayCommand(this.SelectedDatesChanged, this.CanSelectedDatesChanged);
+            this.showWindowCommand = new RelayCommand(this.ShowWindow, this.CanShowWindow);
         }
 
         #endregion Constructors
@@ -58,6 +60,11 @@ namespace Probel.Mvvm.Test.Gui
             get { return this.selectedDatesChangedCommand; }
         }
 
+        public ICommand ShowWindowCommand
+        {
+            get { return this.showWindowCommand; }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -67,9 +74,21 @@ namespace Probel.Mvvm.Test.Gui
             return this.SelectedDate > DateTime.MinValue;
         }
 
+        private bool CanShowWindow()
+        {
+            return true;
+        }
+
         private void SelectedDatesChanged()
         {
             ViewService.MessageBox.Asterisk(string.Format("A date changed [{0}]", this.SelectedDate.ToString()));
+        }
+
+        private void ShowWindow()
+        {
+            ViewService.Manager.Show<ModalViewModel>(
+                vm => ViewService.MessageBox.Asterisk("Before"),
+                vm => ViewService.MessageBox.Asterisk("After"));
         }
 
         #endregion Methods

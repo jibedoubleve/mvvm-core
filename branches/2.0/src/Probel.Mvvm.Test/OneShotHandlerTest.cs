@@ -14,27 +14,34 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+namespace Probel.Mvvm.Test
 {
-    /// <summary>
-    /// This is a mocked validator. This does no validation
-    /// </summary>
-    internal class EmptyValidator : IValidator
+    using NUnit.Framework;
+
+    using Probel.Mvvm.Gui;
+    using Probel.Mvvm.Test.Helpers;
+
+    [TestFixture]
+    public class OneShotHandlerTest
     {
-        #region Properties
-
-        public string Error
-        {
-            get { return null; }
-        }
-
-        #endregion Properties
-
         #region Methods
 
-        public void SetValidationLogic(ValidatableObject item)
+        [Test]
+        public void Subscribe_ToEvent_NoEventsTriggeredAfterDisposing()
         {
-            //Always valid
+            var eventObject = new EventObject();
+            var count = 0;
+
+            using (var handler = new OneShotHandler<EventObject>(eventObject))
+            {
+                handler.Handle("SomeEvent", e => count = count + 1);
+
+                for (int i = 0; i < 10; i++) { eventObject.OnSomeEvent(); }
+            }
+
+            for (int i = 0; i < 10; i++) { eventObject.OnSomeEvent(); }
+
+            Assert.AreEqual(10, count);
         }
 
         #endregion Methods

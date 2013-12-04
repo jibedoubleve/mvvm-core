@@ -1,0 +1,13 @@
+﻿<Window x:Class="Probel.Mvvm.Test.Gui.View.ModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ModalWindow" Height="113" Width="206"
+        Closed="Window_Closed" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="46*"/>
+        </Grid.ColumnDefinitions>
+
+    </Grid>
+</Window>

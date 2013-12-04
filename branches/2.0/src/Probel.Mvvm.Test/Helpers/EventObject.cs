@@ -14,27 +14,25 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+namespace Probel.Mvvm.Test.Helpers
 {
-    /// <summary>
-    /// This is a mocked validator. This does no validation
-    /// </summary>
-    internal class EmptyValidator : IValidator
+    using System;
+    using System.Reactive;
+    using System.Reactive.Linq;
+
+    public class EventObject
     {
-        #region Properties
+        #region Events
 
-        public string Error
-        {
-            get { return null; }
-        }
+        public event EventHandler SomeEvent;
 
-        #endregion Properties
+        #endregion Events
 
         #region Methods
 
-        public void SetValidationLogic(ValidatableObject item)
+        public void OnSomeEvent()
         {
-            //Always valid
+            if (this.SomeEvent != null) { this.SomeEvent(this, EventArgs.Empty); }
         }
 
         #endregion Methods
