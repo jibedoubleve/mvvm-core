@@ -1,4 +1,4 @@
-/*
+﻿/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -17,21 +17,42 @@
 namespace Probel.Mvvm.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     using NUnit.Framework;
 
-    using Probel.Mvvm.DataBinding;
-    using Probel.Mvvm.Test.Helpers;
     using Probel.Mvvm.Helpers;
 
     [TestFixture]
     public class HelpersTest
     {
+        #region Methods
+
         [Test]
-        public void Check_NameOfProperty_NameReturned()
+        public void Find_NameOfProperty_NameFound()
         {
-            var dto = new BaseDto<int>();
-            Assert.AreEqual("Error", NameOf<BaseDto<int>>.Property(e => e.Error));
+            var name = NameOf<MyClass>.Property(e => e.MyProperty);
+            Assert.AreEqual("MyProperty", name);
         }
+
+        #endregion Methods
+
+        #region Nested Types
+
+        private class MyClass
+        {
+            #region Properties
+
+            public int MyProperty
+            {
+                get; set;
+            }
+
+            #endregion Properties
+        }
+
+        #endregion Nested Types
     }
 }
