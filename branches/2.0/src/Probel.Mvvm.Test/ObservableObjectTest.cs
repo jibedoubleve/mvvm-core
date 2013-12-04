@@ -31,7 +31,7 @@ namespace Probel.Mvvm.Test
             var triggered = false;
             var propertyName = string.Empty;
 
-            var observable = new Observable();
+            var observable = new ObservableItem();
 
             observable.PropertyChanged += (sender, e) =>
             {
@@ -42,7 +42,7 @@ namespace Probel.Mvvm.Test
             observable.TriggerOnLambda = "new value";
 
             Assert.IsTrue(triggered, "The event wasn't triggered");
-            Assert.IsTrue(propertyName == Observable.PropName_TriggerOnLambda, "The property name is not the expected one");
+            Assert.IsTrue(propertyName == ObservableItem.PropName_TriggerOnLambda, "The property name is not the expected one");
         }
 
         #endregion Methods
