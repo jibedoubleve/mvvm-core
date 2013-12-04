@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" processModel="Default" domainUsage="Default" />
+  <Config name="Debug">
+    <assembly path="Probel.Mvvm.Test\bin\Debug\Probel.Mvvm.Test.dll" />
+  </Config>
+  <Config name="Release">
+    <assembly path="Probel.Mvvm.Test\bin\Release\Probel.Mvvm.Test.dll" />
+  </Config>
+</NUnitProject>
