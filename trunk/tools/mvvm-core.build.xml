@@ -12,7 +12,7 @@
   <loadtasks assembly="${path::combine(nantcontrib-dir, 'bin/NAnt.Contrib.Tasks.dll')}"/>-->
 
   <!-- Properties -->
-  <property name="release-dir" value="c:\mvvm-core-Release" overwrite="false"/>
+  <property name="release-dir" value="c:\Release\mvvm-core-Release" overwrite="false"/>
   <property name="code-dir" value="${release-dir}\bin"/>
   <property name="sln-file" value="Probel.Mvvm.sln" overwrite="false"/>
   <property name="tool-dir" value="${release-dir}\bin\tools"/>
