@@ -14,29 +14,45 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+namespace Probel.Mvvm.Test
 {
-    /// <summary>
-    /// This is a mocked validator. This does no validation
-    /// </summary>
-    internal class EmptyValidator : IValidator
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using NUnit.Framework;
+
+    using Probel.Mvvm.Helpers;
+
+    [TestFixture]
+    public class HelpersTest
     {
-        #region Properties
-
-        public string Error
-        {
-            get { return null; }
-        }
-
-        #endregion Properties
-
         #region Methods
 
-        public void SetValidationLogic(ValidatableObject item)
+        [Test]
+        public void Find_NameOfProperty_NameFound()
         {
-            //Always valid
+            var name = NameOf<MyClass>.Property(e => e.MyProperty);
+            Assert.AreEqual("MyProperty", name);
         }
 
         #endregion Methods
+
+        #region Nested Types
+
+        private class MyClass
+        {
+            #region Properties
+
+            public int MyProperty
+            {
+                get; set;
+            }
+
+            #endregion Properties
+        }
+
+        #endregion Nested Types
     }
 }
