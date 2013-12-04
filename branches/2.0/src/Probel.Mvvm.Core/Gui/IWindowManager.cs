@@ -1,4 +1,6 @@
-﻿/*
+﻿#region Header
+
+/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -14,6 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#endregion Header
+
 namespace Probel.Mvvm.Gui
 {
     using System;
@@ -36,8 +41,7 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
-        /// <param name="afterShowing">Represent the action to execute after view has been showed.</param>
-        void Show<TViewModel>(Action<TViewModel> beforeShowing = null, Action<TViewModel> afterShowing = null);
+        void Show<TViewModel>(Action<TViewModel> beforeShowing = null);
 
         /// <summary>
         /// Shows window linked to the TViewModel type as a dialog box and execute the specified action.
