@@ -14,29 +14,25 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Validation
+namespace Probel.Mvvm.Test.Gui.View
 {
+    using System.Windows;
+
+    using Probel.Mvvm.Test.Gui.ViewModel;
+
     /// <summary>
-    /// This is a mocked validator. This does no validation
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    internal class EmptyValidator : IValidator
+    public partial class MainView : Window
     {
-        #region Properties
+        #region Constructors
 
-        public string Error
+        public MainView()
         {
-            get { return null; }
+            InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
 
-        #endregion Properties
-
-        #region Methods
-
-        public void SetValidationLogic(ValidatableObject item)
-        {
-            //Always valid
-        }
-
-        #endregion Methods
+        #endregion Constructors
     }
 }

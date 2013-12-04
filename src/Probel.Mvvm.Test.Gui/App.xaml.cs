@@ -16,18 +16,31 @@
 */
 namespace Probel.Mvvm.Test.Gui
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Linq;
-    using System.Threading.Tasks;
     using System.Windows;
+
+    using Probel.Mvvm.Gui;
+    using Probel.Mvvm.Test.Gui.View;
+    using Probel.Mvvm.Test.Gui.ViewModel;
 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+        #region Constructors
+
+        public App()
+        {
+            var rootwindow = new MainView();
+
+            ViewService.Configure(e =>
+            {
+                e.RootWindow = rootwindow;
+                e.Bind<ModalView, ModalViewModel>();
+            });
+            rootwindow.Show();
+        }
+
+        #endregion Constructors
     }
 }
