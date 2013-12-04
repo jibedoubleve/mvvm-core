@@ -14,45 +14,35 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Probel.Mvvm.Test
+namespace Probel.Mvvm.Test.Helpers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using Probel.Mvvm.DataBinding;
 
-    using NUnit.Framework;
-
-    using Probel.Mvvm.Helpers;
-
-    [TestFixture]
-    public class HelpersTest
+    public class Observable : ObservableObject
     {
-        #region Methods
+        #region Fields
 
-        [Test]
-        public void Find_NameOfProperty_NameFound()
+        public const string PropName_TriggerOnLambda = "TriggerOnLambda";
+        public const string PropName_TriggerOnString = "TriggerOnString";
+
+        private string failure = string.Empty;
+        private string triggerOnLambda = string.Empty;
+        private string triggerOnString = string.Empty;
+
+        #endregion Fields
+
+        #region Properties
+
+        public string TriggerOnLambda
         {
-            var name = NameOf<MyClass>.Property(e => e.MyProperty);
-            Assert.AreEqual("MyProperty", name);
-        }
-
-        #endregion Methods
-
-        #region Nested Types
-
-        private class MyClass
-        {
-            #region Properties
-
-            public int MyProperty
+            get { return this.triggerOnLambda; }
+            set
             {
-                get; set;
+                this.triggerOnLambda = value;
+                this.OnPropertyChanged(() => this.TriggerOnLambda);
             }
-
-            #endregion Properties
         }
 
-        #endregion Nested Types
+        #endregion Properties
     }
 }
