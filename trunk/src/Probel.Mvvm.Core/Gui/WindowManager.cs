@@ -200,14 +200,12 @@ namespace Probel.Mvvm.Gui
                 try
                 {
                     if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-                    if (!this.IsUnderTest)
-                    {
 
-                        var handler = new OneShotHandler<Window>(win);
+                    var handler = new OneShotHandler<Window>(win);
 
-                        handler.Handle("Closed", e => afterShowing((TViewModel)win.DataContext));
-                        win.Show();
-                    }
+                    if (afterShowing != null) { handler.Handle("Closed", e => afterShowing((TViewModel)win.DataContext)); }
+
+                    if (!this.IsUnderTest) { win.Show(); }
                 }
                 catch (InvalidCastException ex)
                 {
