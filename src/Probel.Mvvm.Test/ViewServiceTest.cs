@@ -112,20 +112,7 @@ namespace Probel.Mvvm.Test
             ViewService.Manager.ShowDialog<IOtherViewModel>();
             view.Close();
         }
-        [Test]
-        [STAThread]
-        public void Configuration_AddNoHandlerOnClosing_ANonModalWindow()
-        {            
-            var viewmodel = Substitute.For<IViewModel>();
-            var view = new View(viewmodel);
 
-            ViewService.Configure(e =>
-            {
-                e.Bind<IViewModel>(() => view);
-            });
-            ViewService.Manager.Show<IViewModel>();
-            view.Close();
-        }
         [Test]
         [STAThread]
         [ExpectedException(typeof(UnexpectedDataContextException))]
@@ -161,6 +148,21 @@ namespace Probel.Mvvm.Test
 
             ViewService.Configure(e => e.Bind<IOtherViewModel>(() => new View(viewmodel)));
             ViewService.Manager.Show<IOtherViewModel>();
+        }
+
+        [Test]
+        [STAThread]
+        public void Configuration_AddNoHandlerOnClosing_ANonModalWindow()
+        {
+            var viewmodel = Substitute.For<IViewModel>();
+            var view = new View(viewmodel);
+
+            ViewService.Configure(e =>
+            {
+                e.Bind<IViewModel>(() => view);
+            });
+            ViewService.Manager.Show<IViewModel>();
+            view.Close();
         }
 
         [Test]
