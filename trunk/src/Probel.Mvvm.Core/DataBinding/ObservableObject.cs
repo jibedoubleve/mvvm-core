@@ -27,6 +27,15 @@ namespace Probel.Mvvm.DataBinding
     [Serializable]
     public class ObservableObject : INotifyPropertyChanged
     {
+        #region Constructors
+
+        public ObservableObject()
+        {
+            this.IsInpcActive = true;
+        }
+
+        #endregion Constructors
+
         #region Events
 
         /// <summary>
@@ -37,7 +46,36 @@ namespace Probel.Mvvm.DataBinding
 
         #endregion Events
 
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether INotifyPropertyChanged triggers when property is changed.        
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if INotifyPropertyChanged raises events; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsInpcActive
+        {
+            get;
+            set;
+        }
+
+        #endregion Properties
+
         #region Methods
+
+        /// <summary>
+        /// Notify the property was changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.VerifyPropertyName(propertyName);
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         /// <summary>
         /// Notifies subscribers of the property change.
@@ -46,23 +84,9 @@ namespace Probel.Mvvm.DataBinding
         /// <param name="property">The property expression.</param>
         protected void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property)
         {
-            this.OnPropertyChanged(property.GetMemberInfo().Name);
-        }
-
-        /// <summary>
-        /// Raises this object's PropertyChanged event on multiple properties changed
-        /// </summary>
-        /// <param name="propertyNames">The name of the property that has a new value.</param>
-        private void OnPropertyChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
+            if (this.IsInpcActive)
             {
-                this.VerifyPropertyName(propertyName);
-
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
+                this.OnPropertyChanged(property.GetMemberInfo().Name);
             }
         }
 

@@ -17,10 +17,13 @@
 namespace Probel.Mvvm.Test.Gui.ViewModel
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Windows.Input;
 
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Gui;
+    using Probel.Mvvm.Test.Gui.Helpers;
 
     public class MainViewModel : ObservableObject
     {
@@ -28,8 +31,10 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
 
         private readonly ICommand selectedDatesChangedCommand;
         private readonly ICommand showWindowCommand;
+        private readonly ICommand testInpcCommand;
 
         private DateTime selectedDate;
+        private string testInpcResult;
 
         #endregion Fields
 
@@ -39,6 +44,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         {
             this.selectedDatesChangedCommand = new RelayCommand(this.SelectedDatesChanged, this.CanSelectedDatesChanged);
             this.showWindowCommand = new RelayCommand(this.ShowWindow, this.CanShowWindow);
+            this.testInpcCommand = new RelayCommand(this.TestInpc);
         }
 
         #endregion Constructors
@@ -65,6 +71,21 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             get { return this.showWindowCommand; }
         }
 
+        public ICommand TestInpcCommand
+        {
+            get { return this.testInpcCommand; }
+        }
+
+        public string TestInpcResult
+        {
+            get { return this.testInpcResult; }
+            set
+            {
+                this.testInpcResult = value;
+                this.OnPropertyChanged(() => TestInpcResult);
+            }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -79,6 +100,32 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             return true;
         }
 
+        private List<MockInpc> Initialise()
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var list = new List<MockInpc>();
+            for (int i = 0; i < 100 * 1000; i++)
+            {
+                list.Add(new MockInpc());
+            }
+            stopwatch.Stop();
+            this.TestInpcResult += string.Format("Initialisation: {0:N} sec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            return list;
+        }
+
+        private void Manual(List<MockInpc> list)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+            foreach (var item in list)
+            {
+                item.Manual = string.Empty;
+            }
+            stopwatch.Stop();
+            this.TestInpcResult += string.Format("Manual: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+        }
+
         private void SelectedDatesChanged()
         {
             ViewService.MessageBox.Asterisk(string.Format("A date changed [{0}]", this.SelectedDate.ToString()));
@@ -89,6 +136,45 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             ViewService.Manager.Show<ModalViewModel>(
                 vm => ViewService.MessageBox.Asterisk("Before"),
                 vm => ViewService.MessageBox.Asterisk("After"));
+        }
+
+        private void TestInpc()
+        {
+            this.TestInpcResult = string.Empty;
+            var stopwatch = new Stopwatch();
+
+            var list = Initialise();
+            this.WithLambda(list);
+            this.Manual(list);
+            this.WithDeactivatedLambda(list);
+        }
+
+        private void WithDeactivatedLambda(List<MockInpc> list)
+        {
+            foreach (var item in list) { item.IsInpcActive = false; }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+
+
+            foreach (var item in list)
+            {
+                item.Manual = string.Empty;
+            }
+            stopwatch.Stop();
+            this.TestInpcResult += string.Format("With deactivated lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+        }
+
+        private void WithLambda(List<MockInpc> list)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+            foreach (var item in list)
+            {
+                item.Lambda = string.Empty;
+            }
+            stopwatch.Stop();
+            this.TestInpcResult += string.Format("With lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
         #endregion Methods
