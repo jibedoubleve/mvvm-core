@@ -32,8 +32,11 @@ namespace Probel.Mvvm.Validation
     {
         #region Fields
 
+        /// <summary>
+        /// Never use this variable directly
+        /// </summary>
         [NonSerialized]
-        private readonly Dictionary<string, ValidationRule> ValidationRules = new Dictionary<string, ValidationRule>();
+        private readonly Dictionary<string, ValidationRule> @__validationRules = new Dictionary<string, ValidationRule>();
         private readonly IValidator Validator;
 
         private bool validationSet = false;
@@ -65,6 +68,15 @@ namespace Probel.Mvvm.Validation
             get { return this.Validator.Error; }
         }
 
+        private Dictionary<string, ValidationRule> ValidationRules
+        {
+            get
+            {
+                this.LazyValidationConfiguration();
+                return this.@__validationRules;
+            }
+        }
+
         #endregion Properties
 
         #region Indexers
@@ -78,7 +90,6 @@ namespace Probel.Mvvm.Validation
         {
             get
             {
-                this.LazyValidationConfiguration();
                 if (this.ValidationRules.ContainsKey(columnName))
                 {
                     var rule = this.ValidationRules[columnName];
@@ -138,8 +149,10 @@ namespace Probel.Mvvm.Validation
         {
             if (!this.validationSet)
             {
-                this.Validator.SetValidationLogic(this);
+                /* //HACK if you don't set ValidationSet now,
+                 * then you'll go into an infinite loop and have a StackOverflow... */
                 this.validationSet = true;
+                this.Validator.SetValidationLogic(this);
             }
         }
 
