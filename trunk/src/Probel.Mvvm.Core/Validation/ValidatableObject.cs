@@ -38,7 +38,8 @@ namespace Probel.Mvvm.Validation
         #endregion Fields
 
         #region Constructors
-
+        private readonly IValidator Validator;
+        private bool validationSet = false;
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
@@ -47,7 +48,7 @@ namespace Probel.Mvvm.Validation
         {
             this.ValidationRules = new Dictionary<string, ValidationRule>();
             this.Error = validator.Error;
-            validator.SetValidationLogic(this);
+            this.Validator = validator;
         }
 
         #endregion Constructors
@@ -78,6 +79,11 @@ namespace Probel.Mvvm.Validation
         {
             get
             {
+                if (!this.validationSet)
+                {
+                    this.Validator.SetValidationLogic(this);
+                    this.validationSet = true;
+                }
                 if (this.ValidationRules.ContainsKey(columnName))
                 {
                     var rule = this.ValidationRules[columnName];

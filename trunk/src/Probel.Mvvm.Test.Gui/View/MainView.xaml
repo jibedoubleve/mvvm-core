@@ -11,10 +11,14 @@
     </Window.Resources>
     <TabControl>
         <TabItem Header="Benchmark">
-            <StackPanel>
-                <Button Content="Test INPC" Command="{Binding TestInpcCommand}"/>
-                <TextBlock Text="{Binding TestInpcResult}"/>
-            </StackPanel>
+            <DockPanel>
+                <Button DockPanel.Dock="Top" Content="Test INPC" Command="{Binding TestInpcCommand}"/>
+                <Button DockPanel.Dock="Top" Content="Test validaton" Command="{Binding TestValidationCommand}"/>
+                <ScrollViewer DockPanel.Dock="Top"
+                              VerticalScrollBarVisibility="Visible">
+                    <TextBlock Text="{Binding Result}"/>
+                </ScrollViewer>
+            </DockPanel>
         </TabItem>
         <TabItem Header="Gui tests">
             <StackPanel>

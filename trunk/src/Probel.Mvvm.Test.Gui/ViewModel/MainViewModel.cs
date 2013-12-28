@@ -32,6 +32,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         private readonly ICommand selectedDatesChangedCommand;
         private readonly ICommand showWindowCommand;
         private readonly ICommand testInpcCommand;
+        private readonly ICommand testValidationCommand;
 
         private DateTime selectedDate;
         private string testInpcResult;
@@ -44,7 +45,9 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         {
             this.selectedDatesChangedCommand = new RelayCommand(this.SelectedDatesChanged, this.CanSelectedDatesChanged);
             this.showWindowCommand = new RelayCommand(this.ShowWindow, this.CanShowWindow);
+
             this.testInpcCommand = new RelayCommand(this.TestInpc);
+            this.testValidationCommand = new RelayCommand(this.TestValidation);
         }
 
         #endregion Constructors
@@ -76,14 +79,19 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             get { return this.testInpcCommand; }
         }
 
-        public string TestInpcResult
+        public string Result
         {
             get { return this.testInpcResult; }
             set
             {
                 this.testInpcResult = value;
-                this.OnPropertyChanged(() => TestInpcResult);
+                this.OnPropertyChanged(() => Result);
             }
+        }
+
+        public ICommand TestValidationCommand
+        {
+            get { return this.testValidationCommand; }
         }
 
         #endregion Properties
@@ -110,7 +118,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
                 list.Add(new MockInpc());
             }
             stopwatch.Stop();
-            this.TestInpcResult += string.Format("Initialisation: {0:N} sec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            this.Result += string.Format("Initialisation: {0:N} sec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
             return list;
         }
 
@@ -123,7 +131,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
                 item.Manual = string.Empty;
             }
             stopwatch.Stop();
-            this.TestInpcResult += string.Format("Manual: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            this.Result += string.Format("Manual: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
         private void SelectedDatesChanged()
@@ -140,13 +148,35 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
 
         private void TestInpc()
         {
-            this.TestInpcResult = string.Empty;
+            this.Result = string.Empty;
             var stopwatch = new Stopwatch();
 
             var list = Initialise();
             this.WithLambda(list);
             this.Manual(list);
             this.WithDeactivatedLambda(list);
+        }
+
+        private void TestValidation()
+        {
+            this.Result = string.Empty;
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            for (int i = 0; i < 10 * 1000; i++)
+            {
+                new SimpleBookDto();
+            }
+            stopwatch.Stop();
+            this.Result += string.Format("Simple book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+
+            stopwatch.Start();
+            for (int i = 0; i < 10 * 1000; i++)
+            {
+                new BookDto();
+            }
+            stopwatch.Stop();
+            this.Result += string.Format("Book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
         private void WithDeactivatedLambda(List<MockInpc> list)
@@ -156,13 +186,12 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             var stopwatch = new Stopwatch();
             stopwatch.Restart();
 
-
             foreach (var item in list)
             {
                 item.Manual = string.Empty;
             }
             stopwatch.Stop();
-            this.TestInpcResult += string.Format("With deactivated lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            this.Result += string.Format("With deactivated lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
         private void WithLambda(List<MockInpc> list)
@@ -174,7 +203,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
                 item.Lambda = string.Empty;
             }
             stopwatch.Stop();
-            this.TestInpcResult += string.Format("With lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            this.Result += string.Format("With lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
         #endregion Methods
