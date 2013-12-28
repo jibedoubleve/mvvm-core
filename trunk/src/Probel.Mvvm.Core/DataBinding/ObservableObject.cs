@@ -29,6 +29,9 @@ namespace Probel.Mvvm.DataBinding
     {
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObservableObject"/> class.
+        /// </summary>
         public ObservableObject()
         {
             this.IsInpcActive = true;
