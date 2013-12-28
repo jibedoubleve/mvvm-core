@@ -29,6 +29,16 @@ namespace Probel.Mvvm.Test
         #region Methods
 
         [Test]
+        public void ValidateObject_ManuallValidation_ValidationOnIsValid()
+        {
+            var user = new User("Robert"); //Validation doesn't allow names which starts with "R"
+
+            var error = user.IsValid();
+
+            Assert.IsFalse(error);
+        }
+
+        [Test]
         public void ValidateObject_ManuallValidation_ValidationWorks()
         {
             var user = new User("Robert"); //Validation doesn't allow names which starts with "R"
