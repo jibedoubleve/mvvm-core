@@ -16,9 +16,9 @@
 */
 namespace Probel.Mvvm.Test.Gui.Helpers
 {
-    using Probel.Mvvm.Validation;
     using System;
 
+    using Probel.Mvvm.Validation;
 
     public class BookValidator : IValidator
     {
