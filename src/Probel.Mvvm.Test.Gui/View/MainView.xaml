@@ -4,10 +4,24 @@
         xmlns:behaviours="clr-namespace:Probel.Mvvm.Behaviours;assembly=Probel.Mvvm"
         
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Calendar behaviours:CalendarBehaviour.SelectedDatesChanged="{Binding SelectedDatesChangedCommand}"                  
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <TabControl>
+        <TabItem Header="Benchmark">
+            <StackPanel>
+                <Button Content="Test INPC" Command="{Binding TestInpcCommand}"/>
+                <TextBlock Text="{Binding TestInpcResult}"/>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Gui tests">
+            <StackPanel>
+                <Calendar behaviours:CalendarBehaviour.SelectedDatesChanged="{Binding SelectedDatesChangedCommand}"                  
                   SelectedDate="{Binding SelectedDate}"/>
-        <Button Content="Show window" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="43,213,0,0"
-                Command="{Binding ShowWindowCommand}"/>
-    </Grid>
+                <Button Content="Show window" Command="{Binding ShowWindowCommand}"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </Window>
