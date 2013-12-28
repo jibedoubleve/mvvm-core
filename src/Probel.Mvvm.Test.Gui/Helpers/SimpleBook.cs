@@ -1,5 +1,4 @@
-﻿using Probel.Mvvm.DataBinding;
-/*
+﻿/*
     This file is part of Mvvm-core.
 
     Mvvm-core is free software: you can redistribute it and/or modify
@@ -15,9 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with Mvvm-core.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 namespace Probel.Mvvm.Test.Gui.Helpers
 {
+    using System;
+
+    using Probel.Mvvm.DataBinding;
+
     public class SimpleBookDto : ObservableObject
     {
         #region Fields

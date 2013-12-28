@@ -25,7 +25,6 @@ namespace Probel.Mvvm.Gui
     /// This class handles one shot events
     /// </summary>
     /// <typeparam name="TEventSource">The type of the event source.</typeparam>
-    /// <typeparam name="TEventArgs">The type of the event arguments.</typeparam>
     public class OneShotHandler<TEventSource> : IDisposable
     {
         #region Fields
@@ -65,7 +64,6 @@ namespace Probel.Mvvm.Gui
         /// <summary>
         /// Handles the specified event when trigered and unsubscribe to it once it was handled.
         /// </summary>
-        /// <typeparam name="TEventArgs">The type of the event arguments.</typeparam>
         /// <param name="eventName">Name of the event.</param>
         /// <param name="handler">The handler which handles the event.</param>
         public void Handle(string eventName, Action<EventPattern<object>> handler)

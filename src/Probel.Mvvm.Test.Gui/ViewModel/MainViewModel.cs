@@ -19,6 +19,8 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Text;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
     using Probel.Mvvm.DataBinding;
@@ -54,6 +56,16 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
 
         #region Properties
 
+        public string Result
+        {
+            get { return this.testInpcResult; }
+            set
+            {
+                this.testInpcResult = value;
+                this.OnPropertyChanged(() => Result);
+            }
+        }
+
         public DateTime SelectedDate
         {
             get { return this.selectedDate; }
@@ -77,16 +89,6 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         public ICommand TestInpcCommand
         {
             get { return this.testInpcCommand; }
-        }
-
-        public string Result
-        {
-            get { return this.testInpcResult; }
-            set
-            {
-                this.testInpcResult = value;
-                this.OnPropertyChanged(() => Result);
-            }
         }
 
         public ICommand TestValidationCommand
@@ -122,18 +124,6 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             return list;
         }
 
-        private void Manual(List<MockInpc> list)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Restart();
-            foreach (var item in list)
-            {
-                item.Manual = string.Empty;
-            }
-            stopwatch.Stop();
-            this.Result += string.Format("Manual: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
-        }
-
         private void SelectedDatesChanged()
         {
             ViewService.MessageBox.Asterisk(string.Format("A date changed [{0}]", this.SelectedDate.ToString()));
@@ -152,34 +142,33 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             var stopwatch = new Stopwatch();
 
             var list = Initialise();
-            this.WithLambda(list);
-            this.Manual(list);
-            this.WithDeactivatedLambda(list);
+
+            var t1 = Task.Factory.StartNew<string>(l => this.TestInpcWithLambda(l as List<MockInpc>), list);
+            t1.ContinueWith(t => this.Result += t.Result);
+
+            var t2 = Task.Factory.StartNew<string>(l => this.TestInpcManually(l as List<MockInpc>), list);
+            t2.ContinueWith(t => this.Result += t.Result);
+
+            var t3 = Task.Factory.StartNew<string>(l => this.TestInpcWithDeactivatedLambda(l as List<MockInpc>), list);
+            t3.ContinueWith(t => this.Result += t.Result);
+
+            var t4 = Task.Factory.StartNew<string>(l => this.TestInpcWithDeactivatedLambdaUSING(l as List<MockInpc>), list);
+            t4.ContinueWith(t => this.Result += t.Result);
         }
 
-        private void TestValidation()
+        private string TestInpcManually(List<MockInpc> list)
         {
-            this.Result = string.Empty;
-
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            for (int i = 0; i < 10 * 1000; i++)
+            stopwatch.Restart();
+            foreach (var item in list)
             {
-                new SimpleBookDto();
+                item.Manual = string.Empty;
             }
             stopwatch.Stop();
-            this.Result += string.Format("Simple book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
-
-            stopwatch.Start();
-            for (int i = 0; i < 10 * 1000; i++)
-            {
-                new BookDto();
-            }
-            stopwatch.Stop();
-            this.Result += string.Format("Book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            return string.Format("Manual: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
-        private void WithDeactivatedLambda(List<MockInpc> list)
+        private string TestInpcWithDeactivatedLambda(List<MockInpc> list)
         {
             foreach (var item in list) { item.IsInpcActive = false; }
 
@@ -191,10 +180,28 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
                 item.Manual = string.Empty;
             }
             stopwatch.Stop();
-            this.Result += string.Format("With deactivated lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            return string.Format("With deactivated lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
         }
 
-        private void WithLambda(List<MockInpc> list)
+        private string TestInpcWithDeactivatedLambdaUSING(List<MockInpc> list)
+        {
+            //foreach (var item in list) { item.IsInpcActive = false; }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+
+            foreach (var item in list)
+            {
+                using (new ObservableObject.DeactivateEvents(item))
+                {
+                    item.Manual = string.Empty;
+                }
+            }
+            stopwatch.Stop();
+            return string.Format("With deactivated lambda (with using): {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+        }
+
+        private string TestInpcWithLambda(List<MockInpc> list)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Restart();
@@ -203,7 +210,48 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
                 item.Lambda = string.Empty;
             }
             stopwatch.Stop();
-            this.Result += string.Format("With lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            return string.Format("With lambda: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+        }
+
+        private void TestValidation()
+        {
+            this.Result = string.Empty;
+            var iterations = 100 * 1000;
+            var msg = new StringBuilder();
+
+            #region books
+            var t4 = Task.Factory.StartNew<string>(() =>
+            {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                for (int i = 0; i < iterations; i++) { new BookDto(); }
+                stopwatch.Stop();
+                return string.Format("Book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            });
+            t4.ContinueWith(t => this.Result += t.Result);
+            #endregion
+            #region simple book
+            var t2 = Task.Factory.StartNew<string>(() =>
+            {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                for (int i = 0; i < iterations; i++) { new SimpleBookDto(); }
+                stopwatch.Stop();
+                return string.Format("Simple book: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            });
+            t2.ContinueWith(t => this.Result += t.Result);
+            #endregion
+            #region validator
+            var t3 = Task.Factory.StartNew<string>(() =>
+            {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                for (int i = 0; i < iterations; i++) { new BookValidator(); }
+                stopwatch.Stop();
+                return string.Format("Instantiate validator: {0:N} msec{1}", stopwatch.Elapsed.TotalSeconds, Environment.NewLine);
+            });
+            t3.ContinueWith(t => this.Result += t.Result);
+            #endregion
         }
 
         #endregion Methods

@@ -34,20 +34,20 @@ namespace Probel.Mvvm.Validation
 
         [NonSerialized]
         private readonly Dictionary<string, ValidationRule> ValidationRules = new Dictionary<string, ValidationRule>();
+        private readonly IValidator Validator;
+
+        private bool validationSet = false;
 
         #endregion Fields
 
         #region Constructors
-        private readonly IValidator Validator;
-        private bool validationSet = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidatableObject"/> class.
         /// </summary>
         /// <param name="validator">The validator in charge to validate the data of this instance.</param>
         public ValidatableObject(IValidator validator)
         {
-            this.ValidationRules = new Dictionary<string, ValidationRule>();
-            this.Error = validator.Error;
             this.Validator = validator;
         }
 
@@ -62,8 +62,7 @@ namespace Probel.Mvvm.Validation
         /// <returns>An error message indicating what is wrong with this object. The default is an empty string ("").</returns>
         public string Error
         {
-            get;
-            private set;
+            get { return this.Validator.Error; }
         }
 
         #endregion Properties
@@ -79,11 +78,7 @@ namespace Probel.Mvvm.Validation
         {
             get
             {
-                if (!this.validationSet)
-                {
-                    this.Validator.SetValidationLogic(this);
-                    this.validationSet = true;
-                }
+                this.LazyValidationConfiguration();
                 if (this.ValidationRules.ContainsKey(columnName))
                 {
                     var rule = this.ValidationRules[columnName];
@@ -137,6 +132,15 @@ namespace Probel.Mvvm.Validation
                 if (!rule.CheckCondition()) return false;
             }
             return true;
+        }
+
+        private void LazyValidationConfiguration()
+        {
+            if (!this.validationSet)
+            {
+                this.Validator.SetValidationLogic(this);
+                this.validationSet = true;
+            }
         }
 
         #endregion Methods

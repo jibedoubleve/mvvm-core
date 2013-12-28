@@ -110,5 +110,47 @@ namespace Probel.Mvvm.DataBinding
         }
 
         #endregion Methods
+
+        #region Nested Types
+
+        /// <summary>
+        /// During the lifetime of this object, the ObservableObject will not raise NotifyPropertyChanged
+        /// </summary>
+        protected class DeactivateEvents : IDisposable
+        {
+            #region Fields
+
+            private readonly ObservableObject Observable;
+
+            #endregion Fields
+
+            #region Constructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DeactivateEvents"/> class.
+            /// </summary>
+            /// <param name="observable">The observable.</param>
+            public DeactivateEvents(ObservableObject observable)
+            {
+                this.Observable = observable;
+            }
+
+            #endregion Constructors
+
+            #region Methods
+
+            /// <summary>
+            /// When this method is called, the <see cref="ObservableObject"/> linked to this instance
+            /// will raise agin NotifyOnPropertyChanged
+            /// </summary>
+            public void Dispose()
+            {
+                this.Observable.IsInpcActive = true;
+            }
+
+            #endregion Methods
+        }
+
+        #endregion Nested Types
     }
 }
