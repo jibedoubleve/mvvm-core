@@ -197,21 +197,11 @@ namespace Probel.Mvvm.Gui
         {
             this.WrappedShow<TViewModel>(win =>
             {
-                try
+                return this.Show(win, beforeShowing, afterShowing, w =>
                 {
-                    if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-
-                    var handler = new OneShotHandler<Window>(win);
-
-                    if (afterShowing != null) { handler.Handle("Closed", e => afterShowing((TViewModel)win.DataContext)); }
-
-                    if (!this.IsUnderTest) { win.Show(); }
-                }
-                catch (InvalidCastException ex)
-                {
-                    throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex);
-                }
-                return null;
+                    w.Show();
+                    return true;
+                });
             });
         }
 
@@ -221,15 +211,11 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        /// <param name="afterShowing">Represent the action to execute after showing the view.</param>
         /// <returns></returns>
-        public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null)
+        public bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null, Action<TViewModel> afterShowing = null)
         {
-            return this.WrappedShow<TViewModel>(win =>
-            {
-                if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
-                if (!this.IsUnderTest) { return win.ShowDialog(); }
-                else { return true; }
-            });
+            return this.WrappedShow<TViewModel>(win => this.Show(win, beforeShowing, afterShowing, w => w.ShowDialog()));
         }
 
         /// <summary>
@@ -325,6 +311,26 @@ namespace Probel.Mvvm.Gui
                 else { throw new NullDataContextException(); }
                 return view;
             };
+        }
+
+        private bool? Show<TViewModel>(Window win, Action<TViewModel> beforeShowing, Action<TViewModel> afterShowing, Func<Window, bool?> show)
+        {
+            try
+            {
+                if (beforeShowing != null) { beforeShowing((TViewModel)win.DataContext); }
+
+                var handler = new OneShotHandler<Window>(win);
+
+                if (afterShowing != null) { handler.Handle("Closed", e => afterShowing((TViewModel)win.DataContext)); }
+
+                return (!this.IsUnderTest)
+                    ? show(win)
+                    : true;
+            }
+            catch (InvalidCastException ex)
+            {
+                throw new UnexpectedDataContextException(typeof(TViewModel), win.DataContext.GetType(), ex);
+            }
         }
 
         private bool? WrappedShow<TViewModel>(Func<Window, bool?> action)

@@ -32,6 +32,7 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         #region Fields
 
         private readonly ICommand selectedDatesChangedCommand;
+        private readonly ICommand showDialogWindowCommand;
         private readonly ICommand showWindowCommand;
         private readonly ICommand testInpcCommand;
         private readonly ICommand testValidationCommand;
@@ -46,7 +47,8 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         public MainViewModel()
         {
             this.selectedDatesChangedCommand = new RelayCommand(this.SelectedDatesChanged, this.CanSelectedDatesChanged);
-            this.showWindowCommand = new RelayCommand(this.ShowWindow, this.CanShowWindow);
+            this.showWindowCommand = new RelayCommand(this.ShowWindow);
+            this.showDialogWindowCommand = new RelayCommand(this.ShowWindow);
 
             this.testInpcCommand = new RelayCommand(this.TestInpc);
             this.testValidationCommand = new RelayCommand(this.TestValidation);
@@ -81,6 +83,11 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             get { return this.selectedDatesChangedCommand; }
         }
 
+        public ICommand ShowDialogWindowCommand
+        {
+            get { return this.showDialogWindowCommand; }
+        }
+
         public ICommand ShowWindowCommand
         {
             get { return this.showWindowCommand; }
@@ -105,11 +112,6 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
             return this.SelectedDate > DateTime.MinValue;
         }
 
-        private bool CanShowWindow()
-        {
-            return true;
-        }
-
         private List<MockInpc> Initialise()
         {
             var stopwatch = new Stopwatch();
@@ -127,6 +129,13 @@ namespace Probel.Mvvm.Test.Gui.ViewModel
         private void SelectedDatesChanged()
         {
             ViewService.MessageBox.Asterisk(string.Format("A date changed [{0}]", this.SelectedDate.ToString()));
+        }
+
+        private void ShowDialogWindow()
+        {
+            ViewService.Manager.ShowDialog<ModalViewModel>(
+                vm => ViewService.MessageBox.Asterisk("Before"),
+                vm => ViewService.MessageBox.Asterisk("After"));
         }
 
         private void ShowWindow()
