@@ -25,6 +25,7 @@
                 <Calendar behaviours:CalendarBehaviour.SelectedDatesChanged="{Binding SelectedDatesChangedCommand}"                  
                   SelectedDate="{Binding SelectedDate}"/>
                 <Button Content="Show window" Command="{Binding ShowWindowCommand}"/>
+                <Button Content="Show dialog window" Command="{Binding ShowDialogWindowCommand}"/>
             </StackPanel>
         </TabItem>
     </TabControl>

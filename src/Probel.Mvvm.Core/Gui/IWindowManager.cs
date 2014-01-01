@@ -45,8 +45,9 @@ namespace Probel.Mvvm.Gui
         /// </summary>
         /// <typeparam name="TViewModel">The type of the view model.</typeparam>
         /// <param name="beforeShowing">Represent the action to execute before showing the view.</param>
+        /// <param name="afterShowing">Represent the action to execute after showing the view.</param>
         /// <returns></returns>
-        bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null);
+        bool? ShowDialog<TViewModel>(Action<TViewModel> beforeShowing = null, Action<TViewModel> afterShowing = null);
 
         #endregion Methods
     }
