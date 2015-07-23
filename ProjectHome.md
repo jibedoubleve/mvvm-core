@@ -1,0 +1,1 @@
+Provides a small library to ease the use of MVVM pattern
