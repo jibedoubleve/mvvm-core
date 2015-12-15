@@ -36,7 +36,22 @@ namespace Probel.Mvvm.DataBinding
         /// <returns>The specified ViewModel</returns>
         /// <exception cref="NullDataContextException">Thrown of the DataContext of the specified view is not set</exception>
         /// <exception cref="UnexpectedDataContextException">Thrown if the type of the DataContext of the view is not of the expected type</exception>
+        [Obsolete("Will be removed in next version. Use GetViewModel instead")]
         public static TViewModel As<TViewModel>(this FrameworkElement view)
+            where TViewModel : class
+        {
+            return FrameworkElementExtension.GetViewModel<TViewModel>(view);
+        }
+
+        /// <summary>
+        /// Returns the ViewModel as it is configured in the specified View
+        /// </summary>
+        /// <typeparam name="TViewModel">The type of the view model.</typeparam>
+        /// <param name="view">The view.</param>
+        /// <returns>The specified ViewModel</returns>
+        /// <exception cref="NullDataContextException">Thrown of the DataContext of the specified view is not set</exception>
+        /// <exception cref="UnexpectedDataContextException">Thrown if the type of the DataContext of the view is not of the expected type</exception>
+        public static TViewModel GetViewModel<TViewModel>(this FrameworkElement view)
             where TViewModel : class
         {
             if (view.DataContext == null) { throw new NullDataContextException(); }

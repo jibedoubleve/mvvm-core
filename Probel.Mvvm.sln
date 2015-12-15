@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm", "src\Probel.Mvvm.Core\Probel.Mvvm.csproj", "{880C823C-81D8-4F32-9E92-81C2E663C9BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test", "src\Probel.Mvvm.Test\Probel.Mvvm.Test.csproj", "{A6BB9CC1-8C1A-4C09-8557-8945E24B17DC}"
@@ -14,9 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{798F29
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tools", ".tools", "{AB33D8B3-0537-4333-BBAC-905EF8CEDB43}"
 	ProjectSection(SolutionItems) = preProject
-		tools\mvvm-core.build.xml = tools\mvvm-core.build.xml
 		src\Probel.Mvvm.nunit = src\Probel.Mvvm.nunit
-		src\Version.template = src\Version.template
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probel.Mvvm.Test.Gui", "src\Probel.Mvvm.Test.Gui\Probel.Mvvm.Test.Gui.csproj", "{EA2478D9-D529-4B9E-8E91-CA00E7267E93}"

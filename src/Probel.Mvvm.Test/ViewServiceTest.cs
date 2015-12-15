@@ -30,7 +30,8 @@ namespace Probel.Mvvm.Test
     using Probel.Mvvm.DataBinding;
     using Probel.Mvvm.Gui;
 
-    [TestFixture]
+    [TestFixture,
+    Apartment(ApartmentState.STA)]
     public class ViewServiceTest
     {
         #region Nested Interfaces
@@ -98,7 +99,6 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
         public void Configuration_AddAnUnexpectedViewModelOnAddClosingHandler_UnexpectedDataContextException()
         {
             var viewmodel = Substitute.For<IViewModel>();
@@ -109,13 +109,15 @@ namespace Probel.Mvvm.Test
                 e.Bind<IOtherViewModel>(() => view)
                  .OnClosing(vm => vm.Closing());
             });
-            ViewService.Manager.ShowDialog<IOtherViewModel>();
-            view.Close();
+               Assert.Throws<UnexpectedDataContextException>(() =>
+               {
+               ViewService.Manager.ShowDialog<IOtherViewModel>();
+               view.Close();
+               });
         }
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
         public void Configuration_AddAnUnexpectedViewModelOnAddShowingHandler_UnexpectedDataContextException()
         {
             var viewmodel = Substitute.For<IViewModel>();
@@ -125,29 +127,27 @@ namespace Probel.Mvvm.Test
                 e.Bind<IOtherViewModel>(() => new View(viewmodel))
                  .OnShow(vm => vm.Refresh());
             });
-            ViewService.Manager.Show<IOtherViewModel>();
+            Assert.Throws<UnexpectedDataContextException>(() => ViewService.Manager.Show<IOtherViewModel>());
         }
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
         public void Configuration_AddAnUnexpectedViewModelOnShowDialog_UnexpectedDataContextException()
         {
             var viewmodel = Substitute.For<IViewModel>();
 
             ViewService.Configure(e => e.Bind<IOtherViewModel>(() => new View(viewmodel)));
-            ViewService.Manager.ShowDialog<IOtherViewModel>();
+            Assert.Throws<UnexpectedDataContextException>(() => ViewService.Manager.ShowDialog<IOtherViewModel>());
         }
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
         public void Configuration_AddAnUnexpectedViewModelOnShow_UnexpectedDataContextException()
         {
             var viewmodel = Substitute.For<IViewModel>();
 
             ViewService.Configure(e => e.Bind<IOtherViewModel>(() => new View(viewmodel)));
-            ViewService.Manager.Show<IOtherViewModel>();
+            Assert.Throws<UnexpectedDataContextException>(() => ViewService.Manager.Show<IOtherViewModel>());
         }
 
         [Test]
@@ -198,26 +198,27 @@ namespace Probel.Mvvm.Test
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(NullDataContextException))]
         public void Configuration_GetDataContextWithNull_DataContextIsReturned()
         {
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View();
 
-            var vm = view.As<IOtherViewModel>();
+            Assert.Throws<NullDataContextException>(() => view.As<IOtherViewModel>());
         }
 
         [Test]
         [STAThread]
-        [ExpectedException(typeof(UnexpectedDataContextException))]
         public void Configuration_GetDataContextWithOtherTypeThanAsked_DataContextIsReturned()
         {
             var viewmodel = Substitute.For<IViewModel>();
             var view = new View(viewmodel);
 
-            var vm = view.As<IOtherViewModel>();
+            Assert.Throws<UnexpectedDataContextException>(() =>
+            {
+                var vm = view.As<IOtherViewModel>();
 
-            Assert.IsInstanceOf<IViewModel>(vm);
+                Assert.IsInstanceOf<IViewModel>(vm);
+            });
         }
 
         [Test]

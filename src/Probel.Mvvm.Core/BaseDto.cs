@@ -32,6 +32,7 @@ namespace Probel.Mvvm
     /// </summary>
     /// <typeparam name="TId">The type of the id.</typeparam>
     [Serializable]
+    [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
     public class BaseDto<TId> : ValidatableObject
     {
         #region Fields
@@ -71,6 +72,7 @@ namespace Probel.Mvvm
         /// Gets or sets the id of this DTO.
         /// </summary>
         /// <value>The id.</value>
+        [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
         public TId Id
         {
             get { return this.id; }
@@ -84,6 +86,7 @@ namespace Probel.Mvvm
         /// Gets or sets the state. That's if this instance is clean, created, removed or updated
         /// </summary>
         /// <value>The state.</value>
+        [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
         public State State
         {
             get;
@@ -103,6 +106,7 @@ namespace Probel.Mvvm
         /// <summary>
         /// Cleans the state of this instance.
         /// </summary>
+        [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
         public void Clean()
         {
             this.State = State.Clean;
@@ -111,6 +115,7 @@ namespace Probel.Mvvm
         /// <summary>
         /// Set the state of this instance to Removed
         /// </summary>
+        [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
         public void Remove()
         {
             this.State = State.Removed;
@@ -128,6 +133,7 @@ namespace Probel.Mvvm
             }
         }
 
+        [Obsolete("This shouldn't be used anymore. Will be removed in next version")]
         private void UpdateState(string propertyName)
         {
             if (this.State != State.Removed
