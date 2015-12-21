@@ -115,6 +115,7 @@
     <Compile Include="DataBinding\RelayArgCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
+    <Compile Include="Gui\WaitingCursor.cs" />
     <Compile Include="Gui\ConfigurationExpression.cs" />
     <Compile Include="Gui\OneShotHandler.cs" />
     <Compile Include="Gui\FileServices\FileGuiFactory.cs" />
