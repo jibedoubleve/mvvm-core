@@ -29,7 +29,7 @@ namespace Probel.Mvvm.DataBinding
         #region Fields
 
         /// <summary>
-        /// Null to inducate the command is empty
+        /// Null to indicate the command is empty
         /// </summary>
         public static readonly ICommand Empty = null;
 

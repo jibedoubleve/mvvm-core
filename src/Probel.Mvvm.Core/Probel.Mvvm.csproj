@@ -113,6 +113,7 @@
     <Compile Include="DataBinding\CommandExtension.cs" />
     <Compile Include="DataBinding\FrameworkElementExtension.cs" />
     <Compile Include="DataBinding\RelayArgCommand.cs" />
+    <Compile Include="DataBinding\RelayAsyncCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
     <Compile Include="Gui\WaitingCursor.cs" />
