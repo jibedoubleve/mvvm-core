@@ -17,8 +17,6 @@
 namespace Probel.Mvvm.Test.Helpers
 {
     using System;
-    using System.Reactive;
-    using System.Reactive.Linq;
 
     public class EventObject
     {

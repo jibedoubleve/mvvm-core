@@ -86,10 +86,6 @@
       <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -113,7 +109,6 @@
     <Compile Include="DataBinding\CommandExtension.cs" />
     <Compile Include="DataBinding\FrameworkElementExtension.cs" />
     <Compile Include="DataBinding\RelayArgCommand.cs" />
-    <Compile Include="DataBinding\RelayAsyncCommand.cs" />
     <Compile Include="DataBinding\State.cs" />
     <Compile Include="ExpressionExtension.cs" />
     <Compile Include="Gui\WaitingCursor.cs" />
@@ -137,6 +132,9 @@
     </Compile>
     <Compile Include="LazyContainer.cs" />
     <Compile Include="LazyLoader.cs" />
+    <Compile Include="Gui\PostOffice\Messenger.cs" />
+    <Compile Include="Gui\PostOffice\Message.cs" />
+    <Compile Include="Gui\PostOffice\IMessenger.cs" />
     <Compile Include="Properties\Messages.fr.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -26,8 +26,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Probel.Mvvm.Core")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("Helpers for the MVVM pattern")]
+[assembly: AssemblyConfiguration("Helpers for the MVVM pattern")]
 [assembly: AssemblyCompany("Probel")]
 [assembly: AssemblyProduct("Probel.Mvvm.Core")]
 [assembly: AssemblyCopyright("Copyright © Probel 2012")]
